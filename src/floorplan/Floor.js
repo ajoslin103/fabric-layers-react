@@ -1,4 +1,4 @@
-REimport { Point } from '../geometry/Point';
+import { Point } from '../geometry/Point';
 import { Group } from '../layer/Group';
 import { Layer } from '../layer/Layer';
 
