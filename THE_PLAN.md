@@ -12,9 +12,9 @@
 ## 2. Package Configuration Updates
 
 ### Package Identity
-- [ ] Rename package from "indoorjs" to "react-canvas-image"
-- [ ] Update package description to reflect new purpose as generic image manipulation library
-- [ ] Update keywords to match new functionality
+- [ ] Rename package from "indoorjs" to "fabric-layers-react"
+- [ ] Update package description to reflect new purpose as a fabric.js coordinate-plane (grid) & layers library for React
+- [ ] Update keywords to match new functionality (fabric.js, canvas, grid, coordinate-plane, layers, react)
 - [ ] Update repository, bugs, and homepage URLs
 
 ### Package Structure
@@ -42,9 +42,10 @@
 - [ ] Verify React hooks usage follows best practices
 
 ### API Improvements
-- [ ] Document public API interface
+- [ ] Document public API interface focusing on coordinate-plane and layers functionality
 - [ ] Ensure consistent naming conventions across the codebase
 - [ ] Remove any indoor-specific code that wasn't already refactored
+- [ ] Enhance grid system and layer management APIs
 - [ ] Add TypeScript type definitions (optional but recommended)
 
 ## 4. Documentation
@@ -52,9 +53,10 @@
 ### Package Documentation
 - [ ] Create comprehensive README.md
 - [ ] Include installation instructions
-- [ ] Add basic usage examples
-- [ ] Document API and available components
-- [ ] Explain configuration options
+- [ ] Add basic usage examples for coordinate planes and layer management
+- [ ] Document grid system API and coordinate transformation utilities
+- [ ] Explain layer system configuration options
+- [ ] Provide examples of integrating with existing React applications
 
 ### Code Documentation
 - [ ] Add/update JSDoc comments for public methods and components
@@ -69,8 +71,13 @@
 
 ### Demo Application
 - [ ] Create/update demo application
-- [ ] Include examples of common use cases
+- [ ] Include examples showing:
+  - [ ] Basic coordinate plane setup
+  - [ ] Layer management and interaction
+  - [ ] Grid customization options
+  - [ ] Event handling with layers
 - [ ] Ensure demo is buildable independently
+- [ ] Create CodeSandbox examples for quick testing
 
 ## 6. Publishing
 
@@ -98,5 +105,10 @@
 - [ ] Set up change log process
 
 ### Future Development
-- [ ] Outline roadmap for future features
+- [ ] Outline roadmap for future features:
+  - [ ] Additional grid types (polar, isometric)
+  - [ ] Advanced layer management features
+  - [ ] Performance optimizations for large canvases
+  - [ ] Enhanced event handling system
 - [ ] Consider module federation for larger applications
+- [ ] Explore integration with other React visualization libraries
