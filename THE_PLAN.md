@@ -98,7 +98,19 @@
 - [ ] Set up GitHub Actions or similar for automated testing
 - [ ] Configure automated publishing (optional)
 
-## 7. Maintenance
+## 7. Dependency Upgrades
+
+### Upgrade Strategy
+- [ ] Create a separate branch for upgrades after initial library is working
+- [ ] Upgrade Node.js version (from 14.x to latest LTS)
+- [ ] Update React to latest version (from 17.0.2)
+- [ ] Update fabric.js dependency
+- [ ] Update build tools (webpack, babel, etc.)
+- [ ] Update all other dependencies to compatible versions
+- [ ] Test thoroughly after upgrades
+- [ ] Document breaking changes if any
+
+## 8. Maintenance
 
 ### Version Control
 - [ ] Create semantic versioning strategy
