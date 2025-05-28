@@ -5,7 +5,6 @@
 
 import fabric from 'fabric-pure-browser';
 import { version } from '../package.json';
-import CanvasLayer from './layer/CanvasLayer';
 import Grid from './grid/Grid';
 import { Map } from './map/Map';
 
@@ -33,11 +32,13 @@ export * from './layer/index';
 // Canvas utilities
 export * from './paint/index';
 
-// Re-export with better names for the new library purpose
-export { CanvasLayer };
+// Named exports for better clarity with the new library purpose
+export { Map as CoordinatePlane } from './map/Map';
+// Re-export Grid with a more descriptive name
+import Grid from './grid/Grid';
 export { Grid as GridSystem };
-export { Map as CoordinatePlane };
 
 // For backwards compatibility, but these should be considered deprecated
+// These will be removed in a future version
 export * from './map/index';
 export * from './floorplan/index';
