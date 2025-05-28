@@ -12,17 +12,17 @@
 ## 2. Package Configuration Updates
 
 ### Package Identity
-- [ ] Rename package from "indoorjs" to "fabric-layers-react"
-- [ ] Update package description to reflect new purpose as a fabric.js coordinate-plane (grid) & layers library for React
-- [ ] Update keywords to match new functionality (fabric.js, canvas, grid, coordinate-plane, layers, react)
-- [ ] Update repository, bugs, and homepage URLs
+- [x] Rename package from "indoorjs" to "fabric-layers-react"
+- [x] Update package description to reflect new purpose as a fabric.js coordinate-plane (grid) & layers library for React
+- [x] Update keywords to match new functionality (fabric.js, canvas, grid, coordinate-plane, layers, react)
+- [x] Update repository, bugs, and homepage URLs
 
 ### Package Structure
-- [ ] Review and update main entry point in package.json
-- [ ] Add module field for ES modules support
+- [x] Review and update main entry point in package.json
+- [x] Add module field for ES modules support
 - [ ] Add types field if TypeScript definitions are added
-- [ ] Set appropriate "files" array to include only necessary files
-- [ ] Properly mark React and fabric.js as peer dependencies
+- [x] Set appropriate "files" array to include only necessary files
+- [x] Properly mark React and fabric.js as peer dependencies
 
 ### Build Configuration
 - [ ] Update webpack/rollup configuration to generate:
