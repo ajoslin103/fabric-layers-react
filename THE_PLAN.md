@@ -25,13 +25,13 @@
 - [x] Properly mark React and fabric.js as peer dependencies
 
 ### Build Configuration
-- [ ] Update webpack/rollup configuration to generate:
+- [x] Update webpack/rollup configuration to generate:
   - CommonJS build (for Node.js/npm)
   - ES module build (for modern bundlers)
   - UMD build (for direct browser usage)
-- [ ] Configure external dependencies correctly
-- [ ] Set up source maps generation
-- [ ] Ensure tree-shaking friendly exports
+- [x] Configure external dependencies correctly
+- [x] Set up source maps generation
+- [x] Ensure tree-shaking friendly exports
 
 ## 3. Code Refactoring
 
