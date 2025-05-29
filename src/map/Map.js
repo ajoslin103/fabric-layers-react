@@ -9,7 +9,31 @@ import ModesMixin from './ModesMixin';
 import Measurement from '../measurement/Measurement';
 import { mix } from '../lib/mix';
 
+/**
+ * CoordinatePlane (formerly Map)
+ *
+ * Main container component that provides a canvas with a coordinate system,
+ * grid management, and layer management capabilities.
+ *
+ * @class
+ * @extends {Base}
+ * @mixes {ModesMixin}
+ */
 export class Map extends mix(Base).with(ModesMixin) {
+  /**
+   * Create a new coordinate plane
+   *
+   * @param {HTMLElement} container - The DOM element to contain the canvas
+   * @param {Object} options - Configuration options
+   * @param {Point} [options.center] - Center point of the coordinate plane
+   * @param {number} [options.zoom=1] - Initial zoom level
+   * @param {number} [options.minZoom=0] - Minimum allowed zoom level
+   * @param {number} [options.maxZoom=20] - Maximum allowed zoom level
+   * @param {boolean} [options.gridEnabled=true] - Whether to display the grid
+   * @param {boolean} [options.zoomEnabled=true] - Whether zooming is enabled
+   * @param {boolean} [options.selectEnabled=true] - Whether selection is enabled
+   * @param {string} [options.mode=Modes.SELECT] - Initial interaction mode
+   */
   constructor(container, options) {
     super(options);
 

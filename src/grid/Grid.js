@@ -7,8 +7,28 @@ import gridStyle from './gridStyle';
 import Axis from './Axis';
 import { Point } from '../geometry/Point';
 
-// constructor
+/**
+ * Grid - Provides a coordinate grid system for the coordinate plane
+ *
+ * Handles drawing grid lines, labels, and axes based on the current
+ * coordinate plane state and viewport.
+ *
+ * @class
+ * @extends {Base}
+ */
 class Grid extends Base {
+  /**
+   * Create a new grid
+   *
+   * @param {HTMLCanvasElement} canvas - Canvas element to draw the grid on
+   * @param {Object} opts - Grid configuration options
+   * @param {string} [opts.color='#cccccc'] - Grid line color
+   * @param {number} [opts.opacity=0.5] - Grid line opacity
+   * @param {string} [opts.axisColor='#999999'] - Axis line color
+   * @param {number} [opts.spacing=10] - Grid line spacing
+   * @param {boolean} [opts.showLabels=true] - Whether to show grid labels
+   * @param {boolean} [opts.visible=true] - Whether the grid is visible
+   */
   constructor(canvas, opts) {
     super(opts);
     this.canvas = canvas;
@@ -18,6 +38,11 @@ class Grid extends Base {
     this.update(opts);
   }
 
+  /**
+   * Render the grid to the canvas
+   *
+   * @returns {Grid} This grid instance for chaining
+   */
   render() {
     this.draw();
     return this;

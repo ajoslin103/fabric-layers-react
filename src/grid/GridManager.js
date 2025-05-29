@@ -5,12 +5,25 @@ import Grid from './Grid';
  * GridManager - Manages grid properties and behavior
  *
  * This component provides methods for configuring and controlling
- * the grid system in a coordinate plane.
+ * the grid system in a coordinate plane. It handles grid visibility,
+ * spacing, colors, and other visual properties.
+ *
+ * @class
+ * @extends {Base}
  */
 class GridManager extends Base {
   /**
    * Create a new GridManager
-   * @param {Object} options Configuration options
+   *
+   * @param {Object} options - Configuration options
+   * @param {CoordinatePlane} [options.coordinatePlane] - The coordinate plane to manage grid for
+   * @param {HTMLCanvasElement} [options.canvas] - Canvas element to draw the grid on
+   * @param {boolean} [options.visible=true] - Whether the grid is initially visible
+   * @param {number} [options.spacing=10] - Grid line spacing
+   * @param {string} [options.color='#cccccc'] - Grid line color
+   * @param {number} [options.opacity=0.5] - Grid line opacity
+   * @param {string} [options.axisColor='#999999'] - Axis line color
+   * @param {boolean} [options.showLabels=true] - Whether to show grid labels
    */
   constructor(options = {}) {
     super(options);
@@ -29,7 +42,10 @@ class GridManager extends Base {
   }
 
   /**
-   * Initialize the grid
+   * Initialize the grid with current configuration options
+   *
+   * Creates a new Grid instance and draws it on the canvas if visible.
+   *
    * @returns {GridManager} This GridManager instance for chaining
    */
   initGrid() {
@@ -45,13 +61,17 @@ class GridManager extends Base {
     if (this._grid && this._visible) {
       this._grid.draw();
     }
-    
+
     return this;
   }
 
   /**
    * Set the grid visibility
-   * @param {boolean} visible Whether the grid should be visible
+   *
+   * Controls whether the grid is drawn on the canvas or cleared.
+   * Fires a 'grid:visibility' event when the visibility changes.
+   *
+   * @param {boolean} visible - Whether the grid should be visible
    * @returns {GridManager} This GridManager instance for chaining
    */
   setVisible(visible) {
@@ -67,14 +87,18 @@ class GridManager extends Base {
         }
       }
     }
-    
+
     this.fire('grid:visibility', { visible });
     return this;
   }
 
   /**
    * Set the grid spacing
-   * @param {number} spacing The grid spacing in pixels
+   *
+   * Updates the distance between grid lines and redraws the grid.
+   * Fires a 'grid:spacing' event when the spacing changes.
+   *
+   * @param {number} spacing - The grid spacing in pixels
    * @returns {GridManager} This GridManager instance for chaining
    */
   setSpacing(spacing) {
@@ -85,7 +109,7 @@ class GridManager extends Base {
         this._grid.draw();
       }
     }
-    
+
     this.fire('grid:spacing', { spacing });
     return this;
   }
@@ -103,7 +127,7 @@ class GridManager extends Base {
         this._grid.draw();
       }
     }
-    
+
     this.fire('grid:color', { color });
     return this;
   }
@@ -121,7 +145,7 @@ class GridManager extends Base {
         this._grid.draw();
       }
     }
-    
+
     this.fire('grid:opacity', { opacity });
     return this;
   }
@@ -139,7 +163,7 @@ class GridManager extends Base {
         this._grid.draw();
       }
     }
-    
+
     this.fire('grid:labels', { showLabels: show });
     return this;
   }
@@ -156,12 +180,12 @@ class GridManager extends Base {
     } else if (canvas && this._grid) {
       this._grid.canvas = canvas;
       this._grid.context = canvas.getContext('2d');
-      
+
       if (this._visible) {
         this._grid.draw();
       }
     }
-    
+
     return this;
   }
 

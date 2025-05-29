@@ -6,9 +6,26 @@ import { Layer } from '../layer/Layer';
  * ImageLayer - A layer for displaying and manipulating images
  *
  * This component provides functionality for loading and managing images
- * within the coordinate plane.
+ * within the coordinate plane. It supports image loading, positioning,
+ * scaling, and other transformations.
+ *
+ * @class
+ * @extends {Layer}
  */
 export class ImageLayer extends Layer {
+  /**
+   * Create a new ImageLayer
+   *
+   * @param {Object} options - Configuration options
+   * @param {string} options.url - URL of the image to load
+   * @param {Point|Object} [options.position] - Position of the image (x,y coordinates)
+   * @param {number} [options.width=-1] - Width of the image (-1 for auto)
+   * @param {number} [options.height=-1] - Height of the image (-1 for auto)
+   * @param {number} [options.opacity=1] - Opacity of the image (0-1)
+   * @param {boolean} [options.draggable=false] - Whether the image can be dragged
+   * @param {number} [options.zIndex=1] - Z-index for layer stacking order
+   * @param {string} [options.id] - Unique identifier for the layer
+   */
   constructor(options) {
     super(options);
 
@@ -24,6 +41,11 @@ export class ImageLayer extends Layer {
 
   /**
    * Load the image from the provided URL
+   *
+   * Creates a fabric.js Image object from the URL and sets up event handlers
+   * for when the image is loaded. Auto-scales the image if width/height are not specified.
+   *
+   * @returns {void}
    */
   load() {
     const vm = this;
