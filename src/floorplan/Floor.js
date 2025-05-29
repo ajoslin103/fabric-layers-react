@@ -2,7 +2,7 @@ import { Point } from '../geometry/Point';
 import { Group } from '../layer/Group';
 import { Layer } from '../layer/Layer';
 
-export class Floor extends Layer {
+export class ImageLayer extends Layer {
   constructor(options) {
     super(options);
 
@@ -11,7 +11,7 @@ export class Floor extends Layer {
 
     this.position = new Point(this.position);
 
-    this.class = 'floorplan';
+    this.class = 'image-layer';
 
     this.load();
   }
@@ -150,4 +150,4 @@ export class Floor extends Layer {
   }
 }
 
-export const floorplan = options => new Floor(options);
+export const imageLayer = options => new ImageLayer(options);

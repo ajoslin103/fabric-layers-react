@@ -6,6 +6,8 @@
 import fabric from 'fabric-pure-browser';
 import { version } from '../package.json';
 import Grid from './grid/Grid';
+// Import but don't re-export legacy renamed components to avoid naming conflicts
+import './floorplan/index';
 
 // Log version information in development only
 if (process.env.NODE_ENV !== 'production') {
@@ -57,8 +59,12 @@ export { Map as CoordinatePlane } from './map/Map';
 export * from './measurement/index';
 
 /**
+ * Image Handling
+ */
+export * from './image/index';
+
+/**
  * Legacy Components
  * @deprecated These will be removed in a future version
  */
 export * from './map/index';
-export * from './floorplan/index';

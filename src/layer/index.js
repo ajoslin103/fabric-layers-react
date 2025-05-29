@@ -8,6 +8,7 @@ export { default as CanvasLayer } from './CanvasLayer';
 export { default as Connector } from './Connector';
 export { default as Group } from './Group';
 export { default as Tooltip } from './Tooltip';
+export { default as LayerManager } from './LayerManager';
 
 // Marker components
 export * from './marker/index';

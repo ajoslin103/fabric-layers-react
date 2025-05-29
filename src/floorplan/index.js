@@ -1,6 +1,6 @@
 /**
- * Floorplan module exports
+ * Image Layer module exports
  */
 
-// Export Floor class and factory function
-export { Floor, floorplan } from './Floor';
+// Export ImageLayer class and factory function
+export { ImageLayer, imageLayer } from './Floor';

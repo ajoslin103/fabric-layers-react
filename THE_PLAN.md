@@ -42,11 +42,11 @@
 - [x] Verify React hooks usage follows best practices
 
 ### API Improvements
-- [ ] Document public API interface focusing on coordinate-plane and layers functionality
-- [ ] Ensure consistent naming conventions across the codebase
-- [ ] Remove any indoor-specific code that wasn't already refactored
-- [ ] Enhance grid system and layer management APIs
-- [ ] Add TypeScript type definitions (optional but recommended)
+- [x] Document public API interface focusing on coordinate-plane and layers functionality
+- [x] Ensure consistent naming conventions across the codebase
+- [x] Remove any indoor-specific code that wasn't already refactored
+- [x] Enhance grid system and layer management APIs
+- [x] Add TypeScript type definitions (optional but recommended)
 
 ## 4. Documentation
 

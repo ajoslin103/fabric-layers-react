@@ -27,7 +27,7 @@ export class Map extends mix(Base).with(ModesMixin) {
 
     const canvas = document.createElement('canvas');
     this.container.appendChild(canvas);
-    canvas.setAttribute('id', 'indoors-map-canvas');
+    canvas.setAttribute('id', 'fabric-layers-canvas');
 
     canvas.width = this.width || this.container.clientWidth;
     canvas.height = this.height || this.container.clientHeight;
@@ -86,10 +86,10 @@ export class Map extends mix(Base).with(ModesMixin) {
     this.measurement = new Measurement(this);
   }
 
-  addFloorPlan() {
-    if (!this.floorplan) return;
+  addBaseLayer() {
+    if (!this.baseLayer) return;
     const vm = this;
-    this.floorplan.on('load', img => {
+    this.baseLayer.on('load', img => {
       vm.addLayer(img);
     });
   }
@@ -130,7 +130,7 @@ export class Map extends mix(Base).with(ModesMixin) {
 
   addGrid() {
     this.gridCanvas = this.cloneCanvas();
-    this.gridCanvas.setAttribute('id', 'indoors-grid-canvas');
+    this.gridCanvas.setAttribute('id', 'fabric-layers-grid-canvas');
     this.grid = new Grid(this.gridCanvas, this);
     this.grid.draw();
   }
