@@ -68,7 +68,6 @@ class CanvasLayer extends Layer {
    */
   render() {
     const { style, className, ...otherProps } = this.props;
-    
     return React.createElement(
       'div',
       {

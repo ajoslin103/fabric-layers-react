@@ -1,5 +1,8 @@
-export * from './Marker.js';
+/**
+ * Marker module exports
+ */
 
-export * from './Icon.js';
-
-export * from './MarkerGroup.js';
+// Marker components
+export { Marker, marker } from './Marker';
+export { Icon, icon } from './Icon';
+export { MarkerGroup, markerGroup } from './MarkerGroup';

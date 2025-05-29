@@ -6,7 +6,6 @@
 import fabric from 'fabric-pure-browser';
 import { version } from '../package.json';
 import Grid from './grid/Grid';
-import { Map } from './map/Map';
 
 // Log version information in development only
 if (process.env.NODE_ENV !== 'production') {
@@ -14,31 +13,52 @@ if (process.env.NODE_ENV !== 'production') {
   console.log('fabric.js', fabric.version);
 }
 
-// Export version
+/**
+ * Library Version
+ */
 export { version };
 
-// Core functionality
+/**
+ * Core Components and Constants
+ */
 export * from './core/index';
 
-// Geometry utilities
+/**
+ * Geometry Utilities
+ */
 export * from './geometry/index';
 
-// Grid system
+/**
+ * Grid System
+ * @deprecated Use GridSystem instead of Grid for new projects
+ */
 export * from './grid/index';
-
-// Layer system
-export * from './layer/index';
-
-// Canvas utilities
-export * from './paint/index';
-
-// Named exports for better clarity with the new library purpose
-export { Map as CoordinatePlane } from './map/Map';
-// Re-export Grid with a more descriptive name
-import Grid from './grid/Grid';
 export { Grid as GridSystem };
 
-// For backwards compatibility, but these should be considered deprecated
-// These will be removed in a future version
+/**
+ * Layer System
+ */
+export * from './layer/index';
+
+/**
+ * Canvas Utilities
+ */
+export * from './paint/index';
+
+/**
+ * Coordinate Plane (formerly Map)
+ * @deprecated Use CoordinatePlane instead of Map for new projects
+ */
+export { Map as CoordinatePlane } from './map/Map';
+
+/**
+ * Measurement Tools
+ */
+export * from './measurement/index';
+
+/**
+ * Legacy Components
+ * @deprecated These will be removed in a future version
+ */
 export * from './map/index';
 export * from './floorplan/index';
