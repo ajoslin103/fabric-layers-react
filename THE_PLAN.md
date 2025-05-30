@@ -70,14 +70,14 @@
 - [x] Add integration tests for React components
 
 ### Demo Application
-- [ ] Create/update demo application
-- [ ] Include examples showing:
-  - [ ] Basic coordinate plane setup
-  - [ ] Layer management and interaction
-  - [ ] Grid customization options
-  - [ ] Event handling with layers
-- [ ] Ensure demo is buildable independently
-- [ ] Create CodeSandbox examples for quick testing
+- [x] Create/update demo application
+- [x] Include examples showing:
+  - [x] Basic coordinate plane setup
+  - [x] Layer management and interaction
+  - [x] Grid customization options
+  - [x] Event handling with layers
+- [x] Ensure demo is buildable independently
+- [x] Create CodeSandbox examples for quick testing
 
 ## 6. Publishing
 
