@@ -82,10 +82,11 @@
 ## 6. Publishing
 
 ### Pre-publishing Checklist
-- [ ] Verify package.json configuration
-- [ ] Run all tests
-- [ ] Build production assets
-- [ ] Test package locally using npm link
+- [x] Verify package.json configuration
+- [x] Fix build dependencies (added missing Babel plugins)
+- [x] Run all tests (with some warnings to address in future updates)
+- [x] Build production assets
+- [x] Test package locally using npm link
 
 ### Publishing Process
 - [ ] Set up npm account if needed

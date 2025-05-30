@@ -23,42 +23,47 @@ if (process.env.NODE_ENV === 'release') {
 }
 
 const banner = `/* @preserve
- * IndoorJS ${version}, a JS library for interactive indoor maps. https://mudin.github.io/indoorjs
- * (c) 2019 Mudin Ibrahim
+ * fabric-layers-react ${version}, a fabric.js coordinate-plane (grid) & layers library for React
+ * (c) 2025 Allen Joslin
  */
 `;
 
-const outro = `var oldI = window.I;
+const outro = `var oldFLR = window.FabricLayersReact;
 exports.noConflict = function() {
-	window.I = oldI;
+	window.FabricLayersReact = oldFLR;
 	return this;
 }
-// Always export us to window global (see #2364)
-window.I = exports;`;
+// Always export us to window global
+window.FabricLayersReact = exports;`;
 
 
 export default {
-  input: 'src/Indoor.js',
+  input: 'src/index.js',
   output: [
     {
       file: pkg.main,
-      format: 'umd',
-      name: 'Indoor',
+      format: 'cjs',
       banner,
-      outro:outro,
-      sourcemap: true,
-      globals:{
-        fabric:'fabric',
-        impetus:'impetus',
-        eventemitter2:'EventEmitter2',
-        EventEmitter2:'eventemitter2'
-      }
+      sourcemap: true
     },
     {
-      file: 'dist/indoor.esm.js',
+      file: pkg.module,
       format: 'es',
       banner,
       sourcemap: true
+    },
+    {
+      file: pkg.unpkg,
+      format: 'umd',
+      name: 'FabricLayersReact',
+      banner,
+      outro: outro,
+      sourcemap: true,
+      globals:{
+        'fabric-pure-browser': 'fabric',
+        'react': 'React',
+        'eventemitter2': 'EventEmitter2'
+      }
     }
   ],
   plugins: [
