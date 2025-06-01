@@ -1,5 +1,5 @@
 /* @preserve
- * fabric-layers-react 1.0.0, a fabric.js coordinate-plane (grid) & layers library for React
+ * fabric-layers-react 2.0.0, a fabric.js coordinate-plane (grid) & layers library for React
  * (c) 2025 Allen Joslin
  */
 
@@ -164,7 +164,7 @@
   var process = {
     env: env};
 
-  var version = "1.0.0";
+  var version = "2.0.0";
 
   function alpha(color, value) {
     let obj = color.replace(/[^\d,]/g, '').split(',');
