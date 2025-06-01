@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     // Handle CSS imports (if needed)

@@ -1,30 +1,73 @@
 // Config file for running Rollup in "watch" mode
 // This adds a sanity check to help ourselves to run 'rollup -w' as needed.
 
-import rollupGitVersion from 'rollup-plugin-git-version';
-import gitRev from 'git-rev-sync';
+// import rollupGitVersion from 'rollup-plugin-git-version';
+import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import builtins from 'rollup-plugin-node-builtins';
+import globals from 'rollup-plugin-node-globals';
+import json from '@rollup/plugin-json';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pkg = require('../package.json');
 
-const branch = gitRev.branch();
-const rev = gitRev.short();
-const version = `${require('../package.json').version}+${branch}.${rev}`;
+const { version } = pkg;
 
 const banner = `/* @preserve
- * IndoorJS ${version}, a JS library for interactive indoor maps. https://mudin.github.io/indoorjs
- * (c) 2019 Mudin Ibrahim
+ * fabric-layers-react ${version}, a fabric.js coordinate-plane (grid) & layers library for React
+ * (c) 2025 Allen Joslin
  */
 `;
 
+const outro = `var oldFLR = window.FabricLayersReact;
+exports.noConflict = function() {
+	window.FabricLayersReact = oldFLR;
+	return this;
+}
+// Always export us to window global
+window.FabricLayersReact = exports;`;
+
 export default {
-  input: 'src/Indoor.js',
-  output: {
-    file: 'dist/indoor.js',
-    format: 'umd',
-    name: 'L',
-    banner,
-    sourcemap: true
-  },
-  legacy: true, // Needed to create files loadable by IE8
+  input: 'src/index.js',
+  output: [
+    {
+      file: pkg.main,
+      format: 'cjs',
+      banner,
+      sourcemap: true
+    },
+    {
+      file: pkg.module,
+      format: 'es',
+      banner,
+      sourcemap: true
+    },
+    {
+      file: pkg.unpkg,
+      format: 'umd',
+      name: 'FabricLayersReact',
+      banner,
+      outro: outro,
+      sourcemap: true,
+      globals:{
+        'fabric-pure-browser': 'fabric',
+        'react': 'React',
+        'eventemitter2': 'EventEmitter2'
+      }
+    }
+  ],
   plugins: [
-    rollupGitVersion()
+    commonjs({
+      include: 'src/lib/panzoom.js'
+    }),
+    json(),
+    babel({
+      exclude: 'node_modules/**',
+      babelHelpers: 'bundled'
+    }),
+    globals(),
+    builtins(),
+    nodePolyfills()
   ]
 };
