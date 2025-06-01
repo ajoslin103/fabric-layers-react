@@ -1,5 +1,5 @@
 /* @preserve
- * fabric-layers-react 1.0.0+main.58eeb3b, a fabric.js coordinate-plane (grid) & layers library for React
+ * fabric-layers-react 1.0.0, a fabric.js coordinate-plane (grid) & layers library for React
  * (c) 2025 Allen Joslin
  */
 
@@ -7,7 +7,11 @@ import fabric$1 from 'fabric-pure-browser';
 import EventEmitter2 from 'eventemitter2';
 import React from 'react';
 
-var global$1 = (typeof global !== "undefined" ? global :
+var global$2 = (typeof global !== "undefined" ? global :
+  typeof self !== "undefined" ? self :
+  typeof window !== "undefined" ? window : {});
+
+var global$1 = (typeof global$2 !== "undefined" ? global$2 :
             typeof self !== "undefined" ? self :
             typeof window !== "undefined" ? window : {});
 
@@ -144,232 +148,36 @@ function Item(fun, array) {
 Item.prototype.run = function () {
     this.fun.apply(null, this.array);
 };
+var env = {};
 
 // from https://github.com/kumavis/browser-process-hrtime/blob/master/index.js
 var performance = global$1.performance || {};
-var performanceNow =
-  performance.now        ||
+performance.now        ||
   performance.mozNow     ||
   performance.msNow      ||
   performance.oNow       ||
   performance.webkitNow  ||
   function(){ return (new Date()).getTime() };
 
-var version = "1.0.0+main.58eeb3b";
+var process = {
+  env: env};
 
-function _arrayLikeToArray(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-function _arrayWithHoles(r) {
-  if (Array.isArray(r)) return r;
-}
-function _assertThisInitialized(e) {
-  if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  return e;
-}
-function _callSuper(t, o, e) {
-  return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e));
-}
-function _classCallCheck(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-function _construct(t, e, r) {
-  if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments);
-  var o = [null];
-  o.push.apply(o, e);
-  var p = new (t.bind.apply(t, o))();
-  return r && _setPrototypeOf(p, r.prototype), p;
-}
-function _defineProperties(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o);
-  }
-}
-function _createClass(e, r, t) {
-  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
-    writable: !1
-  }), e;
-}
-function _defineProperty(e, r, t) {
-  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
-  }) : e[r] = t, e;
-}
-function _get() {
-  return _get = "undefined" != typeof Reflect && Reflect.get ? Reflect.get.bind() : function (e, t, r) {
-    var p = _superPropBase(e, t);
-    if (p) {
-      var n = Object.getOwnPropertyDescriptor(p, t);
-      return n.get ? n.get.call(arguments.length < 3 ? e : r) : n.value;
-    }
-  }, _get.apply(null, arguments);
-}
-function _getPrototypeOf(t) {
-  return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) {
-    return t.__proto__ || Object.getPrototypeOf(t);
-  }, _getPrototypeOf(t);
-}
-function _inherits(t, e) {
-  if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function");
-  t.prototype = Object.create(e && e.prototype, {
-    constructor: {
-      value: t,
-      writable: !0,
-      configurable: !0
-    }
-  }), Object.defineProperty(t, "prototype", {
-    writable: !1
-  }), e && _setPrototypeOf(t, e);
-}
-function _isNativeReflectConstruct() {
-  try {
-    var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-  } catch (t) {}
-  return (_isNativeReflectConstruct = function () {
-    return !!t;
-  })();
-}
-function _iterableToArrayLimit(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (null != t) {
-    var e,
-      n,
-      i,
-      u,
-      a = [],
-      f = !0,
-      o = !1;
-    try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = !1;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-    } catch (r) {
-      o = !0, n = r;
-    } finally {
-      try {
-        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
-      } finally {
-        if (o) throw n;
-      }
-    }
-    return a;
-  }
-}
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function ownKeys(e, r) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r && (o = o.filter(function (r) {
-      return Object.getOwnPropertyDescriptor(e, r).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread2(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
-      _defineProperty(e, r, t[r]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
-      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-    });
-  }
-  return e;
-}
-function _objectWithoutProperties(e, t) {
-  if (null == e) return {};
-  var o,
-    r,
-    i = _objectWithoutPropertiesLoose(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-function _objectWithoutPropertiesLoose(r, e) {
-  if (null == r) return {};
-  var t = {};
-  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r[n];
-  }
-  return t;
-}
-function _possibleConstructorReturn(t, e) {
-  if (e && ("object" == typeof e || "function" == typeof e)) return e;
-  if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined");
-  return _assertThisInitialized(t);
-}
-function _setPrototypeOf(t, e) {
-  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
-    return t.__proto__ = e, t;
-  }, _setPrototypeOf(t, e);
-}
-function _slicedToArray(r, e) {
-  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
-}
-function _superPropBase(t, o) {
-  for (; !{}.hasOwnProperty.call(t, o) && null !== (t = _getPrototypeOf(t)););
-  return t;
-}
-function _superPropGet(t, o, e, r) {
-  var p = _get(_getPrototypeOf(1 & r ? t.prototype : t), o, e);
-  return 2 & r && "function" == typeof p ? function (t) {
-    return p.apply(e, t);
-  } : p;
-}
-function _toPrimitive(t, r) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r ? String : Number)(t);
-}
-function _toPropertyKey(t) {
-  var i = _toPrimitive(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _unsupportedIterableToArray(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
-  }
-}
+var version = "1.0.0";
 
 function alpha(color, value) {
-  var obj = color.replace(/[^\d,]/g, '').split(',');
+  let obj = color.replace(/[^\d,]/g, '').split(',');
   if (value == null) value = obj[3] || 1;
   obj[3] = value;
   return 'rgba(' + obj.join(',') + ')';
 }
 
-var Base = /*#__PURE__*/function (_EventEmitter) {
-  function Base(options) {
-    var _this;
-    _classCallCheck(this, Base);
-    _this = _callSuper(this, Base, [options]);
-    _this._options = options || {};
-    Object.assign(_this, options);
-    return _this;
+class Base extends EventEmitter2 {
+  constructor(options) {
+    super(options);
+    this._options = options || {};
+    Object.assign(this, options);
   }
-  _inherits(Base, _EventEmitter);
-  return _createClass(Base);
-}(EventEmitter2);
+}
 
 /**
  * Clamp value.
@@ -416,8 +224,8 @@ function almostEqual(a, b, absoluteError, relativeError) {
   }
   return a === b;
 }
-var FLT_EPSILON = 1.19209290e-7;
-var DBL_EPSILON = 2.2204460492503131e-16;
+const FLT_EPSILON = 1.19209290e-7;
+const DBL_EPSILON = 2.2204460492503131e-16;
 almostEqual.FLT_EPSILON = FLT_EPSILON;
 almostEqual.DBL_EPSILON = DBL_EPSILON;
 
@@ -491,6 +299,7 @@ var lg = Math.log10 || function (a) {
  *
  * @module  mumath/is-multiple
  */
+
 function isMultiple(a, b, eps) {
   var remainder = a % b;
   if (!eps) eps = almostEqual.FLT_EPSILON;
@@ -507,13 +316,9 @@ function isMultiple(a, b, eps) {
 function scale (minStep, srcSteps) {
   var power = Math.floor(lg(minStep));
   var order = Math.pow(10, power);
-  var steps = srcSteps.map(function (v) {
-    return v * order;
-  });
+  var steps = srcSteps.map(v => v * order);
   order = Math.pow(10, power + 1);
-  steps = steps.concat(srcSteps.map(function (v) {
-    return v * order;
-  }));
+  steps = steps.concat(srcSteps.map(v => v * order));
 
   //find closest scale
   var step = 0;
@@ -524,16 +329,18 @@ function scale (minStep, srcSteps) {
   return step;
 }
 
-var parseUnit = (function (str, out) {
+var parseUnit = (str, out) => {
   if (!out) out = [0, ''];
   str = String(str);
   var num = parseFloat(str, 10);
   out[0] = num;
   out[1] = str.match(/[\d.\-\+]*\s*(.*)/)[1] || '';
   return out;
-});
+};
 
 // (c) 2015 Mikola Lysenko. MIT License
+// https://github.com/mikolalysenko/to-px
+
 var PIXELS_PER_INCH = 96;
 var defaults = {
   'ch': 8,
@@ -564,61 +371,61 @@ function toPX(str) {
  * MIT © Sindre Sorhus
  * https://github.com/sindresorhus/is-plain-obj/blob/master/index.js
  */
-var isObj = (function (value) {
+var isObj = value => {
   if (Object.prototype.toString.call(value) !== '[object Object]') {
     return false;
   }
-  var prototype = Object.getPrototypeOf(value);
+  const prototype = Object.getPrototypeOf(value);
   return prototype === null || prototype === Object.getPrototypeOf({});
-});
+};
 
 /* eslint-disable consistent-return */
-var gridStyle = {
+const gridStyle = {
   steps: [1, 2, 5],
   distance: 20,
   unit: 10,
-  lines: function lines(state) {
-    var coord = state.coordinate;
+  lines: state => {
+    const coord = state.coordinate;
     // eslint-disable-next-line no-multi-assign
-    var step = state.step = scale(coord.distance * coord.zoom, coord.steps);
+    const step = state.step = scale(coord.distance * coord.zoom, coord.steps);
     return range(Math.floor(state.offset / step) * step, Math.ceil((state.offset + state.range) / step + 1) * step, step);
   },
-  lineColor: function lineColor(state) {
+  lineColor: state => {
     if (!state.lines) return;
-    var coord = state.coordinate;
-    var light = alpha(coord.color, 0.1);
-    var heavy = alpha(coord.color, 0.3);
-    var step = state.step;
-    var power = Math.ceil(lg(step));
-    var tenStep = Math.pow(10, power);
-    var nextStep = Math.pow(10, power + 1);
-    var eps = step / 10;
-    var colors = state.lines.map(function (v) {
+    const coord = state.coordinate;
+    const light = alpha(coord.color, 0.1);
+    const heavy = alpha(coord.color, 0.3);
+    const step = state.step;
+    const power = Math.ceil(lg(step));
+    const tenStep = 10 ** power;
+    const nextStep = 10 ** (power + 1);
+    const eps = step / 10;
+    const colors = state.lines.map(v => {
       if (isMultiple(v, nextStep, eps)) return heavy;
       if (isMultiple(v, tenStep, eps)) return light;
       return null;
     });
     return colors;
   },
-  ticks: function ticks(state) {
+  ticks: state => {
     if (!state.lines) return;
-    var coord = state.coordinate;
-    var step = scale(scale(state.step * 1.1, coord.steps) * 1.1, coord.steps);
-    var eps = step / 10;
-    var tickWidth = state.axisWidth * 4;
-    return state.lines.map(function (v) {
+    const coord = state.coordinate;
+    const step = scale(scale(state.step * 1.1, coord.steps) * 1.1, coord.steps);
+    const eps = step / 10;
+    const tickWidth = state.axisWidth * 4;
+    return state.lines.map(v => {
       if (!isMultiple(v, step, eps)) return null;
       if (almostEqual(v, 0, eps)) return null;
       return tickWidth;
     });
   },
-  labels: function labels(state) {
+  labels: state => {
     if (!state.lines) return;
-    var coord = state.coordinate;
-    var step = scale(scale(state.step * 1.1, coord.steps) * 1.1, coord.steps);
+    const coord = state.coordinate;
+    const step = scale(scale(state.step * 1.1, coord.steps) * 1.1, coord.steps);
     // let precision = clamp(Math.abs(Math.floor(lg(step))), 10, 20);
-    var eps = step / 100;
-    return state.lines.map(function (v) {
+    const eps = step / 100;
+    return state.lines.map(v => {
       if (!isMultiple(v, step, eps)) return null;
       if (almostEqual(v, 0, eps)) return coord.orientation === 'y' ? null : '0';
       v = Number((v / 100).toFixed(2));
@@ -627,109 +434,74 @@ var gridStyle = {
   }
 };
 
-var Axis = /*#__PURE__*/function () {
-  function Axis(orientation, options) {
-    _classCallCheck(this, Axis);
+class Axis {
+  constructor(orientation, options) {
     Object.assign(this, options);
     this.orientation = orientation || 'x';
   }
-  return _createClass(Axis, [{
-    key: "getCoords",
-    value: function getCoords(values) {
-      var coords = [];
-      if (!values) return coords;
-      for (var i = 0; i < values.length; i += 1) {
-        var t = this.getRatio(values[i]);
-        coords.push(t);
-        coords.push(0);
-        coords.push(t);
-        coords.push(1);
-      }
-      return coords;
+  getCoords(values) {
+    const coords = [];
+    if (!values) return coords;
+    for (let i = 0; i < values.length; i += 1) {
+      const t = this.getRatio(values[i]);
+      coords.push(t);
+      coords.push(0);
+      coords.push(t);
+      coords.push(1);
     }
-  }, {
-    key: "getRange",
-    value: function getRange() {
-      var len = this.width;
-      if (this.orientation === 'y') len = this.height;
-      return len * this.zoom;
-    }
-  }, {
-    key: "getRatio",
-    value: function getRatio(value) {
-      return (value - this.offset) / this.range;
-    }
-  }, {
-    key: "setOffset",
-    value: function setOffset(offset) {
-      this.offset = offset;
-    }
-  }, {
-    key: "update",
-    value: function update(options) {
-      options = options || {};
-      Object.assign(this, options);
-      this.range = this.getRange();
-    }
-  }]);
-}();
+    return coords;
+  }
+  getRange() {
+    let len = this.width;
+    if (this.orientation === 'y') len = this.height;
+    return len * this.zoom;
+  }
+  getRatio(value) {
+    return (value - this.offset) / this.range;
+  }
+  setOffset(offset) {
+    this.offset = offset;
+  }
+  update(options) {
+    options = options || {};
+    Object.assign(this, options);
+    this.range = this.getRange();
+  }
+}
 
-var Point = /*#__PURE__*/function (_fabric$Point) {
-  function Point() {
-    _classCallCheck(this, Point);
-    var x;
-    var y;
-    for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
-      params[_key] = arguments[_key];
-    }
+class Point extends fabric.Point {
+  constructor(...params) {
+    let x;
+    let y;
     if (params.length > 1) {
-      x = params[0];
-      y = params[1];
+      [x, y] = params;
     } else if (params.length === 0 || !params[0]) {
-      x = 0;
-      y = 0;
+      [x, y] = [0, 0];
     } else if (Object.prototype.hasOwnProperty.call(params[0], 'x')) {
       x = params[0].x;
       y = params[0].y;
     } else if (params[0].length) {
-      var _params$ = _slicedToArray(params[0], 2);
-      x = _params$[0];
-      y = _params$[1];
+      [[x, y]] = params;
     } else {
       console.error('Parameter for Point is not valid. Use Point(x,y) or Point({x,y}) or Point([x,y])', params);
     }
-    return _callSuper(this, Point, [x, y]);
+    super(x, y);
   }
-  _inherits(Point, _fabric$Point);
-  return _createClass(Point, [{
-    key: "setX",
-    value: function setX(x) {
-      this.x = x || 0;
-    }
-  }, {
-    key: "setY",
-    value: function setY(y) {
-      this.y = y || 0;
-    }
-  }, {
-    key: "copy",
-    value: function copy(point) {
-      this.x = point.x;
-      this.y = point.y;
-    }
-  }, {
-    key: "getArray",
-    value: function getArray() {
-      return [this.x, this.y];
-    }
-  }]);
-}(fabric.Point);
-var point = function point() {
-  for (var _len2 = arguments.length, params = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    params[_key2] = arguments[_key2];
+  setX(x) {
+    this.x = x || 0;
   }
-  return _construct(Point, params);
-};
+  setY(y) {
+    this.y = y || 0;
+  }
+  copy(point) {
+    this.x = point.x;
+    this.y = point.y;
+  }
+  getArray() {
+    return [this.x, this.y];
+  }
+}
+const point = (...params) => new Point(...params);
 
 /**
  * Grid - Provides a coordinate grid system for the coordinate plane
@@ -740,7 +512,7 @@ var point = function point() {
  * @class
  * @extends {Base}
  */
-var Grid = /*#__PURE__*/function (_Base) {
+class Grid extends Base {
   /**
    * Create a new grid
    *
@@ -753,16 +525,13 @@ var Grid = /*#__PURE__*/function (_Base) {
    * @param {boolean} [opts.showLabels=true] - Whether to show grid labels
    * @param {boolean} [opts.visible=true] - Whether the grid is visible
    */
-  function Grid(canvas, opts) {
-    var _this;
-    _classCallCheck(this, Grid);
-    _this = _callSuper(this, Grid, [opts]);
-    _this.canvas = canvas;
-    _this.context = _this.canvas.getContext('2d');
-    _this.state = {};
-    _this.setDefaults();
-    _this.update(opts);
-    return _this;
+  constructor(canvas, opts) {
+    super(opts);
+    this.canvas = canvas;
+    this.context = this.canvas.getContext('2d');
+    this.state = {};
+    this.setDefaults();
+    this.update(opts);
   }
 
   /**
@@ -770,479 +539,410 @@ var Grid = /*#__PURE__*/function (_Base) {
    *
    * @returns {Grid} This grid instance for chaining
    */
-  _inherits(Grid, _Base);
-  return _createClass(Grid, [{
-    key: "render",
-    value: function render() {
-      this.draw();
-      return this;
-    }
-  }, {
-    key: "getCenterCoords",
-    value: function getCenterCoords() {
-      var state = this.state.x;
-      var _state$shape = _slicedToArray(state.shape, 2),
-        width = _state$shape[0],
-        height = _state$shape[1];
-      var _state$padding = _slicedToArray(state.padding, 4),
-        pt = _state$padding[0],
-        pr = _state$padding[1],
-        pb = _state$padding[2],
-        pl = _state$padding[3];
-      var axisCoords = state.opposite.coordinate.getCoords([state.coordinate.axisOrigin], state.opposite);
-      var y = pt + axisCoords[1] * (height - pt - pb);
-      state = this.state.y;
-      var _state$shape2 = _slicedToArray(state.shape, 2);
-      width = _state$shape2[0];
-      height = _state$shape2[1];
-      var _state$padding2 = _slicedToArray(state.padding, 4);
-      pt = _state$padding2[0];
-      pr = _state$padding2[1];
-      pb = _state$padding2[2];
-      pl = _state$padding2[3];
-      axisCoords = state.opposite.coordinate.getCoords([state.coordinate.axisOrigin], state.opposite);
-      var x = pl + axisCoords[0] * (width - pr - pl);
-      return {
-        x: x,
-        y: y
-      };
-    }
-  }, {
-    key: "setSize",
-    value: function setSize(width, height) {
-      this.setWidth(width);
-      this.setHeight(height);
-    }
-  }, {
-    key: "setWidth",
-    value: function setWidth(width) {
-      this.canvas.width = width;
-    }
-  }, {
-    key: "setHeight",
-    value: function setHeight(height) {
-      this.canvas.height = height;
-    }
+  render() {
+    this.draw();
+    return this;
+  }
+  getCenterCoords() {
+    let state = this.state.x;
+    let [width, height] = state.shape;
+    let [pt, pr, pb, pl] = state.padding;
+    let axisCoords = state.opposite.coordinate.getCoords([state.coordinate.axisOrigin], state.opposite);
+    const y = pt + axisCoords[1] * (height - pt - pb);
+    state = this.state.y;
+    [width, height] = state.shape;
+    [pt, pr, pb, pl] = state.padding;
+    axisCoords = state.opposite.coordinate.getCoords([state.coordinate.axisOrigin], state.opposite);
+    const x = pl + axisCoords[0] * (width - pr - pl);
+    return {
+      x,
+      y
+    };
+  }
+  setSize(width, height) {
+    this.setWidth(width);
+    this.setHeight(height);
+  }
+  setWidth(width) {
+    this.canvas.width = width;
+  }
+  setHeight(height) {
+    this.canvas.height = height;
+  }
 
-    // re-evaluate lines, calc options for renderer
-  }, {
-    key: "update",
-    value: function update(opts) {
-      if (!opts) opts = {};
-      var shape = [this.canvas.width, this.canvas.height];
+  // re-evaluate lines, calc options for renderer
+  update(opts) {
+    if (!opts) opts = {};
+    const shape = [this.canvas.width, this.canvas.height];
 
-      // recalc state
-      this.state.x = this.calcCoordinate(this.axisX, shape, this);
-      this.state.y = this.calcCoordinate(this.axisY, shape, this);
-      this.state.x.opposite = this.state.y;
-      this.state.y.opposite = this.state.x;
-      this.emit('update', opts);
-      return this;
-    }
+    // recalc state
+    this.state.x = this.calcCoordinate(this.axisX, shape, this);
+    this.state.y = this.calcCoordinate(this.axisY, shape, this);
+    this.state.x.opposite = this.state.y;
+    this.state.y.opposite = this.state.x;
+    this.emit('update', opts);
+    return this;
+  }
 
-    // re-evaluate lines, calc options for renderer
-  }, {
-    key: "update2",
-    value: function update2(center) {
-      var shape = [this.canvas.width, this.canvas.height];
-      Object.assign(this.center, center);
-      // recalc state
-      this.state.x = this.calcCoordinate(this.axisX, shape, this);
-      this.state.y = this.calcCoordinate(this.axisY, shape, this);
-      this.state.x.opposite = this.state.y;
-      this.state.y.opposite = this.state.x;
-      this.emit('update', center);
-      this.axisX.offset = center.x;
-      this.axisX.zoom = 1 / center.zoom;
-      this.axisY.offset = center.y;
-      this.axisY.zoom = 1 / center.zoom;
-    }
+  // re-evaluate lines, calc options for renderer
+  update2(center) {
+    const shape = [this.canvas.width, this.canvas.height];
+    Object.assign(this.center, center);
+    // recalc state
+    this.state.x = this.calcCoordinate(this.axisX, shape, this);
+    this.state.y = this.calcCoordinate(this.axisY, shape, this);
+    this.state.x.opposite = this.state.y;
+    this.state.y.opposite = this.state.x;
+    this.emit('update', center);
+    this.axisX.offset = center.x;
+    this.axisX.zoom = 1 / center.zoom;
+    this.axisY.offset = center.y;
+    this.axisY.zoom = 1 / center.zoom;
+  }
 
-    // get state object with calculated params, ready for rendering
-  }, {
-    key: "calcCoordinate",
-    value: function calcCoordinate(coord, shape) {
-      var state = {
-        coordinate: coord,
-        shape: shape,
-        grid: this
-      };
-      // calculate real offset/range
-      state.range = coord.getRange(state);
-      state.offset = clamp(coord.offset - state.range * clamp(0.5, 0, 1), Math.max(coord.min, -Number.MAX_VALUE + 1), Math.min(coord.max, Number.MAX_VALUE) - state.range);
-      state.zoom = coord.zoom;
-      // calc style
-      state.axisColor = typeof coord.axisColor === 'number' ? alpha(coord.color, coord.axisColor) : coord.axisColor || coord.color;
-      state.axisWidth = coord.axisWidth || coord.lineWidth;
-      state.lineWidth = coord.lineWidth;
-      state.tickAlign = coord.tickAlign;
-      state.labelColor = state.color;
-      // get padding
-      if (typeof coord.padding === 'number') {
-        state.padding = Array(4).fill(coord.padding);
-      } else if (coord.padding instanceof Function) {
-        state.padding = coord.padding(state);
-      } else {
-        state.padding = coord.padding;
-      }
-      // calc font
-      if (typeof coord.fontSize === 'number') {
-        state.fontSize = coord.fontSize;
-      } else {
-        var units = parseUnit(coord.fontSize);
-        state.fontSize = units[0] * toPX(units[1]);
-      }
-      state.fontFamily = coord.fontFamily || 'sans-serif';
-      // get lines stops, including joined list of values
-      var lines;
-      if (coord.lines instanceof Function) {
-        lines = coord.lines(state);
-      } else {
-        lines = coord.lines || [];
-      }
-      state.lines = lines;
-      // calc colors
-      if (coord.lineColor instanceof Function) {
-        state.lineColors = coord.lineColor(state);
-      } else if (Array.isArray(coord.lineColor)) {
-        state.lineColors = coord.lineColor;
-      } else {
-        var color = alpha(coord.color, coord.lineColor);
-        if (typeof coord.lineColor !== 'number') {
-          color = coord.lineColor === false || coord.lineColor == null ? null : coord.color;
-        }
-        state.lineColors = Array(lines.length).fill(color);
-      }
-      // calc ticks
-      var ticks;
-      if (coord.ticks instanceof Function) {
-        ticks = coord.ticks(state);
-      } else if (Array.isArray(coord.ticks)) {
-        ticks = coord.ticks;
-      } else {
-        var tick = coord.ticks === true || coord.ticks === true ? state.axisWidth * 2 : coord.ticks || 0;
-        ticks = Array(lines.length).fill(tick);
-      }
-      state.ticks = ticks;
-      // calc labels
-      var labels;
-      if (coord.labels === true) labels = state.lines;else if (coord.labels instanceof Function) {
-        labels = coord.labels(state);
-      } else if (Array.isArray(coord.labels)) {
-        labels = coord.labels;
-      } else if (isObj(coord.labels)) {
-        labels = coord.labels;
-      } else {
-        labels = Array(state.lines.length).fill(null);
-      }
-      state.labels = labels;
-      // convert hashmap ticks/labels to lines + colors
-      if (isObj(ticks)) {
-        state.ticks = Array(lines.length).fill(0);
-      }
-      if (isObj(labels)) {
-        state.labels = Array(lines.length).fill(null);
-      }
-      if (isObj(ticks)) {
-        // eslint-disable-next-line guard-for-in
-        Object.keys(ticks).forEach(function (value, tick) {
-          state.ticks.push(tick);
-          state.lines.push(parseFloat(value));
-          state.lineColors.push(null);
-          state.labels.push(null);
-        });
-      }
-      if (isObj(labels)) {
-        Object.keys(labels).forEach(function (label, value) {
-          state.labels.push(label);
-          state.lines.push(parseFloat(value));
-          state.lineColors.push(null);
-          state.ticks.push(null);
-        });
-      }
-      return state;
+  // get state object with calculated params, ready for rendering
+  calcCoordinate(coord, shape) {
+    const state = {
+      coordinate: coord,
+      shape,
+      grid: this
+    };
+    // calculate real offset/range
+    state.range = coord.getRange(state);
+    state.offset = clamp(coord.offset - state.range * clamp(0.5, 0, 1), Math.max(coord.min, -Number.MAX_VALUE + 1), Math.min(coord.max, Number.MAX_VALUE) - state.range);
+    state.zoom = coord.zoom;
+    // calc style
+    state.axisColor = typeof coord.axisColor === 'number' ? alpha(coord.color, coord.axisColor) : coord.axisColor || coord.color;
+    state.axisWidth = coord.axisWidth || coord.lineWidth;
+    state.lineWidth = coord.lineWidth;
+    state.tickAlign = coord.tickAlign;
+    state.labelColor = state.color;
+    // get padding
+    if (typeof coord.padding === 'number') {
+      state.padding = Array(4).fill(coord.padding);
+    } else if (coord.padding instanceof Function) {
+      state.padding = coord.padding(state);
+    } else {
+      state.padding = coord.padding;
     }
-  }, {
-    key: "setDefaults",
-    value: function setDefaults() {
-      this.pixelRatio = window.devicePixelRatio;
-      this.autostart = true;
-      this.interactions = true;
-      this.defaults = Object.assign({
-        type: 'linear',
-        name: '',
-        units: '',
-        state: {},
-        // visible range params
-        minZoom: -Infinity,
-        maxZoom: Infinity,
-        min: -Infinity,
-        max: Infinity,
-        offset: 0,
-        origin: 0.5,
-        center: {
-          x: 0,
-          y: 0,
-          zoom: 1
-        },
-        zoom: 1,
-        zoomEnabled: true,
-        panEnabled: true,
-        // labels
-        labels: true,
-        fontSize: '11pt',
-        fontFamily: 'sans-serif',
-        padding: 0,
-        color: 'rgb(0,0,0,1)',
-        // lines params
-        lines: true,
-        tick: 8,
-        tickAlign: 0.5,
-        lineWidth: 1,
-        distance: 13,
-        style: 'lines',
-        lineColor: 0.4,
-        // axis params
-        axis: true,
-        axisOrigin: 0,
-        axisWidth: 2,
-        axisColor: 0.8,
-        // stub methods
-        // return coords for the values, redefined by axes
-        getCoords: function getCoords() {
-          return [0, 0, 0, 0];
-        },
-        // return 0..1 ratio based on value/offset/range, redefined by axes
-        getRatio: function getRatio() {
-          return 0;
-        },
-        // default label formatter
-        format: function format(v) {
-          return v;
-        }
-      }, gridStyle, this._options);
-      this.axisX = new Axis('x', this.defaults);
-      this.axisY = new Axis('y', this.defaults);
-      this.axisX = Object.assign({}, this.defaults, {
-        orientation: 'x',
-        offset: this.center.x,
-        getCoords: function getCoords(values, state) {
-          var coords = [];
-          if (!values) return coords;
-          for (var i = 0; i < values.length; i += 1) {
-            var t = state.coordinate.getRatio(values[i], state);
-            coords.push(t);
-            coords.push(0);
-            coords.push(t);
-            coords.push(1);
-          }
-          return coords;
-        },
-        getRange: function getRange(state) {
-          return state.shape[0] * state.coordinate.zoom;
-        },
-        // FIXME: handle infinity case here
-        getRatio: function getRatio(value, state) {
-          return (value - state.offset) / state.range;
-        }
+    // calc font
+    if (typeof coord.fontSize === 'number') {
+      state.fontSize = coord.fontSize;
+    } else {
+      const units = parseUnit(coord.fontSize);
+      state.fontSize = units[0] * toPX(units[1]);
+    }
+    state.fontFamily = coord.fontFamily || 'sans-serif';
+    // get lines stops, including joined list of values
+    let lines;
+    if (coord.lines instanceof Function) {
+      lines = coord.lines(state);
+    } else {
+      lines = coord.lines || [];
+    }
+    state.lines = lines;
+    // calc colors
+    if (coord.lineColor instanceof Function) {
+      state.lineColors = coord.lineColor(state);
+    } else if (Array.isArray(coord.lineColor)) {
+      state.lineColors = coord.lineColor;
+    } else {
+      let color = alpha(coord.color, coord.lineColor);
+      if (typeof coord.lineColor !== 'number') {
+        color = coord.lineColor === false || coord.lineColor == null ? null : coord.color;
+      }
+      state.lineColors = Array(lines.length).fill(color);
+    }
+    // calc ticks
+    let ticks;
+    if (coord.ticks instanceof Function) {
+      ticks = coord.ticks(state);
+    } else if (Array.isArray(coord.ticks)) {
+      ticks = coord.ticks;
+    } else {
+      const tick = coord.ticks === true || coord.ticks === true ? state.axisWidth * 2 : coord.ticks || 0;
+      ticks = Array(lines.length).fill(tick);
+    }
+    state.ticks = ticks;
+    // calc labels
+    let labels;
+    if (coord.labels === true) labels = state.lines;else if (coord.labels instanceof Function) {
+      labels = coord.labels(state);
+    } else if (Array.isArray(coord.labels)) {
+      labels = coord.labels;
+    } else if (isObj(coord.labels)) {
+      labels = coord.labels;
+    } else {
+      labels = Array(state.lines.length).fill(null);
+    }
+    state.labels = labels;
+    // convert hashmap ticks/labels to lines + colors
+    if (isObj(ticks)) {
+      state.ticks = Array(lines.length).fill(0);
+    }
+    if (isObj(labels)) {
+      state.labels = Array(lines.length).fill(null);
+    }
+    if (isObj(ticks)) {
+      // eslint-disable-next-line guard-for-in
+      Object.keys(ticks).forEach((value, tick) => {
+        state.ticks.push(tick);
+        state.lines.push(parseFloat(value));
+        state.lineColors.push(null);
+        state.labels.push(null);
       });
-      this.axisY = Object.assign({}, this.defaults, {
-        orientation: 'y',
-        offset: this.center.y,
-        getCoords: function getCoords(values, state) {
-          var coords = [];
-          if (!values) return coords;
-          for (var i = 0; i < values.length; i += 1) {
-            var t = state.coordinate.getRatio(values[i], state);
-            coords.push(0);
-            coords.push(t);
-            coords.push(1);
-            coords.push(t);
-          }
-          return coords;
-        },
-        getRange: function getRange(state) {
-          return state.shape[1] * state.coordinate.zoom;
-        },
-        getRatio: function getRatio(value, state) {
-          return 1 - (value - state.offset) / state.range;
-        }
+    }
+    if (isObj(labels)) {
+      Object.keys(labels).forEach((label, value) => {
+        state.labels.push(label);
+        state.lines.push(parseFloat(value));
+        state.lineColors.push(null);
+        state.ticks.push(null);
       });
-      Object.assign(this, this.defaults);
-      Object.assign(this, this._options);
-      this.center = new Point(this.center);
     }
+    return state;
+  }
+  setDefaults() {
+    this.pixelRatio = window.devicePixelRatio;
+    this.autostart = true;
+    this.interactions = true;
+    this.defaults = Object.assign({
+      type: 'linear',
+      name: '',
+      units: '',
+      state: {},
+      // visible range params
+      minZoom: -Infinity,
+      maxZoom: Infinity,
+      min: -Infinity,
+      max: Infinity,
+      offset: 0,
+      origin: 0.5,
+      center: {
+        x: 0,
+        y: 0,
+        zoom: 1
+      },
+      zoom: 1,
+      zoomEnabled: true,
+      panEnabled: true,
+      // labels
+      labels: true,
+      fontSize: '11pt',
+      fontFamily: 'sans-serif',
+      padding: 0,
+      color: 'rgb(0,0,0,1)',
+      // lines params
+      lines: true,
+      tick: 8,
+      tickAlign: 0.5,
+      lineWidth: 1,
+      distance: 13,
+      style: 'lines',
+      lineColor: 0.4,
+      // axis params
+      axis: true,
+      axisOrigin: 0,
+      axisWidth: 2,
+      axisColor: 0.8,
+      // stub methods
+      // return coords for the values, redefined by axes
+      getCoords: () => [0, 0, 0, 0],
+      // return 0..1 ratio based on value/offset/range, redefined by axes
+      getRatio: () => 0,
+      // default label formatter
+      format: v => v
+    }, gridStyle, this._options);
+    this.axisX = new Axis('x', this.defaults);
+    this.axisY = new Axis('y', this.defaults);
+    this.axisX = Object.assign({}, this.defaults, {
+      orientation: 'x',
+      offset: this.center.x,
+      getCoords: (values, state) => {
+        const coords = [];
+        if (!values) return coords;
+        for (let i = 0; i < values.length; i += 1) {
+          const t = state.coordinate.getRatio(values[i], state);
+          coords.push(t);
+          coords.push(0);
+          coords.push(t);
+          coords.push(1);
+        }
+        return coords;
+      },
+      getRange: state => state.shape[0] * state.coordinate.zoom,
+      // FIXME: handle infinity case here
+      getRatio: (value, state) => (value - state.offset) / state.range
+    });
+    this.axisY = Object.assign({}, this.defaults, {
+      orientation: 'y',
+      offset: this.center.y,
+      getCoords: (values, state) => {
+        const coords = [];
+        if (!values) return coords;
+        for (let i = 0; i < values.length; i += 1) {
+          const t = state.coordinate.getRatio(values[i], state);
+          coords.push(0);
+          coords.push(t);
+          coords.push(1);
+          coords.push(t);
+        }
+        return coords;
+      },
+      getRange: state => state.shape[1] * state.coordinate.zoom,
+      getRatio: (value, state) => 1 - (value - state.offset) / state.range
+    });
+    Object.assign(this, this.defaults);
+    Object.assign(this, this._options);
+    this.center = new Point(this.center);
+  }
 
-    // draw grid to the canvas
-  }, {
-    key: "draw",
-    value: function draw() {
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.drawLines(this.state.x);
-      this.drawLines(this.state.y);
-      return this;
+  // draw grid to the canvas
+  draw() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawLines(this.state.x);
+    this.drawLines(this.state.y);
+    return this;
+  }
+
+  // lines instance draw
+  drawLines(state) {
+    // draw lines and sublines
+    if (!state || !state.coordinate) return;
+    const ctx = this.context;
+    const [width, height] = state.shape;
+    const left = 0;
+    const top = 0;
+    const [pt, pr, pb, pl] = state.padding;
+    let axisRatio = state.opposite.coordinate.getRatio(state.coordinate.axisOrigin, state.opposite);
+    axisRatio = clamp(axisRatio, 0, 1);
+    const coords = state.coordinate.getCoords(state.lines, state);
+    // draw state.lines
+    ctx.lineWidth = 1; // state.lineWidth/2.;
+    for (let i = 0, j = 0; i < coords.length; i += 4, j += 1) {
+      const color = state.lineColors[j];
+      if (!color) continue;
+      ctx.strokeStyle = color;
+      ctx.beginPath();
+      const x1 = left + pl + coords[i] * (width - pr - pl);
+      const y1 = top + pt + coords[i + 1] * (height - pb - pt);
+      const x2 = left + pl + coords[i + 2] * (width - pr - pl);
+      const y2 = top + pt + coords[i + 3] * (height - pb - pt);
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.closePath();
     }
-
-    // lines instance draw
-  }, {
-    key: "drawLines",
-    value: function drawLines(state) {
-      // draw lines and sublines
-      if (!state || !state.coordinate) return;
-      var ctx = this.context;
-      var _state$shape3 = _slicedToArray(state.shape, 2),
-        width = _state$shape3[0],
-        height = _state$shape3[1];
-      var left = 0;
-      var top = 0;
-      var _state$padding3 = _slicedToArray(state.padding, 4),
-        pt = _state$padding3[0],
-        pr = _state$padding3[1],
-        pb = _state$padding3[2],
-        pl = _state$padding3[3];
-      var axisRatio = state.opposite.coordinate.getRatio(state.coordinate.axisOrigin, state.opposite);
-      axisRatio = clamp(axisRatio, 0, 1);
-      var coords = state.coordinate.getCoords(state.lines, state);
-      // draw state.lines
-      ctx.lineWidth = 1; // state.lineWidth/2.;
-      for (var i = 0, j = 0; i < coords.length; i += 4, j += 1) {
-        var color = state.lineColors[j];
-        if (!color) continue;
-        ctx.strokeStyle = color;
-        ctx.beginPath();
-        var x1 = left + pl + coords[i] * (width - pr - pl);
-        var y1 = top + pt + coords[i + 1] * (height - pb - pt);
-        var x2 = left + pl + coords[i + 2] * (width - pr - pl);
-        var y2 = top + pt + coords[i + 3] * (height - pb - pt);
+    const normals = [];
+    for (let i = 0; i < coords.length; i += 4) {
+      const x1 = coords[i];
+      const y1 = coords[i + 1];
+      const x2 = coords[i + 2];
+      const y2 = coords[i + 3];
+      const xDif = x2 - x1;
+      const yDif = y2 - y1;
+      const dist = len(xDif, yDif);
+      normals.push(xDif / dist);
+      normals.push(yDif / dist);
+    }
+    // calc state.labels/tick coords
+    const tickCoords = [];
+    state.labelCoords = [];
+    const ticks = state.ticks;
+    for (let i = 0, j = 0, k = 0; i < normals.length; k += 1, i += 2, j += 4) {
+      const x1 = coords[j];
+      const y1 = coords[j + 1];
+      const x2 = coords[j + 2];
+      const y2 = coords[j + 3];
+      const xDif = (x2 - x1) * axisRatio;
+      const yDif = (y2 - y1) * axisRatio;
+      const tick = [normals[i] * ticks[k] / (width - pl - pr), normals[i + 1] * ticks[k] / (height - pt - pb)];
+      tickCoords.push(normals[i] * (xDif + tick[0] * state.tickAlign) + x1);
+      tickCoords.push(normals[i + 1] * (yDif + tick[1] * state.tickAlign) + y1);
+      tickCoords.push(normals[i] * (xDif - tick[0] * (1 - state.tickAlign)) + x1);
+      tickCoords.push(normals[i + 1] * (yDif - tick[1] * (1 - state.tickAlign)) + y1);
+      state.labelCoords.push(normals[i] * xDif + x1);
+      state.labelCoords.push(normals[i + 1] * yDif + y1);
+    }
+    // draw ticks
+    if (ticks.length) {
+      ctx.lineWidth = state.axisWidth / 2;
+      ctx.beginPath();
+      for (let i = 0, j = 0; i < tickCoords.length; i += 4, j += 1) {
+        if (almostEqual(state.lines[j], state.opposite.coordinate.axisOrigin)) continue;
+        const x1 = left + pl + tickCoords[i] * (width - pl - pr);
+        const y1 = top + pt + tickCoords[i + 1] * (height - pt - pb);
+        const x2 = left + pl + tickCoords[i + 2] * (width - pl - pr);
+        const y2 = top + pt + tickCoords[i + 3] * (height - pt - pb);
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
-        ctx.stroke();
-        ctx.closePath();
       }
-      var normals = [];
-      for (var _i = 0; _i < coords.length; _i += 4) {
-        var _x = coords[_i];
-        var _y = coords[_i + 1];
-        var _x2 = coords[_i + 2];
-        var _y2 = coords[_i + 3];
-        var xDif = _x2 - _x;
-        var yDif = _y2 - _y;
-        var dist = len(xDif, yDif);
-        normals.push(xDif / dist);
-        normals.push(yDif / dist);
-      }
-      // calc state.labels/tick coords
-      var tickCoords = [];
-      state.labelCoords = [];
-      var ticks = state.ticks;
-      for (var _i2 = 0, _j = 0, k = 0; _i2 < normals.length; k += 1, _i2 += 2, _j += 4) {
-        var _x3 = coords[_j];
-        var _y3 = coords[_j + 1];
-        var _x4 = coords[_j + 2];
-        var _y4 = coords[_j + 3];
-        var _xDif = (_x4 - _x3) * axisRatio;
-        var _yDif = (_y4 - _y3) * axisRatio;
-        var tick = [normals[_i2] * ticks[k] / (width - pl - pr), normals[_i2 + 1] * ticks[k] / (height - pt - pb)];
-        tickCoords.push(normals[_i2] * (_xDif + tick[0] * state.tickAlign) + _x3);
-        tickCoords.push(normals[_i2 + 1] * (_yDif + tick[1] * state.tickAlign) + _y3);
-        tickCoords.push(normals[_i2] * (_xDif - tick[0] * (1 - state.tickAlign)) + _x3);
-        tickCoords.push(normals[_i2 + 1] * (_yDif - tick[1] * (1 - state.tickAlign)) + _y3);
-        state.labelCoords.push(normals[_i2] * _xDif + _x3);
-        state.labelCoords.push(normals[_i2 + 1] * _yDif + _y3);
-      }
-      // draw ticks
-      if (ticks.length) {
-        ctx.lineWidth = state.axisWidth / 2;
-        ctx.beginPath();
-        for (var _i3 = 0, _j2 = 0; _i3 < tickCoords.length; _i3 += 4, _j2 += 1) {
-          if (almostEqual(state.lines[_j2], state.opposite.coordinate.axisOrigin)) continue;
-          var _x5 = left + pl + tickCoords[_i3] * (width - pl - pr);
-          var _y5 = top + pt + tickCoords[_i3 + 1] * (height - pt - pb);
-          var _x6 = left + pl + tickCoords[_i3 + 2] * (width - pl - pr);
-          var _y6 = top + pt + tickCoords[_i3 + 3] * (height - pt - pb);
-          ctx.moveTo(_x5, _y5);
-          ctx.lineTo(_x6, _y6);
-        }
-        ctx.strokeStyle = state.axisColor;
-        ctx.stroke();
-        ctx.closePath();
-      }
-      // draw axis
-      if (state.coordinate.axis && state.axisColor) {
-        var axisCoords = state.opposite.coordinate.getCoords([state.coordinate.axisOrigin], state.opposite);
-        ctx.lineWidth = state.axisWidth / 2;
-        var _x7 = left + pl + clamp(axisCoords[0], 0, 1) * (width - pr - pl);
-        var _y7 = top + pt + clamp(axisCoords[1], 0, 1) * (height - pt - pb);
-        var _x8 = left + pl + clamp(axisCoords[2], 0, 1) * (width - pr - pl);
-        var _y8 = top + pt + clamp(axisCoords[3], 0, 1) * (height - pt - pb);
-        ctx.beginPath();
-        ctx.moveTo(_x7, _y7);
-        ctx.lineTo(_x8, _y8);
-        ctx.strokeStyle = state.axisColor;
-        ctx.stroke();
-        ctx.closePath();
-      }
-      // draw state.labels
-      this.drawLabels(state);
+      ctx.strokeStyle = state.axisColor;
+      ctx.stroke();
+      ctx.closePath();
     }
-  }, {
-    key: "drawLabels",
-    value: function drawLabels(state) {
-      if (state.labels) {
-        var ctx = this.context;
-        var _state$shape4 = _slicedToArray(state.shape, 2),
-          width = _state$shape4[0],
-          height = _state$shape4[1];
-        var _state$padding4 = _slicedToArray(state.padding, 4),
-          pt = _state$padding4[0],
-          pr = _state$padding4[1],
-          pb = _state$padding4[2],
-          pl = _state$padding4[3];
-        ctx.font = "300 ".concat(state.fontSize, "px ").concat(state.fontFamily);
-        ctx.fillStyle = state.labelColor;
-        ctx.textBaseline = 'top';
-        var textHeight = state.fontSize;
-        var indent = state.axisWidth + 1.5;
-        var textOffset = state.tickAlign < 0.5 ? -textHeight - state.axisWidth * 2 : state.axisWidth * 2;
-        var isOpp = state.coordinate.orientation === 'y' && !state.opposite.disabled;
-        for (var i = 0; i < state.labels.length; i += 1) {
-          var label = state.labels[i];
-          if (label == null) continue;
-          if (isOpp && almostEqual(state.lines[i], state.opposite.coordinate.axisOrigin)) continue;
-          var textWidth = ctx.measureText(label).width;
-          var textLeft = state.labelCoords[i * 2] * (width - pl - pr) + indent + pl;
-          if (state.coordinate.orientation === 'y') {
-            textLeft = clamp(textLeft, indent, width - textWidth - 1 - state.axisWidth);
-            label *= -1;
-          }
-          var textTop = state.labelCoords[i * 2 + 1] * (height - pt - pb) + textOffset + pt;
-          if (state.coordinate.orientation === 'x') {
-            textTop = clamp(textTop, 0, height - textHeight - textOffset);
-          }
-          ctx.fillText(label, textLeft, textTop);
-        }
-      }
+    // draw axis
+    if (state.coordinate.axis && state.axisColor) {
+      const axisCoords = state.opposite.coordinate.getCoords([state.coordinate.axisOrigin], state.opposite);
+      ctx.lineWidth = state.axisWidth / 2;
+      const x1 = left + pl + clamp(axisCoords[0], 0, 1) * (width - pr - pl);
+      const y1 = top + pt + clamp(axisCoords[1], 0, 1) * (height - pt - pb);
+      const x2 = left + pl + clamp(axisCoords[2], 0, 1) * (width - pr - pl);
+      const y2 = top + pt + clamp(axisCoords[3], 0, 1) * (height - pt - pb);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = state.axisColor;
+      ctx.stroke();
+      ctx.closePath();
     }
-  }]);
-}(Base);
-
-var Group = /*#__PURE__*/function (_fabric$Group) {
-  function Group(objects, options) {
-    _classCallCheck(this, Group);
-    options = options || {};
-    return _callSuper(this, Group, [objects, options]);
+    // draw state.labels
+    this.drawLabels(state);
   }
-  _inherits(Group, _fabric$Group);
-  return _createClass(Group, [{
-    key: "getBounds",
-    value: function getBounds() {
-      var coords = [];
-      coords.push(new Point(this.left - this.width / 2.0, this.top - this.height / 2.0));
-      coords.push(new Point(this.left + this.width / 2.0, this.top + this.height / 2.0));
-      return coords;
+  drawLabels(state) {
+    if (state.labels) {
+      const ctx = this.context;
+      const [width, height] = state.shape;
+      const [pt, pr, pb, pl] = state.padding;
+      ctx.font = `300 ${state.fontSize}px ${state.fontFamily}`;
+      ctx.fillStyle = state.labelColor;
+      ctx.textBaseline = 'top';
+      const textHeight = state.fontSize;
+      const indent = state.axisWidth + 1.5;
+      const textOffset = state.tickAlign < 0.5 ? -textHeight - state.axisWidth * 2 : state.axisWidth * 2;
+      const isOpp = state.coordinate.orientation === 'y' && !state.opposite.disabled;
+      for (let i = 0; i < state.labels.length; i += 1) {
+        let label = state.labels[i];
+        if (label == null) continue;
+        if (isOpp && almostEqual(state.lines[i], state.opposite.coordinate.axisOrigin)) continue;
+        const textWidth = ctx.measureText(label).width;
+        let textLeft = state.labelCoords[i * 2] * (width - pl - pr) + indent + pl;
+        if (state.coordinate.orientation === 'y') {
+          textLeft = clamp(textLeft, indent, width - textWidth - 1 - state.axisWidth);
+          label *= -1;
+        }
+        let textTop = state.labelCoords[i * 2 + 1] * (height - pt - pb) + textOffset + pt;
+        if (state.coordinate.orientation === 'x') {
+          textTop = clamp(textTop, 0, height - textHeight - textOffset);
+        }
+        ctx.fillText(label, textLeft, textTop);
+      }
     }
-  }]);
-}(fabric.Group);
+  }
+}
+
+class Group extends fabric.Group {
+  constructor(objects, options) {
+    options = options || {};
+    super(objects, options);
+  }
+  getBounds() {
+    const coords = [];
+    coords.push(new Point(this.left - this.width / 2.0, this.top - this.height / 2.0));
+    coords.push(new Point(this.left + this.width / 2.0, this.top + this.height / 2.0));
+    return coords;
+  }
+}
 
 /**
  * Layer - Base class for all layer components
@@ -1253,7 +953,7 @@ var Group = /*#__PURE__*/function (_fabric$Group) {
  * @class
  * @extends {Base}
  */
-var Layer = /*#__PURE__*/function (_Base) {
+class Layer extends Base {
   /**
    * Create a new layer
    *
@@ -1269,75 +969,65 @@ var Layer = /*#__PURE__*/function (_Base) {
    * @param {string} [options.id] - Unique identifier for the layer
    * @param {string} [options.class] - CSS class name for the layer
    */
-  function Layer(options) {
-    var _this;
-    _classCallCheck(this, Layer);
-    _this = _callSuper(this, Layer, [options]);
-    _this.label = _this.label !== undefined ? _this.label : null;
-    _this.draggable = _this.draggable || false;
-    _this.zIndex = _this.zIndex || 1;
-    _this.opacity = _this.opacity || 1;
-    _this.keepOnZoom = _this.keepOnZoom || false;
-    _this.clickable = _this.clickable || false;
-    _this.hoverCursor = _this.hoverCursor || _this.clickable ? 'pointer' : 'default';
-    _this.moveCursor = _this.moveCursor || 'move';
+  constructor(options) {
+    super(options);
+    this.label = this.label !== undefined ? this.label : null;
+    this.draggable = this.draggable || false;
+    this.zIndex = this.zIndex || 1;
+    this.opacity = this.opacity || 1;
+    this.keepOnZoom = this.keepOnZoom || false;
+    this.clickable = this.clickable || false;
+    this.hoverCursor = this.hoverCursor || this.clickable ? 'pointer' : 'default';
+    this.moveCursor = this.moveCursor || 'move';
 
     // this.class = this.class || this.constructor.name.toLowerCase();
 
-    _this.style = {
-      zIndex: _this.zIndex,
-      class: _this.class,
-      parent: _this,
-      keepOnZoom: _this.keepOnZoom,
-      id: _this.id,
+    this.style = {
+      zIndex: this.zIndex,
+      class: this.class,
+      parent: this,
+      keepOnZoom: this.keepOnZoom,
+      id: this.id,
       hasControls: false,
       hasBorders: false,
-      lockMovementX: !_this.draggable,
-      lockMovementY: !_this.draggable,
-      draggable: _this.draggable,
-      clickable: _this.clickable,
-      evented: _this.clickable,
-      selectable: _this.draggable,
-      hoverCursor: _this.hoverCursor,
-      moveCursor: _this.moveCursor
+      lockMovementX: !this.draggable,
+      lockMovementY: !this.draggable,
+      draggable: this.draggable,
+      clickable: this.clickable,
+      evented: this.clickable,
+      selectable: this.draggable,
+      hoverCursor: this.hoverCursor,
+      moveCursor: this.moveCursor
     };
-    return _this;
   }
-  _inherits(Layer, _Base);
-  return _createClass(Layer, [{
-    key: "setOptions",
-    value: function setOptions(options) {
-      var _this2 = this;
-      if (!this.shape) return;
-      Object.keys(options).forEach(function (key) {
-        _this2.shape.set(key, options[key]);
-      });
-      if (this.shape.canvas) {
-        this.shape.canvas.renderAll();
-      }
+  setOptions(options) {
+    if (!this.shape) return;
+    Object.keys(options).forEach(key => {
+      this.shape.set(key, options[key]);
+    });
+    if (this.shape.canvas) {
+      this.shape.canvas.renderAll();
     }
-  }, {
-    key: "addTo",
-    value: function addTo(map) {
-      if (!map) {
-        if (this._map) {
-          this._map.removeLayer(this);
-        }
-        return;
+  }
+  addTo(map) {
+    if (!map) {
+      if (this._map) {
+        this._map.removeLayer(this);
       }
-      this._map = map;
-      this._map.addLayer(this);
+      return;
     }
-  }]);
-}(Base);
+    this._map = map;
+    this._map.addLayer(this);
+  }
+}
 
-var Modes = {
+const Modes$1 = {
   SELECT: 'SELECT',
   GRAB: 'GRAB',
   MEASURE: 'MEASURE',
   DRAW: 'DRAW'
 };
-var MAP = {
+const MAP = {
   center: new Point(),
   zoom: 1,
   minZoom: 0,
@@ -1345,15 +1035,12 @@ var MAP = {
   gridEnabled: true,
   zoomEnabled: true,
   selectEnabled: true,
-  mode: Modes.SELECT,
+  mode: Modes$1.SELECT,
   showGrid: true
 };
-var MARKER = {
-  position: new Point(),
-  minZoom: 1,
-  maxZoom: 20
-};
-var ICON = {
+({
+  position: new Point()});
+const ICON = {
   url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAy8SURBVHhe7Z1r1BVVGcdn5n0hQZMyL62VEGmIN4xqhaV2QQwE0cxLSHbRMsH6nvVdQEWgPpUo0kUDQQGt5eqLIaho2jKF1irAoEi8QEtdXApEV/2e2SPC4Zl59z5n5szl7P9af877cp7/s/d+nnln9uzZe0/QQPTDEfC8IAivCYLoh/x8J1zF7+v4fQvcAXfBAwnlZ/k/vhMbsQ0W8jvacLrxFfsU3x4Vw6kk6Wo+F8DVJG0bfDsMov/lSfFpfAePmbLCr5myPbqN95OIi/mcx+dzcJ+WsG5QyjZ1CObzOZnPY6WCHvnjKAI8lc9FfG7TklEFUrd/JXWUulJnj05xJryFgG7WAl5lUucXqfuspA0ebggn8M8KgviWFtw6kTbQyQxW0qaL4qZ5ZCG6jECt0QLZBNK2tbTxK0ljPd5DOAmu1oLWRNJW7iTijmzP42z4gBakXiBtfxCOkUD0GoZAOkjRf7TA9BKJwX+JxWw4VALTA5DOUPSCFoyiKAcafBn+hQo8AX8PH4LLEsrP8n98JzaxbVcPTspbT2wmUofGYjCcqzU+TxLILZTzMJxDQK8Ngj4Zxv0oPAaGcCCIjdiiEa34EF/iM9qilZknKWcelFg1CucQyGe0BndK89caPBAF0Qw+x8IiB2DEN2XEZS2XsrU6dUpi9Sz+PyEFNgDyMCXapTW0XeLvFRwv5lNuqT4QF1MOhlEHbl3juuR6MOBvN7H7uimmvpijNa5dEhBuFcPr8XuccV8pUCepW763s/i91bivF94H79ca5Er+EmQkbSn8gjiuCT4Pl1D3XEYy8SUd1do8WzgBrtUa4kr83Avlul5XyHX81xwI72jtcyF+HocnitMq4yM0tuNbPPyshp+LPTYDn4UdXxqILbeKwfDYYwUxkgpu1CpuS/Qv05u/MfHXQEjbOussot+Eo1OMv+pA/vI3aRW2JT4Wwg/H3pqNk+CdWgxsSaw34+Pk2FsFcDwVWq9V1IZo/03Pflriq4cgU8qinVpMbIh2A06kv1Uq6O2HT2oVtCF66dicFnvqTYyCbXeYib1MYC317qDtWz20MuTpZ9kGQR+8Q4uRDdEuj72UgLYHeejo/SDx4XEQ0U1arGyI+Dbjo2sIp2kVGYg0cn9vXu9tEfcLiJEevyyilfULXcGZVHK3VoksonmDSn458eGRivhx+etaDLOIZg9imWBTKAZR0HNaBbKI5k20MhjiYYdxEjMtlllE8zzaQh8lO3dWqNR+dH5GrDsuJHbOi17QzTfy/PElrcCBGS+h8mgL4dV6TLOJcLzR5wfu96O/aoVlkd7+9xO9R9uIZmqxzSKajQhzHR+YpRWURTSFnYp6EG1ceuNpbLlgtFzHtULSyKlLRqhkgMMjH0TE1GnEVXKG7nQj7wwPaQWkkYK53Qs+ZqQeOYKYut0eovmtkbaNcILmOItc969MxB65I7pCi3kWyWEnYy+upx1ZGu1RMO7SYp9GcvhUonNFdInmMI3Y70B0vNF6FIgPEevXtBykEftLE60Lwqc0Z+kMb0iEHoUj/I6eA53Y/zER2iL8ouYojdjLciuPriJ8XMtFGrF3Ghyy7vlzenkb+08bmUcX8UmJvZYTjdhb3xGMwvEBzYlG7JcYmUcJuE/LiUbJKfajjSwbt2gONOL0Lez9Hjjl4QxyYD1Ih70sQ8+EjPn/QxNrxF5WrHiUi6VabjSS239in/WMILpYE6YRgX/GXz7O1XKTRnI8JdGpWKSJNPqef5UQWs8sxnix0RyJYzg6XtFEOsPrEp1H6Qi/pefoSJLjVxHIBhitCCdqAo04kVE/vy1qdSDb51qPDmKr7lBm/cwZ218YiUeFsFjLlUZs1bkaf9aMNXIEyV64HpVCNEXLlUaMZfLoYfslycpeq/tJ7OT0r11DPMrF0eTG6jKAnYzfHLrCOLpKM9SI8Qqj8aggrDfd5AQg71g4iPmakcYoiGYmGo/KIbpRy5lGjH9iNAaPaUYag6C/KduXNRD9YzgIrLajwXit0cQrdKOXNKNWYidDibIBlEc1MZgcWQ3lY7cd+0EiGs4vVo8Vse10kqFH8bB6lC85x1Z2UA3O0ww0YpvbXHOPwmC9hgNb2c7Ofqk3trXfubL5CKdrudMotgiim7UvNQZBn3/6V3n0Wz8dJPc/FoXVjlUYy772I0XgUWmMkFxpOWwltrIzW7BK+7KVOJVe49Ei8Kg0hpIry7u6+D0J4Trty1biVF62YLPfvke5IEfRBi2HrcRUFo3YvQQBwydj9x51gNWUcck9ttEO7ctWYiivVPGoBx7RcthKcr8TW7uXOWAo1wuPemCllsNWSu6xtVsDgKGfAVwfWM0Ultxj6w+ABsLpAPCXgObB6RLgO4HNg1Mn0N8GNg+2t4FbsbXbBwBjPxBUD7gMBD0tAj8U3Cy4DgU7PQyKJxB4VBouD4Pugv5xcLPQP07LnUZyL4+D/YSQZiG8RsudRmxlQkjf+dqXGjEecIMBj9LhsMFHn0wJc5oUKq9l96g2bDv1ByeF+mnhzYFMC9+q5a6V2B2cFi5wWBgSnGMkHhVEWwtDBNZLwyhgRqLxqBzaXhrmF4c2BC6LQw97k4vL8vDXsPfLw6sHWR7+qpazVmLXujxcELlsEHFJIvKoDKLJWq40YvsCgiOe6/gtYuqNe7RcacRW2yImnKQZa+QI8ptEVQu5bBLltE0cB8y3E51H6Qi/qeVIoxwoCDhgdDicRkJ59btHJRCu0XKkEeOsy7d9R0KI4Fyj8ygR1k//hOQ4swN/FAZ+s+h6YYmWG43kdhv2Q4wsHQ4bDMT3k2cYmUcJOJ0cuGwXb7XBx2k4dXlhxG+MzKME3KvlRCM5lad/1i+SfFhzojFx/Ckj8+gixjr+of7OyKwQOr0p3N8RlAH7LeKF2F+YCG0RPq05SiP2302EHoUjvF7LQRqxfyYRuiCaqjlLI/YywOBfHFk8jpNYazlII/aXJVpX2O0e8i4R3G10HgVioRb7NMqZPNG1g/AizWkWOdquSMQeuSO6XIt5FslhJy+PjmF9RyCkkq+j8a+Pzx8yZ8P19fEuPf9UjKZg68EGIUedLCSNjNwjBxDL8Akt1mlEkusg3WytkCyimWekHjlgrhbjLKK51UjzgTwj+JtWUBbR+HcLdIxohhbbLKLZiDDrBZFtYbxW2EDk1HXYmyk8XBBdqcV0ICJ0HfSxxjytwCzSiP3oCqtQgzGe2O3TYppFdAuMvBgMolLWk0ffJZo30Y4zLjws8Bli9oYWyyyikcmeg42L4nAWBe3RKpBFaZCMKyQ+PFIRTiBWTrd7QjR7EY8xPgqH/RLkQ0kluRz4PkE6oqug82nfsPtL92/TKzIwaeRNiQ+Pg4hmarGyIeK5xkf3sVyrkA3R3gH7Yi+9DYnB7VqMbIj2wdhLSeBe0+2B0aFEvwaOij31Jj4OrVdmt5LYy3bvA87xKxoncPqy2pZMI9qdvdkviK/3Vpt0akQr2/adaHyVj5Op0GatorbEx8/hSbG3ZkOS9jMtBrYk1i/iY3jsrUI4hYpt0ipsS/TbORvckPhrIKRt0Xat7bZMkn+q8Vc9yH5D67WKuxA/f4BNWnQig2CPam11IbGV0/6I2GOFIac4q71qs0hj38HPr2Cd31Us2+n8krZYbcKVRfzII/baXCLlSdQyrSGuJHjyXFvWHlwgjmuC8+F91N1pHkUa8bUclt7bbwdtDxZpJKCPch29Dr8fNO4rBeokK6ajjk/1hxK/txv3tUV4LUHZrTWuXeJPtjhbxOelfA6LiykHx1KHqXxKXTrq3LUSf3vCIPyGKab+4DoePqs1tFMmB8My/H/PlFPoPobim+t6XNb9lG21v6Ir8fsn/I+VApsECZ7zfAJXEry/U45sgz6LRE1PNriWnrNsdW/zvgOxEVs0oo3308VXsEp8a2XmScqR5/lN3owznEggO75VdCHl7YUvwQ1UQJaxPQJXwqUJ5Wf5P74Tm9h2r+arKFIet3jhJOrQExgK59Boq33tm0xisI9YyAROiUnPQe6TV2iB6QXSdjnz1HmcIy9Ekzn9tf1UrG6krWto85Sk8R7vIbqc4HQ8ilhVStto41eTxnqkI17PJr1u6w0QqkraIBtocFcinV8PV5wFZxPEwm+/8qbU2dQ9OFsa4tEZhhBQGfW7h89CBl/yoNSNOi7mU9bj13Lsvg4YRoClA7WAz+dhLg9c2qGUbeoge+/HdSpzWLpnMYrr6zQ+fwqldy2DOFZvzXCh+DS+4zdtUFZcZi/PZ6wsZGWMvAzpApIkD6Ju5md5QaJ0xNbx+xa4A+6CBxLKz/J/W7GRiZYylIwm+pHxET+KHgkLX3XTXQTB/wEErHoK8OgOXgAAAABJRU5ErkJggg==',
   size: [128, 128],
   anchor: [64, 64]
@@ -1379,7 +1066,7 @@ fabric.Group.prototype.selectionBackgroundColor = 'rgba(45,207,171,0.25)';
 fabric.Object.prototype.borderDashArray = [3, 3];
 fabric.Object.prototype.padding = 5;
 fabric.Object.prototype.getBounds = function getBounds() {
-  var coords = [];
+  const coords = [];
   coords.push(new Point(this.left - this.width / 2.0, this.top - this.height / 2.0));
   coords.push(new Point(this.left + this.width / 2.0, this.top + this.height / 2.0));
   return coords;
@@ -1395,7 +1082,7 @@ fabric.Object.prototype.getBounds = function getBounds() {
  * @class
  * @extends {Base}
  */
-var GridManager = /*#__PURE__*/function (_Base) {
+class GridManager extends Base {
   /**
    * Create a new GridManager
    *
@@ -1409,24 +1096,20 @@ var GridManager = /*#__PURE__*/function (_Base) {
    * @param {string} [options.axisColor='#999999'] - Axis line color
    * @param {boolean} [options.showLabels=true] - Whether to show grid labels
    */
-  function GridManager() {
-    var _this;
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    _classCallCheck(this, GridManager);
-    _this = _callSuper(this, GridManager, [options]);
-    _this._coordinatePlane = options.coordinatePlane || null;
-    _this._canvas = options.canvas || null;
-    _this._grid = null;
-    _this._visible = options.visible !== undefined ? options.visible : true;
-    _this._spacing = options.spacing || 10;
-    _this._color = options.color || '#cccccc';
-    _this._opacity = options.opacity !== undefined ? options.opacity : 0.5;
-    _this._axisColor = options.axisColor || '#999999';
-    _this._showLabels = options.showLabels !== undefined ? options.showLabels : true;
-    if (_this._canvas) {
-      _this.initGrid();
+  constructor(options = {}) {
+    super(options);
+    this._coordinatePlane = options.coordinatePlane || null;
+    this._canvas = options.canvas || null;
+    this._grid = null;
+    this._visible = options.visible !== undefined ? options.visible : true;
+    this._spacing = options.spacing || 10;
+    this._color = options.color || '#cccccc';
+    this._opacity = options.opacity !== undefined ? options.opacity : 0.5;
+    this._axisColor = options.axisColor || '#999999';
+    this._showLabels = options.showLabels !== undefined ? options.showLabels : true;
+    if (this._canvas) {
+      this.initGrid();
     }
-    return _this;
   }
 
   /**
@@ -1436,496 +1119,485 @@ var GridManager = /*#__PURE__*/function (_Base) {
    *
    * @returns {GridManager} This GridManager instance for chaining
    */
-  _inherits(GridManager, _Base);
-  return _createClass(GridManager, [{
-    key: "initGrid",
-    value: function initGrid() {
-      if (!this._canvas) return this;
-      this._grid = new Grid(this._canvas, {
-        color: this._color,
-        opacity: this._opacity,
-        axisColor: this._axisColor,
-        spacing: this._spacing,
-        showLabels: this._showLabels,
-        visible: this._visible
+  initGrid() {
+    if (!this._canvas) return this;
+    this._grid = new Grid(this._canvas, {
+      color: this._color,
+      opacity: this._opacity,
+      axisColor: this._axisColor,
+      spacing: this._spacing,
+      showLabels: this._showLabels,
+      visible: this._visible
+    });
+    if (this._grid && this._visible) {
+      this._grid.draw();
+    }
+    return this;
+  }
+
+  /**
+   * Set the grid visibility
+   *
+   * Controls whether the grid is drawn on the canvas or cleared.
+   * Fires a 'grid:visibility' event when the visibility changes.
+   *
+   * @param {boolean} visible - Whether the grid should be visible
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  setVisible(visible) {
+    this._visible = visible;
+    if (this._grid) {
+      if (visible) {
+        this._grid.draw();
+      } else if (this._canvas) {
+        // Clear the grid canvas
+        const context = this._canvas.getContext('2d');
+        if (context) {
+          context.clearRect(0, 0, this._canvas.width, this._canvas.height);
+        }
+      }
+    }
+    this.fire('grid:visibility', {
+      visible
+    });
+    return this;
+  }
+
+  /**
+   * Set the grid spacing
+   *
+   * Updates the distance between grid lines and redraws the grid.
+   * Fires a 'grid:spacing' event when the spacing changes.
+   *
+   * @param {number} spacing - The grid spacing in pixels
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  setSpacing(spacing) {
+    this._spacing = spacing;
+    if (this._grid) {
+      this._grid.update({
+        spacing
       });
-      if (this._grid && this._visible) {
+      if (this._visible) {
         this._grid.draw();
       }
-      return this;
     }
+    this.fire('grid:spacing', {
+      spacing
+    });
+    return this;
+  }
 
-    /**
-     * Set the grid visibility
-     *
-     * Controls whether the grid is drawn on the canvas or cleared.
-     * Fires a 'grid:visibility' event when the visibility changes.
-     *
-     * @param {boolean} visible - Whether the grid should be visible
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "setVisible",
-    value: function setVisible(visible) {
-      this._visible = visible;
-      if (this._grid) {
-        if (visible) {
-          this._grid.draw();
-        } else if (this._canvas) {
-          // Clear the grid canvas
-          var context = this._canvas.getContext('2d');
-          if (context) {
-            context.clearRect(0, 0, this._canvas.width, this._canvas.height);
-          }
-        }
-      }
-      this.fire('grid:visibility', {
-        visible: visible
+  /**
+   * Set the grid color
+   * @param {string} color The grid color (CSS color string)
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  setColor(color) {
+    this._color = color;
+    if (this._grid) {
+      this._grid.update({
+        color
       });
-      return this;
-    }
-
-    /**
-     * Set the grid spacing
-     *
-     * Updates the distance between grid lines and redraws the grid.
-     * Fires a 'grid:spacing' event when the spacing changes.
-     *
-     * @param {number} spacing - The grid spacing in pixels
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "setSpacing",
-    value: function setSpacing(spacing) {
-      this._spacing = spacing;
-      if (this._grid) {
-        this._grid.update({
-          spacing: spacing
-        });
-        if (this._visible) {
-          this._grid.draw();
-        }
+      if (this._visible) {
+        this._grid.draw();
       }
-      this.fire('grid:spacing', {
-        spacing: spacing
+    }
+    this.fire('grid:color', {
+      color
+    });
+    return this;
+  }
+
+  /**
+   * Set the grid opacity
+   * @param {number} opacity The grid opacity (0-1)
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  setOpacity(opacity) {
+    this._opacity = opacity;
+    if (this._grid) {
+      this._grid.update({
+        opacity
       });
-      return this;
-    }
-
-    /**
-     * Set the grid color
-     * @param {string} color The grid color (CSS color string)
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "setColor",
-    value: function setColor(color) {
-      this._color = color;
-      if (this._grid) {
-        this._grid.update({
-          color: color
-        });
-        if (this._visible) {
-          this._grid.draw();
-        }
+      if (this._visible) {
+        this._grid.draw();
       }
-      this.fire('grid:color', {
-        color: color
-      });
-      return this;
     }
+    this.fire('grid:opacity', {
+      opacity
+    });
+    return this;
+  }
 
-    /**
-     * Set the grid opacity
-     * @param {number} opacity The grid opacity (0-1)
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "setOpacity",
-    value: function setOpacity(opacity) {
-      this._opacity = opacity;
-      if (this._grid) {
-        this._grid.update({
-          opacity: opacity
-        });
-        if (this._visible) {
-          this._grid.draw();
-        }
-      }
-      this.fire('grid:opacity', {
-        opacity: opacity
-      });
-      return this;
-    }
-
-    /**
-     * Set whether to show grid labels
-     * @param {boolean} show Whether to show grid labels
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "setShowLabels",
-    value: function setShowLabels(show) {
-      this._showLabels = show;
-      if (this._grid) {
-        this._grid.update({
-          showLabels: show
-        });
-        if (this._visible) {
-          this._grid.draw();
-        }
-      }
-      this.fire('grid:labels', {
+  /**
+   * Set whether to show grid labels
+   * @param {boolean} show Whether to show grid labels
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  setShowLabels(show) {
+    this._showLabels = show;
+    if (this._grid) {
+      this._grid.update({
         showLabels: show
       });
-      return this;
-    }
-
-    /**
-     * Set the canvas for the grid
-     * @param {HTMLCanvasElement} canvas The canvas element
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "setCanvas",
-    value: function setCanvas(canvas) {
-      this._canvas = canvas;
-      if (canvas && !this._grid) {
-        this.initGrid();
-      } else if (canvas && this._grid) {
-        this._grid.canvas = canvas;
-        this._grid.context = canvas.getContext('2d');
-        if (this._visible) {
-          this._grid.draw();
-        }
-      }
-      return this;
-    }
-
-    /**
-     * Set the coordinate plane for this grid manager
-     * @param {CoordinatePlane} coordinatePlane The coordinate plane
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "setCoordinatePlane",
-    value: function setCoordinatePlane(coordinatePlane) {
-      this._coordinatePlane = coordinatePlane;
-      if (coordinatePlane && coordinatePlane.gridCanvas) {
-        this.setCanvas(coordinatePlane.gridCanvas);
-      }
-      return this;
-    }
-
-    /**
-     * Redraw the grid
-     * @returns {GridManager} This GridManager instance for chaining
-     */
-  }, {
-    key: "redraw",
-    value: function redraw() {
-      if (this._grid && this._visible) {
+      if (this._visible) {
         this._grid.draw();
       }
-      return this;
     }
+    this.fire('grid:labels', {
+      showLabels: show
+    });
+    return this;
+  }
 
-    /**
-     * Get the current grid
-     * @returns {Grid} The current grid instance
-     */
-  }, {
-    key: "getGrid",
-    value: function getGrid() {
-      return this._grid;
+  /**
+   * Set the canvas for the grid
+   * @param {HTMLCanvasElement} canvas The canvas element
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  setCanvas(canvas) {
+    this._canvas = canvas;
+    if (canvas && !this._grid) {
+      this.initGrid();
+    } else if (canvas && this._grid) {
+      this._grid.canvas = canvas;
+      this._grid.context = canvas.getContext('2d');
+      if (this._visible) {
+        this._grid.draw();
+      }
     }
+    return this;
+  }
 
-    /**
-     * Get the current grid settings
-     * @returns {Object} The current grid settings
-     */
-  }, {
-    key: "getSettings",
-    value: function getSettings() {
-      return {
-        visible: this._visible,
-        spacing: this._spacing,
-        color: this._color,
-        opacity: this._opacity,
-        axisColor: this._axisColor,
-        showLabels: this._showLabels
-      };
+  /**
+   * Set the coordinate plane for this grid manager
+   * @param {CoordinatePlane} coordinatePlane The coordinate plane
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  setCoordinatePlane(coordinatePlane) {
+    this._coordinatePlane = coordinatePlane;
+    if (coordinatePlane && coordinatePlane.gridCanvas) {
+      this.setCanvas(coordinatePlane.gridCanvas);
     }
-  }]);
-}(Base);
+    return this;
+  }
 
-var _excluded = ["style", "className"];
+  /**
+   * Redraw the grid
+   * @returns {GridManager} This GridManager instance for chaining
+   */
+  redraw() {
+    if (this._grid && this._visible) {
+      this._grid.draw();
+    }
+    return this;
+  }
+
+  /**
+   * Get the current grid
+   * @returns {Grid} The current grid instance
+   */
+  getGrid() {
+    return this._grid;
+  }
+
+  /**
+   * Get the current grid settings
+   * @returns {Object} The current grid settings
+   */
+  getSettings() {
+    return {
+      visible: this._visible,
+      spacing: this._spacing,
+      color: this._color,
+      opacity: this._opacity,
+      axisColor: this._axisColor,
+      showLabels: this._showLabels
+    };
+  }
+}
+
+function _defineProperty(e, r, t) {
+  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: true,
+    configurable: true,
+    writable: true
+  }) : e[r] = t, e;
+}
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
+      _defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
+function _objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o,
+    r,
+    i = _objectWithoutPropertiesLoose(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var n = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r[n];
+  }
+  return t;
+}
+function _toPrimitive(t, r) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r);
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+
+const _excluded = ["style", "className"];
 
 /**
  * CanvasLayer - A specialized layer for canvas-based content
  * This provides a base implementation for canvas-based layers
  */
-var CanvasLayer = /*#__PURE__*/function (_Layer) {
-  function CanvasLayer(props) {
-    var _this;
-    _classCallCheck(this, CanvasLayer);
-    _this = _callSuper(this, CanvasLayer, [props]);
-    _this.canvasRef = React.createRef();
-    return _this;
+class CanvasLayer extends Layer {
+  constructor(props) {
+    super(props);
+    this.canvasRef = React.createRef();
   }
 
   /**
    * Initialize the canvas context
    */
-  _inherits(CanvasLayer, _Layer);
-  return _createClass(CanvasLayer, [{
-    key: "initCanvas",
-    value: function initCanvas() {
-      if (this.canvasRef.current) {
-        this.ctx = this.canvasRef.current.getContext('2d');
+  initCanvas() {
+    if (this.canvasRef.current) {
+      this.ctx = this.canvasRef.current.getContext('2d');
+    }
+  }
+
+  /**
+   * Clear the canvas
+   */
+  clearCanvas() {
+    if (this.ctx && this.canvasRef.current) {
+      this.ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    }
+  }
+
+  /**
+   * Resize the canvas to match parent dimensions
+   */
+  resizeCanvas() {
+    if (this.canvasRef.current && this.canvasRef.current.parentElement) {
+      const parent = this.canvasRef.current.parentElement;
+      this.canvasRef.current.width = parent.clientWidth;
+      this.canvasRef.current.height = parent.clientHeight;
+    }
+  }
+
+  /**
+   * Component lifecycle method - after mounting
+   */
+  componentDidMount() {
+    super.componentDidMount();
+    this.initCanvas();
+    this.resizeCanvas();
+    window.addEventListener('resize', this.resizeCanvas.bind(this));
+  }
+
+  /**
+   * Component lifecycle method - before unmounting
+   */
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    window.removeEventListener('resize', this.resizeCanvas.bind(this));
+  }
+
+  /**
+   * Render method
+   */
+  render() {
+    const _this$props = this.props,
+      {
+        style,
+        className
+      } = _this$props,
+      otherProps = _objectWithoutProperties(_this$props, _excluded);
+    return React.createElement('div', {
+      className,
+      style: _objectSpread2({
+        position: 'absolute',
+        width: '100%',
+        height: '100%'
+      }, style)
+    }, React.createElement('canvas', _objectSpread2(_objectSpread2({
+      ref: this.canvasRef
+    }, otherProps), {}, {
+      style: {
+        display: 'block',
+        width: '100%',
+        height: '100%'
       }
-    }
+    })));
+  }
+}
 
-    /**
-     * Clear the canvas
-     */
-  }, {
-    key: "clearCanvas",
-    value: function clearCanvas() {
-      if (this.ctx && this.canvasRef.current) {
-        this.ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
-      }
-    }
-
-    /**
-     * Resize the canvas to match parent dimensions
-     */
-  }, {
-    key: "resizeCanvas",
-    value: function resizeCanvas() {
-      if (this.canvasRef.current && this.canvasRef.current.parentElement) {
-        var parent = this.canvasRef.current.parentElement;
-        this.canvasRef.current.width = parent.clientWidth;
-        this.canvasRef.current.height = parent.clientHeight;
-      }
-    }
-
-    /**
-     * Component lifecycle method - after mounting
-     */
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      _superPropGet(CanvasLayer, "componentDidMount", this, 3)([]);
-      this.initCanvas();
-      this.resizeCanvas();
-      window.addEventListener('resize', this.resizeCanvas.bind(this));
-    }
-
-    /**
-     * Component lifecycle method - before unmounting
-     */
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      _superPropGet(CanvasLayer, "componentWillUnmount", this, 3)([]);
-      window.removeEventListener('resize', this.resizeCanvas.bind(this));
-    }
-
-    /**
-     * Render method
-     */
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-        style = _this$props.style,
-        className = _this$props.className,
-        otherProps = _objectWithoutProperties(_this$props, _excluded);
-      return React.createElement('div', {
-        className: className,
-        style: _objectSpread2({
-          position: 'absolute',
-          width: '100%',
-          height: '100%'
-        }, style)
-      }, React.createElement('canvas', _objectSpread2(_objectSpread2({
-        ref: this.canvasRef
-      }, otherProps), {}, {
-        style: {
-          display: 'block',
-          width: '100%',
-          height: '100%'
-        }
-      })));
-    }
-  }]);
-}(Layer);
-
-var Line = /*#__PURE__*/function (_fabric$Line) {
-  function Line(points, options) {
-    var _this;
-    _classCallCheck(this, Line);
+class Line extends fabric.Line {
+  constructor(points, options) {
     options = options || {};
     options.strokeWidth = options.strokeWidth || 1;
     options.class = 'line';
-    _this = _callSuper(this, Line, [points, options]);
-    _this._strokeWidth = options.strokeWidth;
-    return _this;
+    super(points, options);
+    this._strokeWidth = options.strokeWidth;
   }
-  _inherits(Line, _fabric$Line);
-  return _createClass(Line, [{
-    key: "_renderStroke",
-    value: function _renderStroke(ctx) {
-      var stroke = this._strokeWidth / this.canvas.getZoom();
-      this.strokeWidth = stroke > 0.01 ? stroke : 0.01;
-      _superPropGet(Line, "_renderStroke", this, 3)([ctx]);
-      this.setCoords();
-    }
-  }]);
-}(fabric.Line);
-var line = function line(points, options) {
-  return new Line(points, options);
-};
+  _renderStroke(ctx) {
+    const stroke = this._strokeWidth / this.canvas.getZoom();
+    this.strokeWidth = stroke > 0.01 ? stroke : 0.01;
+    super._renderStroke(ctx);
+    this.setCoords();
+  }
+}
+const line = (points, options) => new Line(points, options);
 
-var Connector = /*#__PURE__*/function (_Layer) {
-  function Connector(start, end, options) {
-    var _this;
-    _classCallCheck(this, Connector);
+class Connector extends Layer {
+  constructor(start, end, options) {
     options = options || {};
     options.zIndex = options.zIndex || 10;
     options.class = 'connector';
-    _this = _callSuper(this, Connector, [options]);
+    super(options);
     if (!start || !end) {
       console.error('start or end is missing');
-      return _possibleConstructorReturn(_this);
+      return;
     }
-    _this.start = start;
-    _this.end = end;
-    _this.strokeWidth = _this.strokeWidth || 1;
-    Object.assign(_this.style, {
-      strokeWidth: _this.strokeWidth,
-      stroke: _this.color || 'grey',
-      fill: _this.fill || false,
+    this.start = start;
+    this.end = end;
+    this.strokeWidth = this.strokeWidth || 1;
+    Object.assign(this.style, {
+      strokeWidth: this.strokeWidth,
+      stroke: this.color || 'grey',
+      fill: this.fill || false,
       selectable: false
     });
-    _this.draw();
-    _this.registerListeners();
-    return _this;
+    this.draw();
+    this.registerListeners();
   }
-  _inherits(Connector, _Layer);
-  return _createClass(Connector, [{
-    key: "registerListeners",
-    value: function registerListeners() {
-      var vm = this;
-      this.start.on('update:links', function () {
-        vm.shape.set({
-          x1: vm.start.position.x,
-          y1: vm.start.position.y
-        });
+  registerListeners() {
+    const vm = this;
+    this.start.on('update:links', () => {
+      vm.shape.set({
+        x1: vm.start.position.x,
+        y1: vm.start.position.y
       });
-      this.end.on('update:links', function () {
-        vm.shape.set({
-          x2: vm.end.position.x,
-          y2: vm.end.position.y
-        });
+    });
+    this.end.on('update:links', () => {
+      vm.shape.set({
+        x2: vm.end.position.x,
+        y2: vm.end.position.y
       });
+    });
+  }
+  draw() {
+    this.shape = new Line([this.start.position.x, this.start.position.y, this.end.position.x, this.end.position.y], this.style);
+    // this.shape.setCoords();
+  }
+  redraw() {
+    this.shape.set({
+      x1: this.start.position.x,
+      y1: this.start.position.y,
+      x2: this.end.position.x,
+      y2: this.end.position.y
+    });
+  }
+  setStart(start) {
+    this.start = start;
+    this.redraw();
+  }
+  setEnd(end) {
+    this.end = end;
+    this.redraw();
+  }
+  setColor(color) {
+    this.color = color;
+    this.style.stroke = color;
+    this.shape.set('stroke', color);
+    if (this.shape.canvas) {
+      this.shape.canvas.renderAll();
     }
-  }, {
-    key: "draw",
-    value: function draw() {
-      this.shape = new Line([this.start.position.x, this.start.position.y, this.end.position.x, this.end.position.y], this.style);
-      // this.shape.setCoords();
+  }
+  setStrokeWidth(strokeWidth) {
+    this.strokeWidth = strokeWidth;
+    this.style.strokeWidth = strokeWidth;
+    this.shape.set('strokeWidth', strokeWidth);
+    if (this.shape.canvas) {
+      this.shape.canvas.renderAll();
     }
-  }, {
-    key: "redraw",
-    value: function redraw() {
-      this.shape.set({
-        x1: this.start.position.x,
-        y1: this.start.position.y,
-        x2: this.end.position.x,
-        y2: this.end.position.y
-      });
-    }
-  }, {
-    key: "setStart",
-    value: function setStart(start) {
-      this.start = start;
-      this.redraw();
-    }
-  }, {
-    key: "setEnd",
-    value: function setEnd(end) {
-      this.end = end;
-      this.redraw();
-    }
-  }, {
-    key: "setColor",
-    value: function setColor(color) {
-      this.color = color;
-      this.style.stroke = color;
-      this.shape.set('stroke', color);
-      if (this.shape.canvas) {
-        this.shape.canvas.renderAll();
-      }
-    }
-  }, {
-    key: "setStrokeWidth",
-    value: function setStrokeWidth(strokeWidth) {
-      this.strokeWidth = strokeWidth;
-      this.style.strokeWidth = strokeWidth;
-      this.shape.set('strokeWidth', strokeWidth);
-      if (this.shape.canvas) {
-        this.shape.canvas.renderAll();
-      }
-    }
-  }]);
-}(Layer);
+  }
+}
 
-var Tooltip = /*#__PURE__*/function (_Layer) {
-  function Tooltip(position, options) {
-    var _this;
-    _classCallCheck(this, Tooltip);
+class Tooltip extends Layer {
+  constructor(position, options) {
     options = options || {};
     options.zIndex = options.zIndex || 300;
     options.keepOnZoom = true;
     options.position = new Point(position);
     options.class = 'tooltip';
-    _this = _callSuper(this, Tooltip, [options]);
-    _this.content = _this.content || '';
-    _this.size = _this.size || 10;
-    _this.textColor = _this.textColor || 'black';
-    _this.fill = _this.fill || 'white';
-    _this.stroke = _this.stroke || 'red';
-    Object.assign(_this.style, {
-      left: _this.position.x,
-      top: _this.position.y
+    super(options);
+    this.content = this.content || '';
+    this.size = this.size || 10;
+    this.textColor = this.textColor || 'black';
+    this.fill = this.fill || 'white';
+    this.stroke = this.stroke || 'red';
+    Object.assign(this.style, {
+      left: this.position.x,
+      top: this.position.y
     });
-    if (_this.content) {
-      _this.textObj = new fabric.Text(_this.content, {
-        fontSize: _this.size,
-        fill: _this.textColor
+    if (this.content) {
+      this.textObj = new fabric.Text(this.content, {
+        fontSize: this.size,
+        fill: this.textColor
       });
     }
-    _this.init();
-    return _this;
+    this.init();
   }
-  _inherits(Tooltip, _Layer);
-  return _createClass(Tooltip, [{
-    key: "init",
-    value: function init() {
-      var _this2 = this;
-      var objects = [];
-      if (this.textObj) {
-        objects.push(this.textObj);
-      }
-      this.shape = new Group(objects, this.style);
-      nextTick(function () {
-        _this2.emit('ready');
-      });
+  init() {
+    const objects = [];
+    if (this.textObj) {
+      objects.push(this.textObj);
     }
-  }]);
-}(Layer);
+    this.shape = new Group(objects, this.style);
+    nextTick(() => {
+      this.emit('ready');
+    });
+  }
+}
 
 /**
  * LayerManager - Manages layers in a coordinate plane
@@ -1937,22 +1609,18 @@ var Tooltip = /*#__PURE__*/function (_Layer) {
  * @class
  * @extends {Base}
  */
-var LayerManager = /*#__PURE__*/function (_Base) {
+class LayerManager extends Base {
   /**
    * Create a new LayerManager
    *
    * @param {Object} options - Configuration options
    * @param {CoordinatePlane} [options.coordinatePlane] - The coordinate plane to manage layers for
    */
-  function LayerManager() {
-    var _this;
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    _classCallCheck(this, LayerManager);
-    _this = _callSuper(this, LayerManager, [options]);
-    _this.layers = [];
-    _this.layersMap = new Map();
-    _this._coordinatePlane = options.coordinatePlane || null;
-    return _this;
+  constructor(options = {}) {
+    super(options);
+    this.layers = [];
+    this.layersMap = new Map();
+    this._coordinatePlane = options.coordinatePlane || null;
   }
 
   /**
@@ -1961,198 +1629,172 @@ var LayerManager = /*#__PURE__*/function (_Base) {
    * @param {boolean} render Whether to render the layer immediately
    * @returns {LayerManager} This LayerManager instance for chaining
    */
-  _inherits(LayerManager, _Base);
-  return _createClass(LayerManager, [{
-    key: "addLayer",
-    value: function addLayer(layer) {
-      var render = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      if (!layer) return this;
+  addLayer(layer, render = true) {
+    if (!layer) return this;
 
-      // Generate a unique ID if one doesn't exist
-      layer.id = layer.id || "layer-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 1000));
+    // Generate a unique ID if one doesn't exist
+    layer.id = layer.id || `layer-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-      // Store the layer
-      this.layers.push(layer);
-      this.layersMap.set(layer.id, layer);
+    // Store the layer
+    this.layers.push(layer);
+    this.layersMap.set(layer.id, layer);
 
-      // Add to canvas if coordinate plane exists
-      if (this._coordinatePlane && this._coordinatePlane.canvas) {
+    // Add to canvas if coordinate plane exists
+    if (this._coordinatePlane && this._coordinatePlane.canvas) {
+      if (layer.group) {
+        this._coordinatePlane.canvas.add(layer.group);
+      } else if (layer.shape) {
+        this._coordinatePlane.canvas.add(layer.shape);
+      }
+      if (render) {
+        this._coordinatePlane.canvas.renderAll();
+      }
+    }
+
+    // Sort layers by z-index
+    this.sortLayers();
+    this.fire('layer:add', {
+      layer
+    });
+    return this;
+  }
+
+  /**
+   * Remove a layer from the manager
+   * @param {Layer|string} layer The layer or layer ID to remove
+   * @param {boolean} render Whether to render after removal
+   * @returns {LayerManager} This LayerManager instance for chaining
+   */
+  removeLayer(layer, render = true) {
+    let layerId;
+    if (typeof layer === 'string') {
+      layerId = layer;
+    } else if (layer && layer.id) {
+      layerId = layer.id;
+    } else {
+      return this;
+    }
+    const layerObj = this.layersMap.get(layerId);
+    if (!layerObj) return this;
+
+    // Remove from arrays and map
+    this.layers = this.layers.filter(l => l.id !== layerId);
+    this.layersMap.delete(layerId);
+
+    // Remove from canvas if coordinate plane exists
+    if (this._coordinatePlane && this._coordinatePlane.canvas) {
+      if (layerObj.group) {
+        this._coordinatePlane.canvas.remove(layerObj.group);
+      } else if (layerObj.shape) {
+        this._coordinatePlane.canvas.remove(layerObj.shape);
+      }
+      if (render) {
+        this._coordinatePlane.canvas.renderAll();
+      }
+    }
+    this.fire('layer:remove', {
+      layer: layerObj
+    });
+    return this;
+  }
+
+  /**
+   * Get a layer by its ID
+   * @param {string} id The layer ID
+   * @returns {Layer|null} The layer object or null if not found
+   */
+  getLayer(id) {
+    return this.layersMap.get(id) || null;
+  }
+
+  /**
+   * Sort layers by z-index
+   * @returns {LayerManager} This LayerManager instance for chaining
+   */
+  sortLayers() {
+    this.layers.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+
+    // Update the stacking order if coordinate plane exists
+    if (this._coordinatePlane && this._coordinatePlane.canvas) {
+      this.layers.forEach(layer => {
         if (layer.group) {
-          this._coordinatePlane.canvas.add(layer.group);
+          layer.group.bringToFront();
         } else if (layer.shape) {
-          this._coordinatePlane.canvas.add(layer.shape);
+          layer.shape.bringToFront();
         }
-        if (render) {
-          this._coordinatePlane.canvas.renderAll();
-        }
-      }
+      });
+    }
+    return this;
+  }
 
-      // Sort layers by z-index
+  /**
+   * Show all layers
+   * @param {boolean} render Whether to render after showing
+   * @returns {LayerManager} This LayerManager instance for chaining
+   */
+  showAllLayers(render = true) {
+    this.layers.forEach(layer => {
+      if (layer.setVisible) {
+        layer.setVisible(true);
+      } else if (layer.group) {
+        layer.group.visible = true;
+      } else if (layer.shape) {
+        layer.shape.visible = true;
+      }
+    });
+    if (render && this._coordinatePlane && this._coordinatePlane.canvas) {
+      this._coordinatePlane.canvas.renderAll();
+    }
+    return this;
+  }
+
+  /**
+   * Hide all layers
+   * @param {boolean} render Whether to render after hiding
+   * @returns {LayerManager} This LayerManager instance for chaining
+   */
+  hideAllLayers(render = true) {
+    this.layers.forEach(layer => {
+      if (layer.setVisible) {
+        layer.setVisible(false);
+      } else if (layer.group) {
+        layer.group.visible = false;
+      } else if (layer.shape) {
+        layer.shape.visible = false;
+      }
+    });
+    if (render && this._coordinatePlane && this._coordinatePlane.canvas) {
+      this._coordinatePlane.canvas.renderAll();
+    }
+    return this;
+  }
+
+  /**
+   * Set the coordinate plane for this layer manager
+   * @param {CoordinatePlane} coordinatePlane The coordinate plane
+   * @returns {LayerManager} This LayerManager instance for chaining
+   */
+  setCoordinatePlane(coordinatePlane) {
+    this._coordinatePlane = coordinatePlane;
+
+    // Add existing layers to the new coordinate plane
+    if (coordinatePlane && coordinatePlane.canvas) {
+      this.layers.forEach(layer => {
+        if (layer.group) {
+          coordinatePlane.canvas.add(layer.group);
+        } else if (layer.shape) {
+          coordinatePlane.canvas.add(layer.shape);
+        }
+      });
       this.sortLayers();
-      this.fire('layer:add', {
-        layer: layer
-      });
-      return this;
+      coordinatePlane.canvas.renderAll();
     }
+    return this;
+  }
+}
 
-    /**
-     * Remove a layer from the manager
-     * @param {Layer|string} layer The layer or layer ID to remove
-     * @param {boolean} render Whether to render after removal
-     * @returns {LayerManager} This LayerManager instance for chaining
-     */
-  }, {
-    key: "removeLayer",
-    value: function removeLayer(layer) {
-      var render = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      var layerId;
-      if (typeof layer === 'string') {
-        layerId = layer;
-      } else if (layer && layer.id) {
-        layerId = layer.id;
-      } else {
-        return this;
-      }
-      var layerObj = this.layersMap.get(layerId);
-      if (!layerObj) return this;
-
-      // Remove from arrays and map
-      this.layers = this.layers.filter(function (l) {
-        return l.id !== layerId;
-      });
-      this.layersMap.delete(layerId);
-
-      // Remove from canvas if coordinate plane exists
-      if (this._coordinatePlane && this._coordinatePlane.canvas) {
-        if (layerObj.group) {
-          this._coordinatePlane.canvas.remove(layerObj.group);
-        } else if (layerObj.shape) {
-          this._coordinatePlane.canvas.remove(layerObj.shape);
-        }
-        if (render) {
-          this._coordinatePlane.canvas.renderAll();
-        }
-      }
-      this.fire('layer:remove', {
-        layer: layerObj
-      });
-      return this;
-    }
-
-    /**
-     * Get a layer by its ID
-     * @param {string} id The layer ID
-     * @returns {Layer|null} The layer object or null if not found
-     */
-  }, {
-    key: "getLayer",
-    value: function getLayer(id) {
-      return this.layersMap.get(id) || null;
-    }
-
-    /**
-     * Sort layers by z-index
-     * @returns {LayerManager} This LayerManager instance for chaining
-     */
-  }, {
-    key: "sortLayers",
-    value: function sortLayers() {
-      this.layers.sort(function (a, b) {
-        return (a.zIndex || 0) - (b.zIndex || 0);
-      });
-
-      // Update the stacking order if coordinate plane exists
-      if (this._coordinatePlane && this._coordinatePlane.canvas) {
-        this.layers.forEach(function (layer) {
-          if (layer.group) {
-            layer.group.bringToFront();
-          } else if (layer.shape) {
-            layer.shape.bringToFront();
-          }
-        });
-      }
-      return this;
-    }
-
-    /**
-     * Show all layers
-     * @param {boolean} render Whether to render after showing
-     * @returns {LayerManager} This LayerManager instance for chaining
-     */
-  }, {
-    key: "showAllLayers",
-    value: function showAllLayers() {
-      var render = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-      this.layers.forEach(function (layer) {
-        if (layer.setVisible) {
-          layer.setVisible(true);
-        } else if (layer.group) {
-          layer.group.visible = true;
-        } else if (layer.shape) {
-          layer.shape.visible = true;
-        }
-      });
-      if (render && this._coordinatePlane && this._coordinatePlane.canvas) {
-        this._coordinatePlane.canvas.renderAll();
-      }
-      return this;
-    }
-
-    /**
-     * Hide all layers
-     * @param {boolean} render Whether to render after hiding
-     * @returns {LayerManager} This LayerManager instance for chaining
-     */
-  }, {
-    key: "hideAllLayers",
-    value: function hideAllLayers() {
-      var render = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-      this.layers.forEach(function (layer) {
-        if (layer.setVisible) {
-          layer.setVisible(false);
-        } else if (layer.group) {
-          layer.group.visible = false;
-        } else if (layer.shape) {
-          layer.shape.visible = false;
-        }
-      });
-      if (render && this._coordinatePlane && this._coordinatePlane.canvas) {
-        this._coordinatePlane.canvas.renderAll();
-      }
-      return this;
-    }
-
-    /**
-     * Set the coordinate plane for this layer manager
-     * @param {CoordinatePlane} coordinatePlane The coordinate plane
-     * @returns {LayerManager} This LayerManager instance for chaining
-     */
-  }, {
-    key: "setCoordinatePlane",
-    value: function setCoordinatePlane(coordinatePlane) {
-      this._coordinatePlane = coordinatePlane;
-
-      // Add existing layers to the new coordinate plane
-      if (coordinatePlane && coordinatePlane.canvas) {
-        this.layers.forEach(function (layer) {
-          if (layer.group) {
-            coordinatePlane.canvas.add(layer.group);
-          } else if (layer.shape) {
-            coordinatePlane.canvas.add(layer.shape);
-          }
-        });
-        this.sortLayers();
-        coordinatePlane.canvas.renderAll();
-      }
-      return this;
-    }
-  }]);
-}(Base);
-
-var Marker = /*#__PURE__*/function (_Layer) {
-  function Marker(position, options) {
-    var _this;
-    _classCallCheck(this, Marker);
+class Marker extends Layer {
+  constructor(position, options) {
     options = options || {};
     options.zIndex = options.zIndex || 100;
     options.keepOnZoom = options.keepOnZoom === undefined ? true : options.keepOnZoom;
@@ -2161,474 +1803,371 @@ var Marker = /*#__PURE__*/function (_Layer) {
     options.yaw = options.yaw || 0;
     options.clickable = options.clickable !== undefined ? options.clickable : true;
     options.class = 'marker';
-    _this = _callSuper(this, Marker, [options]);
-    var vm = _this;
-    _this.text = _this.text || '';
-    _this.size = _this.size || 10;
-    _this.textColor = _this.textColor || 'black';
-    _this.fill = _this.fill || 'white';
-    _this.stroke = _this.stroke || 'red';
-    Object.assign(_this.style, {
-      left: _this.position.x,
-      top: _this.position.y,
+    super(options);
+    const vm = this;
+    this.text = this.text || '';
+    this.size = this.size || 10;
+    this.textColor = this.textColor || 'black';
+    this.fill = this.fill || 'white';
+    this.stroke = this.stroke || 'red';
+    Object.assign(this.style, {
+      left: this.position.x,
+      top: this.position.y,
       // selectionBackgroundColor: false,
-      angle: _this.rotation,
-      yaw: _this.yaw,
-      clickable: _this.clickable
+      angle: this.rotation,
+      yaw: this.yaw,
+      clickable: this.clickable
     });
-    if (_this.text) {
-      _this.textObj = new fabric.Text(_this.text, {
-        fontSize: _this.size,
-        fill: _this.textColor
+    if (this.text) {
+      this.textObj = new fabric.Text(this.text, {
+        fontSize: this.size,
+        fill: this.textColor
       });
     }
-    if (_this.icon) {
-      fabric.Image.fromURL(_this.icon.url, function (image) {
-        vm.image = image.scaleToWidth(_this.size);
-        _this.init();
+    if (this.icon) {
+      fabric.Image.fromURL(this.icon.url, image => {
+        vm.image = image.scaleToWidth(this.size);
+        this.init();
         // vm.shape.removeWithUpdate();
       }, {
         selectable: false,
-        evented: _this.evented,
-        clickable: _this.clickable,
-        opacity: _this.opacity
+        evented: this.evented,
+        clickable: this.clickable,
+        opacity: this.opacity
       });
     } else {
-      _this.circle = new fabric.Circle({
-        radius: _this.size,
+      this.circle = new fabric.Circle({
+        radius: this.size,
         strokeWidth: 2,
-        stroke: _this.stroke,
-        fill: _this.fill
+        stroke: this.stroke,
+        fill: this.fill
       });
-      _this.init();
+      this.init();
     }
-    return _this;
   }
-  _inherits(Marker, _Layer);
-  return _createClass(Marker, [{
-    key: "init",
-    value: function init() {
-      var _this2 = this;
-      var objects = [];
-      if (this.image) {
-        objects.push(this.image);
-      }
-      if (this.circle) {
-        objects.push(this.circle);
-      }
-      if (this.textObj) {
-        objects.push(this.textObj);
-      }
-      this.shape = new Group(objects, this.style);
-      this.links = this.links || [];
-      this.addLinks();
-      this.registerListeners();
-      nextTick(function () {
-        _this2.emit('ready');
-      });
+  init() {
+    const objects = [];
+    if (this.image) {
+      objects.push(this.image);
     }
-  }, {
-    key: "registerListeners",
-    value: function registerListeners() {
-      var vm = this;
-      this.shape.on('moving', function () {
-        vm.onShapeDrag();
-      });
-      this.shape.on('rotating', function () {
-        vm.emit('rotating');
-      });
-      this.shape.on('mousedown', function (e) {
-        vm.onShapeMouseDown(e);
-      });
-      this.shape.on('mousemove', function (e) {
-        vm.onShapeMouseMove(e);
-      });
-      this.shape.on('mouseup', function (e) {
-        vm.onShapeMouseUp(e);
-      });
-      this.shape.on('mouseover', function () {
-        vm.emit('mouseover', vm);
-      });
-      this.shape.on('mouseout', function () {
-        vm.emit('mouseout', vm);
-      });
+    if (this.circle) {
+      objects.push(this.circle);
     }
-  }, {
-    key: "setPosition",
-    value: function setPosition(position) {
-      this.position = new Point(position);
-      if (!this.shape) return;
-      this.shape.set({
-        left: this.position.x,
-        top: this.position.y
-      });
-      this.emit('update:links');
-      if (this.shape.canvas) {
-        this.shape.canvas.renderAll();
-      }
+    if (this.textObj) {
+      objects.push(this.textObj);
     }
-  }, {
-    key: "setRotation",
-    value: function setRotation(rotation) {
-      this.rotation = rotation;
-      if (!this.shape) return;
-      this.shape.set({
-        angle: this.rotation
-      });
-      if (this.shape.canvas) {
-        this.shape.canvas.renderAll();
-      }
-    }
-  }, {
-    key: "setOptions",
-    value: function setOptions(options) {
-      var _this3 = this;
-      if (!this.shape) return;
-      Object.keys(options).forEach(function (key) {
-        switch (key) {
-          case 'textColor':
-            _this3.setTextColor(options[key]);
-            break;
-          case 'stroke':
-            _this3.setStroke(options[key]);
-            break;
-          case 'fill':
-            _this3.setColor(options[key]);
-            break;
-        }
-      });
-      if (this.shape.canvas) {
-        this.shape.canvas.renderAll();
-      }
-    }
-  }, {
-    key: "setTextColor",
-    value: function setTextColor(color) {
-      if (this.text && this.textObj) {
-        this.textObj.setColor(color);
-        this.textObj.canvas.renderAll();
-      }
-    }
-  }, {
-    key: "setText",
-    value: function setText(text) {
-      if (this.text && this.textObj) {
-        this.textObj.set({
-          text: text
-        });
-        this.textObj.canvas.renderAll();
-      }
-    }
-  }, {
-    key: "setStroke",
-    value: function setStroke(color) {
-      if (this.circle) {
-        this.circle.set('stroke', color);
-      }
-    }
-  }, {
-    key: "setColor",
-    value: function setColor(color) {
-      if (this.circle) {
-        this.circle.setColor(color);
-      }
-    }
-  }, {
-    key: "setLinks",
-    value: function setLinks(links) {
-      this.links = links;
-      this.addLinks();
-    }
-  }, {
-    key: "setSize",
-    value: function setSize(size) {
-      if (this.image) {
-        this.image.scaleToWidth(size);
-        if (this.image.canvas) {
-          this.image.canvas.renderAll();
-        }
-      } else if (this.circle) {
-        this.circle.setRadius(size);
-      }
-    }
-  }, {
-    key: "addLinks",
-    value: function addLinks() {
-      var _this4 = this;
-      this.connectors = [];
-      this.links.forEach(function (link) {
-        var connector = new Connector(_this4, link);
-        _this4.connectors.push(connector);
-      });
-      this.addConnectors();
-    }
-  }, {
-    key: "addConnectors",
-    value: function addConnectors() {
-      var vm = this;
-      this.connectors.forEach(function (connector) {
-        vm._map.addLayer(connector);
-      });
-    }
-  }, {
-    key: "onAdded",
-    value: function onAdded() {
-      this.addConnectors();
-    }
-  }, {
-    key: "onShapeDrag",
-    value: function onShapeDrag() {
-      var matrix = this.shape.calcTransformMatrix();
-      var _matrix = _slicedToArray(matrix, 6),
-        x = _matrix[4],
-        y = _matrix[5];
-      this.position = new Point(x, y);
-      this.emit('update:links');
-      this.emit('moving');
-    }
-  }, {
-    key: "onShapeMouseDown",
-    value: function onShapeMouseDown(e) {
-      this.dragStart = e;
-    }
-  }, {
-    key: "onShapeMouseMove",
-    value: function onShapeMouseMove(e) {
-      if (this.dragStart) {
-        this.emit('dragstart');
-        var a = new fabric.Point(e.pointer.x, e.pointer.y);
-        var b = new fabric.Point(this.dragStart.pointer.x, this.dragStart.pointer.y);
-        // if distance is far enough, we don't want to fire click event
-        if (a.distanceFrom(b) > 3) {
-          this.dragStart = null;
-          this.dragging = true;
-        }
-      }
-      if (this.dragging) {
-        this.emit('drag');
-      } else {
-        this.emit('hover');
-      }
-    }
-  }, {
-    key: "onShapeMouseUp",
-    value: function onShapeMouseUp() {
-      if (!this.dragging) {
-        this.emit('click');
-      } else {
-        this.emit('moved');
-      }
-      this.dragStart = null;
-      this.dragging = false;
-    }
-  }]);
-}(Layer);
-var marker = function marker(position, options) {
-  return new Marker(position, options);
-};
-
-var Icon = /*#__PURE__*/function (_fabric$Image) {
-  function Icon(options) {
-    var _this;
-    _classCallCheck(this, Icon);
-    _this = _callSuper(this, Icon, [options]);
-    _this.defaults = Object.assign({}, ICON);
-    Object.assign({}, _this.defaults);
-    Object.assign({}, _this._options);
-    return _this;
+    this.shape = new Group(objects, this.style);
+    this.links = this.links || [];
+    this.addLinks();
+    this.registerListeners();
+    nextTick(() => {
+      this.emit('ready');
+    });
   }
-  _inherits(Icon, _fabric$Image);
-  return _createClass(Icon);
-}(fabric.Image);
-var icon = function icon(options) {
-  return new Icon(options);
-};
+  registerListeners() {
+    const vm = this;
+    this.shape.on('moving', () => {
+      vm.onShapeDrag();
+    });
+    this.shape.on('rotating', () => {
+      vm.emit('rotating');
+    });
+    this.shape.on('mousedown', e => {
+      vm.onShapeMouseDown(e);
+    });
+    this.shape.on('mousemove', e => {
+      vm.onShapeMouseMove(e);
+    });
+    this.shape.on('mouseup', e => {
+      vm.onShapeMouseUp(e);
+    });
+    this.shape.on('mouseover', () => {
+      vm.emit('mouseover', vm);
+    });
+    this.shape.on('mouseout', () => {
+      vm.emit('mouseout', vm);
+    });
+  }
+  setPosition(position) {
+    this.position = new Point(position);
+    if (!this.shape) return;
+    this.shape.set({
+      left: this.position.x,
+      top: this.position.y
+    });
+    this.emit('update:links');
+    if (this.shape.canvas) {
+      this.shape.canvas.renderAll();
+    }
+  }
+  setRotation(rotation) {
+    this.rotation = rotation;
+    if (!this.shape) return;
+    this.shape.set({
+      angle: this.rotation
+    });
+    if (this.shape.canvas) {
+      this.shape.canvas.renderAll();
+    }
+  }
+  setOptions(options) {
+    if (!this.shape) return;
+    Object.keys(options).forEach(key => {
+      switch (key) {
+        case 'textColor':
+          this.setTextColor(options[key]);
+          break;
+        case 'stroke':
+          this.setStroke(options[key]);
+          break;
+        case 'fill':
+          this.setColor(options[key]);
+          break;
+      }
+    });
+    if (this.shape.canvas) {
+      this.shape.canvas.renderAll();
+    }
+  }
+  setTextColor(color) {
+    if (this.text && this.textObj) {
+      this.textObj.setColor(color);
+      this.textObj.canvas.renderAll();
+    }
+  }
+  setText(text) {
+    if (this.text && this.textObj) {
+      this.textObj.set({
+        text
+      });
+      this.textObj.canvas.renderAll();
+    }
+  }
+  setStroke(color) {
+    if (this.circle) {
+      this.circle.set('stroke', color);
+    }
+  }
+  setColor(color) {
+    if (this.circle) {
+      this.circle.setColor(color);
+    }
+  }
+  setLinks(links) {
+    this.links = links;
+    this.addLinks();
+  }
+  setSize(size) {
+    if (this.image) {
+      this.image.scaleToWidth(size);
+      if (this.image.canvas) {
+        this.image.canvas.renderAll();
+      }
+    } else if (this.circle) {
+      this.circle.setRadius(size);
+    }
+  }
+  addLinks() {
+    this.connectors = [];
+    this.links.forEach(link => {
+      const connector = new Connector(this, link);
+      this.connectors.push(connector);
+    });
+    this.addConnectors();
+  }
+  addConnectors() {
+    const vm = this;
+    this.connectors.forEach(connector => {
+      vm._map.addLayer(connector);
+    });
+  }
+  onAdded() {
+    this.addConnectors();
+  }
+  onShapeDrag() {
+    const matrix = this.shape.calcTransformMatrix();
+    const [,,,, x, y] = matrix;
+    this.position = new Point(x, y);
+    this.emit('update:links');
+    this.emit('moving');
+  }
+  onShapeMouseDown(e) {
+    this.dragStart = e;
+  }
+  onShapeMouseMove(e) {
+    if (this.dragStart) {
+      this.emit('dragstart');
+      const a = new fabric.Point(e.pointer.x, e.pointer.y);
+      const b = new fabric.Point(this.dragStart.pointer.x, this.dragStart.pointer.y);
+      // if distance is far enough, we don't want to fire click event
+      if (a.distanceFrom(b) > 3) {
+        this.dragStart = null;
+        this.dragging = true;
+      }
+    }
+    if (this.dragging) {
+      this.emit('drag');
+    } else {
+      this.emit('hover');
+    }
+  }
+  onShapeMouseUp() {
+    if (!this.dragging) {
+      this.emit('click');
+    } else {
+      this.emit('moved');
+    }
+    this.dragStart = null;
+    this.dragging = false;
+  }
+}
+const marker = (position, options) => new Marker(position, options);
 
-var Polyline = /*#__PURE__*/function (_Layer) {
-  function Polyline(_points, options) {
-    var _this;
-    _classCallCheck(this, Polyline);
+class Icon extends fabric.Image {
+  constructor(options) {
+    super(options);
+    this.defaults = Object.assign({}, ICON);
+    Object.assign({}, this.defaults);
+    Object.assign({}, this._options);
+  }
+}
+const icon = options => new Icon(options);
+
+class Polyline extends Layer {
+  constructor(_points, options) {
     options = options || {};
     options.points = _points || [];
-    _this = _callSuper(this, Polyline, [options]);
-    _this.lines = [];
-    _this.class = 'polyline';
-    _this.strokeWidth = 1;
-    _this.lineOptions = {
-      strokeWidth: _this.strokeWidth,
-      stroke: _this.color || 'grey',
-      fill: _this.fill || false
+    super(options);
+    this.lines = [];
+    this.class = 'polyline';
+    this.strokeWidth = 1;
+    this.lineOptions = {
+      strokeWidth: this.strokeWidth,
+      stroke: this.color || 'grey',
+      fill: this.fill || false
     };
-    _this.shape = new Group([], {
+    this.shape = new Group([], {
       selectable: false,
       hasControls: false,
-      class: _this.class,
-      parent: _this
+      class: this.class,
+      parent: this
     });
-    _this.setPoints(_this._points);
-    return _this;
+    this.setPoints(this._points);
   }
-  _inherits(Polyline, _Layer);
-  return _createClass(Polyline, [{
-    key: "addPoint",
-    value: function addPoint(point) {
-      this.points.push(new Point(point));
-      if (this.points.length > 1) {
-        var i = this.points.length - 1;
-        var j = this.points.length - 2;
-        var p1 = this.points[i];
-        var p2 = this.points[j];
-        var line = new fabric.Line(p1.getArray().concat(p2.getArray()), this.lineOptions);
-        this.lines.push(line);
-        this.shape.addWithUpdate(line);
-      }
+  addPoint(point) {
+    this.points.push(new Point(point));
+    if (this.points.length > 1) {
+      const i = this.points.length - 1;
+      const j = this.points.length - 2;
+      const p1 = this.points[i];
+      const p2 = this.points[j];
+      const line = new fabric.Line(p1.getArray().concat(p2.getArray()), this.lineOptions);
+      this.lines.push(line);
+      this.shape.addWithUpdate(line);
     }
-  }, {
-    key: "setStrokeWidth",
-    value: function setStrokeWidth(strokeWidth) {
-      this.lines.forEach(function (line) {
-        line.setStrokeWidth(strokeWidth);
-      });
-    }
-  }, {
-    key: "setPoints",
-    value: function setPoints() {
-      var points = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.removeLines();
-      this.points = [];
-      for (var i = 0; i < points.length; i += 1) {
-        var point = new Point(points[i]);
-        this.points.push(point);
-        this.addPoint();
-      }
-    }
-  }, {
-    key: "removeLines",
-    value: function removeLines() {
-      for (var i = 0; i < this.lines.length; i += 1) {
-        this.shape.remove(this.lines[i]);
-      }
-      this.lines = [];
-    }
-  }]);
-}(Layer);
-var polyline = function polyline(points, options) {
-  return new Polyline(points, options);
-};
-
-var Circle = /*#__PURE__*/function (_fabric$Circle) {
-  function Circle() {
-    _classCallCheck(this, Circle);
-    return _callSuper(this, Circle, arguments);
   }
-  _inherits(Circle, _fabric$Circle);
-  return _createClass(Circle);
-}(fabric.Circle);
-var circle = function circle(options) {
-  return new Circle(options);
-};
+  setStrokeWidth(strokeWidth) {
+    this.lines.forEach(line => {
+      line.setStrokeWidth(strokeWidth);
+    });
+  }
+  setPoints(points = []) {
+    this.removeLines();
+    this.points = [];
+    for (let i = 0; i < points.length; i += 1) {
+      const point = new Point(points[i]);
+      this.points.push(point);
+      this.addPoint();
+    }
+  }
+  removeLines() {
+    for (let i = 0; i < this.lines.length; i += 1) {
+      this.shape.remove(this.lines[i]);
+    }
+    this.lines = [];
+  }
+}
+const polyline = (points, options) => new Polyline(points, options);
 
-var Rect = /*#__PURE__*/function (_fabric$Rect) {
-  function Rect(points, options) {
-    var _this;
-    _classCallCheck(this, Rect);
+class Circle extends fabric.Circle {}
+const circle = options => new Circle(options);
+
+class Rect extends fabric.Rect {
+  constructor(points, options) {
     options = options || {};
     options.strokeWidth = options.strokeWidth || 1;
     options.class = 'rect';
-    _this = _callSuper(this, Rect, [points, options]);
-    _this._strokeWidth = options.strokeWidth;
-    return _this;
+    super(points, options);
+    this._strokeWidth = options.strokeWidth;
   }
-  _inherits(Rect, _fabric$Rect);
-  return _createClass(Rect, [{
-    key: "_renderStroke",
-    value: function _renderStroke(ctx) {
-      this.strokeWidth = this._strokeWidth / this.canvas.getZoom();
-      _superPropGet(Rect, "_renderStroke", this, 3)([ctx]);
-    }
-  }]);
-}(fabric.Rect);
-var rect = function rect(points, options) {
-  return new Rect(points, options);
-};
+  _renderStroke(ctx) {
+    this.strokeWidth = this._strokeWidth / this.canvas.getZoom();
+    super._renderStroke(ctx);
+  }
+}
+const rect = (points, options) => new Rect(points, options);
 
-var MarkerGroup = /*#__PURE__*/function (_Layer) {
-  function MarkerGroup(bounds, options) {
-    var _this;
-    _classCallCheck(this, MarkerGroup);
+class MarkerGroup extends Layer {
+  constructor(bounds, options) {
     options = options || {};
     options.bounds = bounds;
     options.zIndex = options.zIndex || 50;
     options.class = 'markergroup';
-    _this = _callSuper(this, MarkerGroup, [options]);
-    if (!_this.bounds) {
+    super(options);
+    if (!this.bounds) {
       console.error('bounds is missing!');
-      return _possibleConstructorReturn(_this);
+      return;
     }
-    _this.style = {
+    this.style = {
       strokeWidth: 1,
-      stroke: _this.stroke || 'black',
-      fill: _this.color || '#88888822',
-      class: _this.class,
-      zIndex: _this.zIndex,
-      parent: _this
+      stroke: this.stroke || 'black',
+      fill: this.color || '#88888822',
+      class: this.class,
+      zIndex: this.zIndex,
+      parent: this
     };
-    _this.draw();
-    return _this;
+    this.draw();
   }
-  _inherits(MarkerGroup, _Layer);
-  return _createClass(MarkerGroup, [{
-    key: "setBounds",
-    value: function setBounds(bounds) {
-      this.bounds = bounds;
-      this.draw();
+  setBounds(bounds) {
+    this.bounds = bounds;
+    this.draw();
+  }
+  draw() {
+    const width = this.bounds[1][0] - this.bounds[0][0];
+    const height = this.bounds[1][1] - this.bounds[0][1];
+    this.coords = {
+      left: this.bounds[0][0] + width / 2,
+      top: this.bounds[0][1] + height / 2,
+      width,
+      height
+    };
+    if (this.shape) {
+      this.shape.set(this.coords);
+    } else {
+      Object.assign(this.style, this.coords);
+      this.shape = new Rect(this.style);
     }
-  }, {
-    key: "draw",
-    value: function draw() {
-      var width = this.bounds[1][0] - this.bounds[0][0];
-      var height = this.bounds[1][1] - this.bounds[0][1];
-      this.coords = {
-        left: this.bounds[0][0] + width / 2,
-        top: this.bounds[0][1] + height / 2,
-        width: width,
-        height: height
-      };
-      if (this.shape) {
-        this.shape.set(this.coords);
-      } else {
-        Object.assign(this.style, this.coords);
-        this.shape = new Rect(this.style);
-      }
-    }
-  }]);
-}(Layer);
-var markerGroup = function markerGroup(bounds, options) {
-  return new MarkerGroup(bounds, options);
-};
+  }
+}
+const markerGroup = (bounds, options) => new MarkerGroup(bounds, options);
 
-var ArrowHead = /*#__PURE__*/function (_fabric$Triangle) {
-  function ArrowHead(points, options) {
-    _classCallCheck(this, ArrowHead);
+class ArrowHead extends fabric.Triangle {
+  constructor(points, options) {
     options = options || {};
     options.headLength = options.headLength || 10;
     options.stroke = options.stroke || '#207cca';
-    var _points = _slicedToArray(points, 4),
-      x1 = _points[0],
-      y1 = _points[1],
-      x2 = _points[2],
-      y2 = _points[3];
-    var dx = x2 - x1;
-    var dy = y2 - y1;
-    var angle = Math.atan2(dy, dx);
+    const [x1, y1, x2, y2] = points;
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    let angle = Math.atan2(dy, dx);
     angle *= 180 / Math.PI;
     angle += 90;
     if (options.lastAngle !== undefined) {
       angle = options.lastAngle;
-      console.log("Angle: ".concat(angle));
+      console.log(`Angle: ${angle}`);
     }
-    return _callSuper(this, ArrowHead, [{
-      angle: angle,
+    super({
+      angle,
       fill: options.stroke,
       top: y2,
       left: x2,
@@ -2637,412 +2176,354 @@ var ArrowHead = /*#__PURE__*/function (_fabric$Triangle) {
       originX: 'center',
       originY: 'center',
       selectable: false
-    }]);
+    });
   }
-  _inherits(ArrowHead, _fabric$Triangle);
-  return _createClass(ArrowHead);
-}(fabric.Triangle);
+}
 
-var Arrow = /*#__PURE__*/function (_fabric$Group) {
-  function Arrow(point, options) {
-    var _this;
-    _classCallCheck(this, Arrow);
+class Arrow extends fabric.Group {
+  constructor(point, options) {
     options = options || {};
     options.strokeWidth = options.strokeWidth || 5;
     options.stroke = options.stroke || '#7db9e8';
     options.class = 'arrow';
-    _this = _callSuper(this, Arrow, [[], Object.assign(options, {
+    super([], Object.assign(options, {
       evented: false
-    })]);
-    _this.pointArray = [point, Object.assign({}, point)];
-    _this.options = options;
-    _this.draw();
-    return _this;
+    }));
+    this.pointArray = [point, Object.assign({}, point)];
+    this.options = options;
+    this.draw();
   }
-  _inherits(Arrow, _fabric$Group);
-  return _createClass(Arrow, [{
-    key: "draw",
-    value: function draw() {
-      if (this.head) {
-        this.remove(this.head);
-      }
-      if (this.polyline) {
-        this.remove(this.polyline);
-      }
-      this.polyline = new fabric.Polyline(this.pointArray, Object.assign(this.options, {
-        strokeLineJoin: 'round',
-        fill: false
-      }));
-      this.addWithUpdate(this.polyline);
-      var lastPoints = this.getLastPoints();
-      var p1 = new fabric.Point(lastPoints[0], lastPoints[1]);
-      var p2 = new fabric.Point(lastPoints[2], lastPoints[3]);
-      var dis = p1.distanceFrom(p2);
-      console.log("dis = ".concat(dis));
-      this.head = new ArrowHead(lastPoints, Object.assign(this.options, {
-        headLength: this.strokeWidth * 2,
-        lastAngle: dis <= 10 ? this.lastAngle : undefined
-      }));
-      if (dis > 10) {
-        this.lastAngle = this.head.angle;
-      }
-      this.addWithUpdate(this.head);
+  draw() {
+    if (this.head) {
+      this.remove(this.head);
     }
-  }, {
-    key: "addPoint",
-    value: function addPoint(point) {
-      this.pointArray.push(point);
-      this.draw();
+    if (this.polyline) {
+      this.remove(this.polyline);
     }
-  }, {
-    key: "addTempPoint",
-    value: function addTempPoint(point) {
-      var len = this.pointArray.length;
-      var lastPoint = this.pointArray[len - 1];
-      lastPoint.x = point.x;
-      lastPoint.y = point.y;
-      this.draw();
+    this.polyline = new fabric.Polyline(this.pointArray, Object.assign(this.options, {
+      strokeLineJoin: 'round',
+      fill: false
+    }));
+    this.addWithUpdate(this.polyline);
+    const lastPoints = this.getLastPoints();
+    const p1 = new fabric.Point(lastPoints[0], lastPoints[1]);
+    const p2 = new fabric.Point(lastPoints[2], lastPoints[3]);
+    const dis = p1.distanceFrom(p2);
+    console.log(`dis = ${dis}`);
+    this.head = new ArrowHead(lastPoints, Object.assign(this.options, {
+      headLength: this.strokeWidth * 2,
+      lastAngle: dis <= 10 ? this.lastAngle : undefined
+    }));
+    if (dis > 10) {
+      this.lastAngle = this.head.angle;
     }
-  }, {
-    key: "getLastPoints",
-    value: function getLastPoints() {
-      var len = this.pointArray.length;
-      var point1 = this.pointArray[len - 2];
-      var point2 = this.pointArray[len - 1];
-      return [point1.x, point1.y, point2.x, point2.y];
-    }
-  }, {
-    key: "setColor",
-    value: function setColor(color) {
-      this._objects.forEach(function (obj) {
-        obj.setColor(color);
-      });
-    }
-  }]);
-}(fabric.Group);
+    this.addWithUpdate(this.head);
+  }
+  addPoint(point) {
+    this.pointArray.push(point);
+    this.draw();
+  }
+  addTempPoint(point) {
+    const len = this.pointArray.length;
+    const lastPoint = this.pointArray[len - 1];
+    lastPoint.x = point.x;
+    lastPoint.y = point.y;
+    this.draw();
+  }
+  getLastPoints() {
+    const len = this.pointArray.length;
+    const point1 = this.pointArray[len - 2];
+    const point2 = this.pointArray[len - 1];
+    return [point1.x, point1.y, point2.x, point2.y];
+  }
+  setColor(color) {
+    this._objects.forEach(obj => {
+      obj.setColor(color);
+    });
+  }
+}
 
-var Modes$1 = {
+/* eslint-disable no-unused-vars */
+const Modes = {
   SELECT: 'select',
   DRAWING: 'drawing',
   ARROW: 'arrow',
   TEXT: 'text'
 };
-var Canvas = /*#__PURE__*/function (_Base) {
-  function Canvas(container, options) {
-    var _this;
-    _classCallCheck(this, Canvas);
-    _this = _callSuper(this, Canvas, [options]);
-    _this.container = container;
-    var canvas = document.createElement('canvas');
-    _this.container.appendChild(canvas);
+class Canvas extends Base {
+  constructor(container, options) {
+    super(options);
+    this.container = container;
+    const canvas = document.createElement('canvas');
+    this.container.appendChild(canvas);
     canvas.setAttribute('id', 'fabric-layers-canvas');
-    canvas.width = _this.width || _this.container.clientWidth;
-    canvas.height = _this.height || _this.container.clientHeight;
-    _this.currentColor = _this.currentColor || 'black';
-    _this.fontFamily = _this.fontFamily || 'Roboto';
-    _this.canvas = new fabric.Canvas(canvas, {
+    canvas.width = this.width || this.container.clientWidth;
+    canvas.height = this.height || this.container.clientHeight;
+    this.currentColor = this.currentColor || 'black';
+    this.fontFamily = this.fontFamily || 'Roboto';
+    this.canvas = new fabric.Canvas(canvas, {
       freeDrawingCursor: 'none',
-      freeDrawingLineWidth: _this.lineWidth
+      freeDrawingLineWidth: this.lineWidth
     });
-    _this.arrows = [];
-    _this.setLineWidth(_this.lineWidth || 10);
-    _this.addCursor();
-    _this.addListeners();
-    _this.setModeAsArrow();
-    return _this;
+    this.arrows = [];
+    this.setLineWidth(this.lineWidth || 10);
+    this.addCursor();
+    this.addListeners();
+    this.setModeAsArrow();
   }
-  _inherits(Canvas, _Base);
-  return _createClass(Canvas, [{
-    key: "setModeAsDrawing",
-    value: function setModeAsDrawing() {
-      this.mode = Modes$1.DRAWING;
-      this.canvas.isDrawingMode = true;
-      this.canvas.selection = false;
-      this.onModeChanged();
-    }
-  }, {
-    key: "isDrawingMode",
-    value: function isDrawingMode() {
-      return this.mode === Modes$1.DRAWING;
-    }
-  }, {
-    key: "setModeAsSelect",
-    value: function setModeAsSelect() {
-      this.mode = Modes$1.SELECT;
-      this.canvas.isDrawingMode = false;
-      this.canvas.selection = true;
-      this.onModeChanged();
-    }
-  }, {
-    key: "isSelectMode",
-    value: function isSelectMode() {
-      return this.mode === Modes$1.SELECT;
-    }
-  }, {
-    key: "setModeAsArrow",
-    value: function setModeAsArrow() {
-      this.mode = Modes$1.ARROW;
-      this.canvas.isDrawingMode = false;
-      this.canvas.selection = false;
-      this.onModeChanged();
-    }
-  }, {
-    key: "isArrowMode",
-    value: function isArrowMode() {
-      return this.mode === Modes$1.ARROW;
-    }
-  }, {
-    key: "setModeAsText",
-    value: function setModeAsText() {
-      this.mode = Modes$1.TEXT;
-      this.canvas.isDrawingMode = false;
-      this.canvas.selection = false;
-      this.onModeChanged();
-    }
-  }, {
-    key: "isTextMode",
-    value: function isTextMode() {
-      return this.mode === Modes$1.TEXT;
-    }
-  }, {
-    key: "onModeChanged",
-    value: function onModeChanged() {
-      var _this2 = this;
-      this.updateCursor();
-      this.emit('mode-changed', this.mode);
-      this.canvas._objects.forEach(function (obj) {
-        obj.evented = _this2.isSelectMode();
-      });
-    }
-  }, {
-    key: "addListeners",
-    value: function addListeners() {
-      var _this3 = this;
-      var canvas = this.canvas;
-      canvas.on('mouse:move', function (evt) {
-        var mouse = canvas.getPointer(evt.e);
-        if (_this3.mousecursor) {
-          _this3.mousecursor.set({
-            top: mouse.y,
-            left: mouse.x
-          }).setCoords().canvas.renderAll();
-        }
-        if (_this3.isTextMode()) {
-          console.log('text');
-        } else if (_this3.isArrowMode()) {
-          if (_this3.activeArrow) {
-            _this3.activeArrow.addTempPoint(mouse);
-          }
-          _this3.canvas.requestRenderAll();
-        }
-      });
-      canvas.on('mouse:out', function () {
-        // put circle off screen
-        if (!_this3.mousecursor) return;
-        _this3.mousecursor.set({
-          left: -1000,
-          top: -1000
-        }).setCoords();
-        _this3.cursor.renderAll();
-      });
-      canvas.on('mouse:up', function (event) {
-        if (canvas.mouseDown) {
-          canvas.fire('mouse:click', event);
-        }
-        canvas.mouseDown = false;
-      });
-      canvas.on('mouse:move', function (event) {
-        canvas.mouseDown = false;
-      });
-      canvas.on('mouse:down', function (event) {
-        canvas.mouseDown = true;
-      });
-      canvas.on('mouse:click', function (event) {
-        console.log('mouse click', event);
-        var mouse = canvas.getPointer(event.e);
-        if (event.target) return;
-        if (_this3.isTextMode()) {
-          var text = new fabric.IText('Text', {
-            left: mouse.x,
-            top: mouse.y,
-            width: 100,
-            fontSize: 20,
-            fontFamily: _this3.fontFamily,
-            lockUniScaling: true,
-            fill: _this3.currentColor,
-            stroke: _this3.currentColor
-          });
-          canvas.add(text).setActiveObject(text).renderAll();
-          _this3.setModeAsSelect();
-        } else if (_this3.isArrowMode()) {
-          console.log('arrow mode');
-          if (_this3.activeArrow) {
-            _this3.activeArrow.addPoint(mouse);
-          } else {
-            _this3.activeArrow = new Arrow(mouse, {
-              stroke: _this3.currentColor,
-              strokeWidth: _this3.lineWidth
-            });
-            _this3.canvas.add(_this3.activeArrow);
-          }
-          _this3.canvas.requestRenderAll();
-        }
-      });
-      canvas.on('mouse:dblclick', function (event) {
-        console.log('mouse:dbclick');
-        if (_this3.isArrowMode() && _this3.activeArrow) {
-          _this3.arrows.push(_this3.activeArrow);
-          _this3.activeArrow = null;
-        }
-      });
-      canvas.on('selection:created', function (event) {
-        _this3.emit('selected');
-      });
-      canvas.on('selection:cleared', function (event) {
-        _this3.emit('unselected');
-      });
-    }
-  }, {
-    key: "removeSelected",
-    value: function removeSelected() {
-      var _this4 = this;
-      this.canvas.remove(this.canvas.getActiveObject());
-      this.canvas.getActiveObjects().forEach(function (obj) {
-        _this4.canvas.remove(obj);
-      });
-      this.canvas.discardActiveObject().renderAll();
-    }
-  }, {
-    key: "updateCursor",
-    value: function updateCursor() {
-      if (!this.cursor) return;
-      var canvas = this.canvas;
+  setModeAsDrawing() {
+    this.mode = Modes.DRAWING;
+    this.canvas.isDrawingMode = true;
+    this.canvas.selection = false;
+    this.onModeChanged();
+  }
+  isDrawingMode() {
+    return this.mode === Modes.DRAWING;
+  }
+  setModeAsSelect() {
+    this.mode = Modes.SELECT;
+    this.canvas.isDrawingMode = false;
+    this.canvas.selection = true;
+    this.onModeChanged();
+  }
+  isSelectMode() {
+    return this.mode === Modes.SELECT;
+  }
+  setModeAsArrow() {
+    this.mode = Modes.ARROW;
+    this.canvas.isDrawingMode = false;
+    this.canvas.selection = false;
+    this.onModeChanged();
+  }
+  isArrowMode() {
+    return this.mode === Modes.ARROW;
+  }
+  setModeAsText() {
+    this.mode = Modes.TEXT;
+    this.canvas.isDrawingMode = false;
+    this.canvas.selection = false;
+    this.onModeChanged();
+  }
+  isTextMode() {
+    return this.mode === Modes.TEXT;
+  }
+  onModeChanged() {
+    this.updateCursor();
+    this.emit('mode-changed', this.mode);
+    this.canvas._objects.forEach(obj => {
+      obj.evented = this.isSelectMode();
+    });
+  }
+  addListeners() {
+    const canvas = this.canvas;
+    canvas.on('mouse:move', evt => {
+      const mouse = canvas.getPointer(evt.e);
       if (this.mousecursor) {
-        this.cursor.remove(this.mousecursor);
-        this.mousecursor = null;
+        this.mousecursor.set({
+          top: mouse.y,
+          left: mouse.x
+        }).setCoords().canvas.renderAll();
       }
-      var cursorOpacity = 0.3;
-      var mousecursor = null;
-      if (this.isDrawingMode()) {
-        mousecursor = new fabric.Circle({
-          left: -1000,
-          top: -1000,
-          radius: canvas.freeDrawingBrush.width / 2,
-          fill: "rgba(255,0,0,".concat(cursorOpacity, ")"),
-          stroke: 'black',
-          originX: 'center',
-          originY: 'center'
-        });
-      } else if (this.isTextMode()) {
-        mousecursor = new fabric.Path('M0,-10 V10', {
-          left: -1000,
-          top: -1000,
-          radius: canvas.freeDrawingBrush.width / 2,
-          fill: "rgba(255,0,0,".concat(cursorOpacity, ")"),
-          stroke: "rgba(0,0,0,".concat(cursorOpacity, ")"),
-          originX: 'center',
-          originY: 'center',
-          scaleX: 1,
-          scaleY: 1
-        });
-      } else {
-        mousecursor = new fabric.Path('M0,-10 V10 M-10,0 H10', {
-          left: -1000,
-          top: -1000,
-          radius: canvas.freeDrawingBrush.width / 2,
-          fill: "rgba(255,0,0,".concat(cursorOpacity, ")"),
-          stroke: "rgba(0,0,0,".concat(cursorOpacity, ")"),
-          originX: 'center',
-          originY: 'center'
-        });
-      }
-      if (this.isSelectMode()) {
-        mousecursor = null;
-        this.canvas.defaultCursor = 'default';
-      } else {
-        this.canvas.defaultCursor = 'none';
-      }
-      if (mousecursor) {
-        this.cursor.add(mousecursor);
-      }
-      this.mousecursor = mousecursor;
-    }
-  }, {
-    key: "addCursor",
-    value: function addCursor() {
-      var canvas = this.canvas;
-      var cursorCanvas = document.createElement('canvas');
-      this.canvas.wrapperEl.appendChild(cursorCanvas);
-      cursorCanvas.setAttribute('id', 'fabric-layers-cursor-canvas');
-      cursorCanvas.style.position = 'absolute';
-      cursorCanvas.style.top = '0';
-      cursorCanvas.style.pointerEvents = 'none';
-      cursorCanvas.width = this.width || this.container.clientWidth;
-      cursorCanvas.height = this.height || this.container.clientHeight;
-      this.cursorCanvas = cursorCanvas;
-      canvas.defaultCursor = 'none';
-      this.cursor = new fabric.StaticCanvas(cursorCanvas);
-      this.updateCursor();
-    }
-  }, {
-    key: "setColor",
-    value: function setColor(color) {
-      this.currentColor = color;
-      this.canvas.freeDrawingBrush.color = color;
-      var obj = this.canvas.getActiveObject();
-      if (obj) {
-        obj.set('stroke', color);
-        obj.set('fill', color);
+      if (this.isTextMode()) {
+        console.log('text');
+      } else if (this.isArrowMode()) {
+        if (this.activeArrow) {
+          this.activeArrow.addTempPoint(mouse);
+        }
         this.canvas.requestRenderAll();
       }
+    });
+    canvas.on('mouse:out', () => {
+      // put circle off screen
       if (!this.mousecursor) return;
       this.mousecursor.set({
-        left: 100,
-        top: 100,
-        fill: color
-      }).setCoords().canvas.renderAll();
-    }
-  }, {
-    key: "setLineWidth",
-    value: function setLineWidth(width) {
-      this.lineWidth = width;
-      this.canvas.freeDrawingBrush.width = width;
-      if (!this.mousecursor) return;
-      this.mousecursor.set({
-        left: 100,
-        top: 100,
-        radius: width / 2
-      }).setCoords().canvas.renderAll();
-    }
-  }, {
-    key: "setFontFamily",
-    value: function setFontFamily(family) {
-      this.fontFamily = family;
-      var obj = this.canvas.getActiveObject();
-      if (obj && obj.type === 'i-text') {
-        obj.set('fontFamily', family);
+        left: -1e3,
+        top: -1e3
+      }).setCoords();
+      this.cursor.renderAll();
+    });
+    canvas.on('mouse:up', event => {
+      if (canvas.mouseDown) {
+        canvas.fire('mouse:click', event);
+      }
+      canvas.mouseDown = false;
+    });
+    canvas.on('mouse:move', event => {
+      canvas.mouseDown = false;
+    });
+    canvas.on('mouse:down', event => {
+      canvas.mouseDown = true;
+    });
+    canvas.on('mouse:click', event => {
+      console.log('mouse click', event);
+      const mouse = canvas.getPointer(event.e);
+      if (event.target) return;
+      if (this.isTextMode()) {
+        const text = new fabric.IText('Text', {
+          left: mouse.x,
+          top: mouse.y,
+          width: 100,
+          fontSize: 20,
+          fontFamily: this.fontFamily,
+          lockUniScaling: true,
+          fill: this.currentColor,
+          stroke: this.currentColor
+        });
+        canvas.add(text).setActiveObject(text).renderAll();
+        this.setModeAsSelect();
+      } else if (this.isArrowMode()) {
+        console.log('arrow mode');
+        if (this.activeArrow) {
+          this.activeArrow.addPoint(mouse);
+        } else {
+          this.activeArrow = new Arrow(mouse, {
+            stroke: this.currentColor,
+            strokeWidth: this.lineWidth
+          });
+          this.canvas.add(this.activeArrow);
+        }
         this.canvas.requestRenderAll();
       }
+    });
+    canvas.on('mouse:dblclick', event => {
+      console.log('mouse:dbclick');
+      if (this.isArrowMode() && this.activeArrow) {
+        this.arrows.push(this.activeArrow);
+        this.activeArrow = null;
+      }
+    });
+    canvas.on('selection:created', event => {
+      this.emit('selected');
+    });
+    canvas.on('selection:cleared', event => {
+      this.emit('unselected');
+    });
+  }
+  removeSelected() {
+    this.canvas.remove(this.canvas.getActiveObject());
+    this.canvas.getActiveObjects().forEach(obj => {
+      this.canvas.remove(obj);
+    });
+    this.canvas.discardActiveObject().renderAll();
+  }
+  updateCursor() {
+    if (!this.cursor) return;
+    const canvas = this.canvas;
+    if (this.mousecursor) {
+      this.cursor.remove(this.mousecursor);
+      this.mousecursor = null;
     }
-  }, {
-    key: "clear",
-    value: function clear() {
-      this.arrows = [];
-      this.canvas.clear();
+    const cursorOpacity = 0.3;
+    let mousecursor = null;
+    if (this.isDrawingMode()) {
+      mousecursor = new fabric.Circle({
+        left: -1e3,
+        top: -1e3,
+        radius: canvas.freeDrawingBrush.width / 2,
+        fill: `rgba(255,0,0,${cursorOpacity})`,
+        stroke: 'black',
+        originX: 'center',
+        originY: 'center'
+      });
+    } else if (this.isTextMode()) {
+      mousecursor = new fabric.Path('M0,-10 V10', {
+        left: -1e3,
+        top: -1e3,
+        radius: canvas.freeDrawingBrush.width / 2,
+        fill: `rgba(255,0,0,${cursorOpacity})`,
+        stroke: `rgba(0,0,0,${cursorOpacity})`,
+        originX: 'center',
+        originY: 'center',
+        scaleX: 1,
+        scaleY: 1
+      });
+    } else {
+      mousecursor = new fabric.Path('M0,-10 V10 M-10,0 H10', {
+        left: -1e3,
+        top: -1e3,
+        radius: canvas.freeDrawingBrush.width / 2,
+        fill: `rgba(255,0,0,${cursorOpacity})`,
+        stroke: `rgba(0,0,0,${cursorOpacity})`,
+        originX: 'center',
+        originY: 'center'
+      });
     }
-  }]);
-}(Base);
+    if (this.isSelectMode()) {
+      mousecursor = null;
+      this.canvas.defaultCursor = 'default';
+    } else {
+      this.canvas.defaultCursor = 'none';
+    }
+    if (mousecursor) {
+      this.cursor.add(mousecursor);
+    }
+    this.mousecursor = mousecursor;
+  }
+  addCursor() {
+    const canvas = this.canvas;
+    const cursorCanvas = document.createElement('canvas');
+    this.canvas.wrapperEl.appendChild(cursorCanvas);
+    cursorCanvas.setAttribute('id', 'fabric-layers-cursor-canvas');
+    cursorCanvas.style.position = 'absolute';
+    cursorCanvas.style.top = '0';
+    cursorCanvas.style.pointerEvents = 'none';
+    cursorCanvas.width = this.width || this.container.clientWidth;
+    cursorCanvas.height = this.height || this.container.clientHeight;
+    this.cursorCanvas = cursorCanvas;
+    canvas.defaultCursor = 'none';
+    this.cursor = new fabric.StaticCanvas(cursorCanvas);
+    this.updateCursor();
+  }
+  setColor(color) {
+    this.currentColor = color;
+    this.canvas.freeDrawingBrush.color = color;
+    const obj = this.canvas.getActiveObject();
+    if (obj) {
+      obj.set('stroke', color);
+      obj.set('fill', color);
+      this.canvas.requestRenderAll();
+    }
+    if (!this.mousecursor) return;
+    this.mousecursor.set({
+      left: 100,
+      top: 100,
+      fill: color
+    }).setCoords().canvas.renderAll();
+  }
+  setLineWidth(width) {
+    this.lineWidth = width;
+    this.canvas.freeDrawingBrush.width = width;
+    if (!this.mousecursor) return;
+    this.mousecursor.set({
+      left: 100,
+      top: 100,
+      radius: width / 2
+    }).setCoords().canvas.renderAll();
+  }
+  setFontFamily(family) {
+    this.fontFamily = family;
+    const obj = this.canvas.getActiveObject();
+    if (obj && obj.type === 'i-text') {
+      obj.set('fontFamily', family);
+      this.canvas.requestRenderAll();
+    }
+  }
+  clear() {
+    this.arrows = [];
+    this.canvas.clear();
+  }
+}
 
-var isNum = function isNum(val) {
+const isNum = function (val) {
   return typeof val === 'number' && !isNaN(val);
 };
-var evPos = (function (ev, toElement) {
+var evPos = (ev, toElement) => {
   toElement = toElement || ev.currentTarget;
-  var toElementBoundingRect = toElement.getBoundingClientRect();
-  var orgEv = ev.originalEvent || ev;
-  var hasTouches = ev.touches && ev.touches.length;
-  var pageX = 0;
-  var pageY = 0;
+  const toElementBoundingRect = toElement.getBoundingClientRect();
+  const orgEv = ev.originalEvent || ev;
+  const hasTouches = ev.touches && ev.touches.length;
+  let pageX = 0;
+  let pageY = 0;
   if (hasTouches) {
     if (isNum(ev.touches[0].pageX) && isNum(ev.touches[0].pageY)) {
       pageX = ev.touches[0].pageX;
@@ -3058,7 +2539,7 @@ var evPos = (function (ev, toElement) {
     pageX = ev.currentPoint.x;
     pageY = ev.currentPoint.y;
   }
-  var isRight = false;
+  let isRight = false;
   if ('which' in ev) {
     // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
     isRight = ev.which == 3;
@@ -3069,476 +2550,476 @@ var evPos = (function (ev, toElement) {
   return {
     x: pageX - toElementBoundingRect.left,
     y: pageY - toElementBoundingRect.top,
-    isRight: isRight
+    isRight
   };
-});
+};
 
-var stopThresholdDefault = 0.3;
-var bounceDeceleration = 0.04;
-var bounceAcceleration = 0.11;
+const stopThresholdDefault = 0.3;
+const bounceDeceleration = 0.04;
+const bounceAcceleration = 0.11;
 
 // fixes weird safari 10 bug where preventDefault is prevented
 // @see https://github.com/metafizzy/flickity/issues/457#issuecomment-254501356
-window.addEventListener('touchmove', function () {});
-var Impetus = /*#__PURE__*/_createClass(function Impetus(_ref) {
-  var _ref$source = _ref.source,
-    sourceEl = _ref$source === void 0 ? document : _ref$source,
-    updateCallback = _ref.update,
-    stopCallback = _ref.stop,
-    _ref$multiplier = _ref.multiplier,
-    multiplier = _ref$multiplier === void 0 ? 1 : _ref$multiplier,
-    _ref$friction = _ref.friction,
-    friction = _ref$friction === void 0 ? 0.92 : _ref$friction,
-    initialValues = _ref.initialValues,
-    boundX = _ref.boundX,
-    boundY = _ref.boundY,
-    _ref$bounce = _ref.bounce,
-    bounce = _ref$bounce === void 0 ? true : _ref$bounce;
-  _classCallCheck(this, Impetus);
-  var boundXmin;
-  var boundXmax;
-  var boundYmin;
-  var boundYmax;
-  var pointerLastX;
-  var pointerLastY;
-  var pointerCurrentX;
-  var pointerCurrentY;
-  var pointerId;
-  var decVelX;
-  var decVelY;
-  var targetX = 0;
-  var targetY = 0;
-  var stopThreshold = stopThresholdDefault * multiplier;
-  var ticking = false;
-  var pointerActive = false;
-  var paused = false;
-  var decelerating = false;
-  var trackingPoints = [];
+window.addEventListener('touchmove', () => {});
+class Impetus {
+  constructor({
+    source: sourceEl = document,
+    update: updateCallback,
+    stop: stopCallback,
+    multiplier = 1,
+    friction = 0.92,
+    initialValues,
+    boundX,
+    boundY,
+    bounce = true
+  }) {
+    let boundXmin;
+    let boundXmax;
+    let boundYmin;
+    let boundYmax;
+    let pointerLastX;
+    let pointerLastY;
+    let pointerCurrentX;
+    let pointerCurrentY;
+    let pointerId;
+    let decVelX;
+    let decVelY;
+    let targetX = 0;
+    let targetY = 0;
+    let stopThreshold = stopThresholdDefault * multiplier;
+    let ticking = false;
+    let pointerActive = false;
+    let paused = false;
+    let decelerating = false;
+    let trackingPoints = [];
 
-  /**
-   * Initialize instance
-   */
-  (function init() {
-    sourceEl = typeof sourceEl === 'string' ? document.querySelector(sourceEl) : sourceEl;
-    if (!sourceEl) {
-      throw new Error('IMPETUS: source not found.');
-    }
-    if (!updateCallback) {
-      throw new Error('IMPETUS: update function not defined.');
-    }
-    if (initialValues) {
-      if (initialValues[0]) {
-        targetX = initialValues[0];
+    /**
+     * Initialize instance
+     */
+    (function init() {
+      sourceEl = typeof sourceEl === 'string' ? document.querySelector(sourceEl) : sourceEl;
+      if (!sourceEl) {
+        throw new Error('IMPETUS: source not found.');
       }
-      if (initialValues[1]) {
-        targetY = initialValues[1];
+      if (!updateCallback) {
+        throw new Error('IMPETUS: update function not defined.');
       }
-      callUpdateCallback();
-    }
+      if (initialValues) {
+        if (initialValues[0]) {
+          targetX = initialValues[0];
+        }
+        if (initialValues[1]) {
+          targetY = initialValues[1];
+        }
+        callUpdateCallback();
+      }
 
-    // Initialize bound values
-    if (boundX) {
+      // Initialize bound values
+      if (boundX) {
+        boundXmin = boundX[0];
+        boundXmax = boundX[1];
+      }
+      if (boundY) {
+        boundYmin = boundY[0];
+        boundYmax = boundY[1];
+      }
+      sourceEl.addEventListener('touchstart', onDown);
+      sourceEl.addEventListener('mousedown', onDown);
+    })();
+
+    /**
+     * In edge cases where you may need to
+     * reinstanciate Impetus on the same sourceEl
+     * this will remove the previous event listeners
+     */
+    this.destroy = function () {
+      sourceEl.removeEventListener('touchstart', onDown);
+      sourceEl.removeEventListener('mousedown', onDown);
+      cleanUpRuntimeEvents();
+
+      // however it won't "destroy" a reference
+      // to instance if you'd like to do that
+      // it returns null as a convinience.
+      // ex: `instance = instance.destroy();`
+      return null;
+    };
+
+    /**
+     * Disable movement processing
+     * @public
+     */
+    this.pause = function () {
+      cleanUpRuntimeEvents();
+      pointerActive = false;
+      paused = true;
+    };
+
+    /**
+     * Enable movement processing
+     * @public
+     */
+    this.resume = function () {
+      paused = false;
+    };
+
+    /**
+     * Update the current x and y values
+     * @public
+     * @param {Number} x
+     * @param {Number} y
+     */
+    this.setValues = function (x, y) {
+      if (typeof x === 'number') {
+        targetX = x;
+      }
+      if (typeof y === 'number') {
+        targetY = y;
+      }
+    };
+
+    /**
+     * Update the multiplier value
+     * @public
+     * @param {Number} val
+     */
+    this.setMultiplier = function (val) {
+      multiplier = val;
+      stopThreshold = stopThresholdDefault * multiplier;
+    };
+
+    /**
+     * Update boundX value
+     * @public
+     * @param {Number[]} boundX
+     */
+    this.setBoundX = function (boundX) {
       boundXmin = boundX[0];
       boundXmax = boundX[1];
-    }
-    if (boundY) {
+    };
+
+    /**
+     * Update boundY value
+     * @public
+     * @param {Number[]} boundY
+     */
+    this.setBoundY = function (boundY) {
       boundYmin = boundY[0];
       boundYmax = boundY[1];
+    };
+
+    /**
+     * Removes all events set by this instance during runtime
+     */
+    function cleanUpRuntimeEvents() {
+      // Remove all touch events added during 'onDown' as well.
+      document.removeEventListener('touchmove', onMove, getPassiveSupported() ? {
+        passive: false
+      } : false);
+      document.removeEventListener('touchend', onUp);
+      document.removeEventListener('touchcancel', stopTracking);
+      document.removeEventListener('mousemove', onMove, getPassiveSupported() ? {
+        passive: false
+      } : false);
+      document.removeEventListener('mouseup', onUp);
     }
-    sourceEl.addEventListener('touchstart', onDown);
-    sourceEl.addEventListener('mousedown', onDown);
-  })();
 
-  /**
-   * In edge cases where you may need to
-   * reinstanciate Impetus on the same sourceEl
-   * this will remove the previous event listeners
-   */
-  this.destroy = function () {
-    sourceEl.removeEventListener('touchstart', onDown);
-    sourceEl.removeEventListener('mousedown', onDown);
-    cleanUpRuntimeEvents();
+    /**
+     * Add all required runtime events
+     */
+    function addRuntimeEvents() {
+      cleanUpRuntimeEvents();
 
-    // however it won't "destroy" a reference
-    // to instance if you'd like to do that
-    // it returns null as a convinience.
-    // ex: `instance = instance.destroy();`
-    return null;
-  };
-
-  /**
-   * Disable movement processing
-   * @public
-   */
-  this.pause = function () {
-    cleanUpRuntimeEvents();
-    pointerActive = false;
-    paused = true;
-  };
-
-  /**
-   * Enable movement processing
-   * @public
-   */
-  this.resume = function () {
-    paused = false;
-  };
-
-  /**
-   * Update the current x and y values
-   * @public
-   * @param {Number} x
-   * @param {Number} y
-   */
-  this.setValues = function (x, y) {
-    if (typeof x === 'number') {
-      targetX = x;
+      // @see https://developers.google.com/web/updates/2017/01/scrolling-intervention
+      document.addEventListener('touchmove', onMove, getPassiveSupported() ? {
+        passive: false
+      } : false);
+      document.addEventListener('touchend', onUp);
+      document.addEventListener('touchcancel', stopTracking);
+      document.addEventListener('mousemove', onMove, getPassiveSupported() ? {
+        passive: false
+      } : false);
+      document.addEventListener('mouseup', onUp);
     }
-    if (typeof y === 'number') {
-      targetY = y;
+
+    /**
+     * Executes the update function
+     */
+    function callUpdateCallback() {
+      updateCallback.call(sourceEl, targetX, targetY);
     }
-  };
 
-  /**
-   * Update the multiplier value
-   * @public
-   * @param {Number} val
-   */
-  this.setMultiplier = function (val) {
-    multiplier = val;
-    stopThreshold = stopThresholdDefault * multiplier;
-  };
-
-  /**
-   * Update boundX value
-   * @public
-   * @param {Number[]} boundX
-   */
-  this.setBoundX = function (boundX) {
-    boundXmin = boundX[0];
-    boundXmax = boundX[1];
-  };
-
-  /**
-   * Update boundY value
-   * @public
-   * @param {Number[]} boundY
-   */
-  this.setBoundY = function (boundY) {
-    boundYmin = boundY[0];
-    boundYmax = boundY[1];
-  };
-
-  /**
-   * Removes all events set by this instance during runtime
-   */
-  function cleanUpRuntimeEvents() {
-    // Remove all touch events added during 'onDown' as well.
-    document.removeEventListener('touchmove', onMove, getPassiveSupported() ? {
-      passive: false
-    } : false);
-    document.removeEventListener('touchend', onUp);
-    document.removeEventListener('touchcancel', stopTracking);
-    document.removeEventListener('mousemove', onMove, getPassiveSupported() ? {
-      passive: false
-    } : false);
-    document.removeEventListener('mouseup', onUp);
-  }
-
-  /**
-   * Add all required runtime events
-   */
-  function addRuntimeEvents() {
-    cleanUpRuntimeEvents();
-
-    // @see https://developers.google.com/web/updates/2017/01/scrolling-intervention
-    document.addEventListener('touchmove', onMove, getPassiveSupported() ? {
-      passive: false
-    } : false);
-    document.addEventListener('touchend', onUp);
-    document.addEventListener('touchcancel', stopTracking);
-    document.addEventListener('mousemove', onMove, getPassiveSupported() ? {
-      passive: false
-    } : false);
-    document.addEventListener('mouseup', onUp);
-  }
-
-  /**
-   * Executes the update function
-   */
-  function callUpdateCallback() {
-    updateCallback.call(sourceEl, targetX, targetY);
-  }
-
-  /**
-   * Creates a custom normalized event object from touch and mouse events
-   * @param  {Event} ev
-   * @returns {Object} with x, y, and id properties
-   */
-  function normalizeEvent(ev) {
-    if (ev.type === 'touchmove' || ev.type === 'touchstart' || ev.type === 'touchend') {
-      var touch = ev.targetTouches[0] || ev.changedTouches[0];
+    /**
+     * Creates a custom normalized event object from touch and mouse events
+     * @param  {Event} ev
+     * @returns {Object} with x, y, and id properties
+     */
+    function normalizeEvent(ev) {
+      if (ev.type === 'touchmove' || ev.type === 'touchstart' || ev.type === 'touchend') {
+        const touch = ev.targetTouches[0] || ev.changedTouches[0];
+        return {
+          x: touch.clientX,
+          y: touch.clientY,
+          id: touch.identifier
+        };
+      }
+      // mouse events
       return {
-        x: touch.clientX,
-        y: touch.clientY,
-        id: touch.identifier
+        x: ev.clientX,
+        y: ev.clientY,
+        id: null
       };
     }
-    // mouse events
-    return {
-      x: ev.clientX,
-      y: ev.clientY,
-      id: null
-    };
-  }
 
-  /**
-   * Initializes movement tracking
-   * @param  {Object} ev Normalized event
-   */
-  function onDown(ev) {
-    var event = normalizeEvent(ev);
-    if (!pointerActive && !paused) {
-      pointerActive = true;
-      decelerating = false;
-      pointerId = event.id;
-      pointerLastX = pointerCurrentX = event.x;
-      pointerLastY = pointerCurrentY = event.y;
-      trackingPoints = [];
+    /**
+     * Initializes movement tracking
+     * @param  {Object} ev Normalized event
+     */
+    function onDown(ev) {
+      const event = normalizeEvent(ev);
+      if (!pointerActive && !paused) {
+        pointerActive = true;
+        decelerating = false;
+        pointerId = event.id;
+        pointerLastX = pointerCurrentX = event.x;
+        pointerLastY = pointerCurrentY = event.y;
+        trackingPoints = [];
+        addTrackingPoint(pointerLastX, pointerLastY);
+        addRuntimeEvents();
+      }
+    }
+
+    /**
+     * Handles move events
+     * @param  {Object} ev Normalized event
+     */
+    function onMove(ev) {
+      ev.preventDefault();
+      const event = normalizeEvent(ev);
+      if (pointerActive && event.id === pointerId) {
+        pointerCurrentX = event.x;
+        pointerCurrentY = event.y;
+        addTrackingPoint(pointerLastX, pointerLastY);
+        requestTick();
+      }
+    }
+
+    /**
+     * Handles up/end events
+     * @param {Object} ev Normalized event
+     */
+    function onUp(ev) {
+      const event = normalizeEvent(ev);
+      if (pointerActive && event.id === pointerId) {
+        stopTracking();
+      }
+    }
+
+    /**
+     * Stops movement tracking, starts animation
+     */
+    function stopTracking() {
+      pointerActive = false;
       addTrackingPoint(pointerLastX, pointerLastY);
-      addRuntimeEvents();
+      startDecelAnim();
+      cleanUpRuntimeEvents();
     }
-  }
 
-  /**
-   * Handles move events
-   * @param  {Object} ev Normalized event
-   */
-  function onMove(ev) {
-    ev.preventDefault();
-    var event = normalizeEvent(ev);
-    if (pointerActive && event.id === pointerId) {
-      pointerCurrentX = event.x;
-      pointerCurrentY = event.y;
-      addTrackingPoint(pointerLastX, pointerLastY);
-      requestTick();
-    }
-  }
-
-  /**
-   * Handles up/end events
-   * @param {Object} ev Normalized event
-   */
-  function onUp(ev) {
-    var event = normalizeEvent(ev);
-    if (pointerActive && event.id === pointerId) {
-      stopTracking();
-    }
-  }
-
-  /**
-   * Stops movement tracking, starts animation
-   */
-  function stopTracking() {
-    pointerActive = false;
-    addTrackingPoint(pointerLastX, pointerLastY);
-    startDecelAnim();
-    cleanUpRuntimeEvents();
-  }
-
-  /**
-   * Records movement for the last 100ms
-   * @param {number} x
-   * @param {number} y [description]
-   */
-  function addTrackingPoint(x, y) {
-    var time = Date.now();
-    while (trackingPoints.length > 0) {
-      if (time - trackingPoints[0].time <= 100) {
-        break;
+    /**
+     * Records movement for the last 100ms
+     * @param {number} x
+     * @param {number} y [description]
+     */
+    function addTrackingPoint(x, y) {
+      const time = Date.now();
+      while (trackingPoints.length > 0) {
+        if (time - trackingPoints[0].time <= 100) {
+          break;
+        }
+        trackingPoints.shift();
       }
-      trackingPoints.shift();
+      trackingPoints.push({
+        x,
+        y,
+        time
+      });
     }
-    trackingPoints.push({
-      x: x,
-      y: y,
-      time: time
-    });
-  }
 
-  /**
-   * Calculate new values, call update function
-   */
-  function updateAndRender() {
-    var pointerChangeX = pointerCurrentX - pointerLastX;
-    var pointerChangeY = pointerCurrentY - pointerLastY;
-    targetX += pointerChangeX * multiplier;
-    targetY += pointerChangeY * multiplier;
-    if (bounce) {
-      var diff = checkBounds();
-      if (diff.x !== 0) {
-        targetX -= pointerChangeX * dragOutOfBoundsMultiplier(diff.x) * multiplier;
-      }
-      if (diff.y !== 0) {
-        targetY -= pointerChangeY * dragOutOfBoundsMultiplier(diff.y) * multiplier;
-      }
-    } else {
-      checkBounds(true);
-    }
-    callUpdateCallback();
-    pointerLastX = pointerCurrentX;
-    pointerLastY = pointerCurrentY;
-    ticking = false;
-  }
-
-  /**
-   * Returns a value from around 0.5 to 1, based on distance
-   * @param {Number} val
-   */
-  function dragOutOfBoundsMultiplier(val) {
-    return 0.000005 * Math.pow(val, 2) + 0.0001 * val + 0.55;
-  }
-
-  /**
-   * prevents animating faster than current framerate
-   */
-  function requestTick() {
-    if (!ticking) {
-      requestAnimFrame(updateAndRender);
-    }
-    ticking = true;
-  }
-
-  /**
-   * Determine position relative to bounds
-   * @param {Boolean} restrict Whether to restrict target to bounds
-   */
-  function checkBounds(restrict) {
-    var xDiff = 0;
-    var yDiff = 0;
-    if (boundXmin !== undefined && targetX < boundXmin) {
-      xDiff = boundXmin - targetX;
-    } else if (boundXmax !== undefined && targetX > boundXmax) {
-      xDiff = boundXmax - targetX;
-    }
-    if (boundYmin !== undefined && targetY < boundYmin) {
-      yDiff = boundYmin - targetY;
-    } else if (boundYmax !== undefined && targetY > boundYmax) {
-      yDiff = boundYmax - targetY;
-    }
-    if (restrict) {
-      if (xDiff !== 0) {
-        targetX = xDiff > 0 ? boundXmin : boundXmax;
-      }
-      if (yDiff !== 0) {
-        targetY = yDiff > 0 ? boundYmin : boundYmax;
-      }
-    }
-    return {
-      x: xDiff,
-      y: yDiff,
-      inBounds: xDiff === 0 && yDiff === 0
-    };
-  }
-
-  /**
-   * Initialize animation of values coming to a stop
-   */
-  function startDecelAnim() {
-    var firstPoint = trackingPoints[0];
-    var lastPoint = trackingPoints[trackingPoints.length - 1];
-    var xOffset = lastPoint.x - firstPoint.x;
-    var yOffset = lastPoint.y - firstPoint.y;
-    var timeOffset = lastPoint.time - firstPoint.time;
-    var D = timeOffset / 15 / multiplier;
-    decVelX = xOffset / D || 0; // prevent NaN
-    decVelY = yOffset / D || 0;
-    var diff = checkBounds();
-    if (Math.abs(decVelX) > 1 || Math.abs(decVelY) > 1 || !diff.inBounds) {
-      decelerating = true;
-      requestAnimFrame(stepDecelAnim);
-    } else if (stopCallback) {
-      stopCallback(sourceEl);
-    }
-  }
-
-  /**
-   * Animates values slowing down
-   */
-  function stepDecelAnim() {
-    if (!decelerating) {
-      return;
-    }
-    decVelX *= friction;
-    decVelY *= friction;
-    targetX += decVelX;
-    targetY += decVelY;
-    var diff = checkBounds();
-    if (Math.abs(decVelX) > stopThreshold || Math.abs(decVelY) > stopThreshold || !diff.inBounds) {
+    /**
+     * Calculate new values, call update function
+     */
+    function updateAndRender() {
+      const pointerChangeX = pointerCurrentX - pointerLastX;
+      const pointerChangeY = pointerCurrentY - pointerLastY;
+      targetX += pointerChangeX * multiplier;
+      targetY += pointerChangeY * multiplier;
       if (bounce) {
-        var reboundAdjust = 2.5;
+        const diff = checkBounds();
         if (diff.x !== 0) {
-          if (diff.x * decVelX <= 0) {
-            decVelX += diff.x * bounceDeceleration;
-          } else {
-            var adjust = diff.x > 0 ? reboundAdjust : -reboundAdjust;
-            decVelX = (diff.x + adjust) * bounceAcceleration;
-          }
+          targetX -= pointerChangeX * dragOutOfBoundsMultiplier(diff.x) * multiplier;
         }
         if (diff.y !== 0) {
-          if (diff.y * decVelY <= 0) {
-            decVelY += diff.y * bounceDeceleration;
-          } else {
-            var _adjust = diff.y > 0 ? reboundAdjust : -reboundAdjust;
-            decVelY = (diff.y + _adjust) * bounceAcceleration;
-          }
+          targetY -= pointerChangeY * dragOutOfBoundsMultiplier(diff.y) * multiplier;
         }
       } else {
-        if (diff.x !== 0) {
-          if (diff.x > 0) {
-            targetX = boundXmin;
-          } else {
-            targetX = boundXmax;
-          }
-          decVelX = 0;
-        }
-        if (diff.y !== 0) {
-          if (diff.y > 0) {
-            targetY = boundYmin;
-          } else {
-            targetY = boundYmax;
-          }
-          decVelY = 0;
-        }
+        checkBounds(true);
       }
       callUpdateCallback();
-      requestAnimFrame(stepDecelAnim);
-    } else {
-      decelerating = false;
-      if (stopCallback) {
+      pointerLastX = pointerCurrentX;
+      pointerLastY = pointerCurrentY;
+      ticking = false;
+    }
+
+    /**
+     * Returns a value from around 0.5 to 1, based on distance
+     * @param {Number} val
+     */
+    function dragOutOfBoundsMultiplier(val) {
+      return 0.000005 * Math.pow(val, 2) + 0.0001 * val + 0.55;
+    }
+
+    /**
+     * prevents animating faster than current framerate
+     */
+    function requestTick() {
+      if (!ticking) {
+        requestAnimFrame(updateAndRender);
+      }
+      ticking = true;
+    }
+
+    /**
+     * Determine position relative to bounds
+     * @param {Boolean} restrict Whether to restrict target to bounds
+     */
+    function checkBounds(restrict) {
+      let xDiff = 0;
+      let yDiff = 0;
+      if (boundXmin !== undefined && targetX < boundXmin) {
+        xDiff = boundXmin - targetX;
+      } else if (boundXmax !== undefined && targetX > boundXmax) {
+        xDiff = boundXmax - targetX;
+      }
+      if (boundYmin !== undefined && targetY < boundYmin) {
+        yDiff = boundYmin - targetY;
+      } else if (boundYmax !== undefined && targetY > boundYmax) {
+        yDiff = boundYmax - targetY;
+      }
+      if (restrict) {
+        if (xDiff !== 0) {
+          targetX = xDiff > 0 ? boundXmin : boundXmax;
+        }
+        if (yDiff !== 0) {
+          targetY = yDiff > 0 ? boundYmin : boundYmax;
+        }
+      }
+      return {
+        x: xDiff,
+        y: yDiff,
+        inBounds: xDiff === 0 && yDiff === 0
+      };
+    }
+
+    /**
+     * Initialize animation of values coming to a stop
+     */
+    function startDecelAnim() {
+      const firstPoint = trackingPoints[0];
+      const lastPoint = trackingPoints[trackingPoints.length - 1];
+      const xOffset = lastPoint.x - firstPoint.x;
+      const yOffset = lastPoint.y - firstPoint.y;
+      const timeOffset = lastPoint.time - firstPoint.time;
+      const D = timeOffset / 15 / multiplier;
+      decVelX = xOffset / D || 0; // prevent NaN
+      decVelY = yOffset / D || 0;
+      const diff = checkBounds();
+      if (Math.abs(decVelX) > 1 || Math.abs(decVelY) > 1 || !diff.inBounds) {
+        decelerating = true;
+        requestAnimFrame(stepDecelAnim);
+      } else if (stopCallback) {
         stopCallback(sourceEl);
       }
     }
+
+    /**
+     * Animates values slowing down
+     */
+    function stepDecelAnim() {
+      if (!decelerating) {
+        return;
+      }
+      decVelX *= friction;
+      decVelY *= friction;
+      targetX += decVelX;
+      targetY += decVelY;
+      const diff = checkBounds();
+      if (Math.abs(decVelX) > stopThreshold || Math.abs(decVelY) > stopThreshold || !diff.inBounds) {
+        if (bounce) {
+          const reboundAdjust = 2.5;
+          if (diff.x !== 0) {
+            if (diff.x * decVelX <= 0) {
+              decVelX += diff.x * bounceDeceleration;
+            } else {
+              const adjust = diff.x > 0 ? reboundAdjust : -2.5;
+              decVelX = (diff.x + adjust) * bounceAcceleration;
+            }
+          }
+          if (diff.y !== 0) {
+            if (diff.y * decVelY <= 0) {
+              decVelY += diff.y * bounceDeceleration;
+            } else {
+              const adjust = diff.y > 0 ? reboundAdjust : -2.5;
+              decVelY = (diff.y + adjust) * bounceAcceleration;
+            }
+          }
+        } else {
+          if (diff.x !== 0) {
+            if (diff.x > 0) {
+              targetX = boundXmin;
+            } else {
+              targetX = boundXmax;
+            }
+            decVelX = 0;
+          }
+          if (diff.y !== 0) {
+            if (diff.y > 0) {
+              targetY = boundYmin;
+            } else {
+              targetY = boundYmax;
+            }
+            decVelY = 0;
+          }
+        }
+        callUpdateCallback();
+        requestAnimFrame(stepDecelAnim);
+      } else {
+        decelerating = false;
+        if (stopCallback) {
+          stopCallback(sourceEl);
+        }
+      }
+    }
   }
-});
-var requestAnimFrame = function () {
+}
+
+/**
+ * @see http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+ */
+const requestAnimFrame = function () {
   return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
     window.setTimeout(callback, 1000 / 60);
   };
 }();
 function getPassiveSupported() {
-  var passiveSupported = false;
+  let passiveSupported = false;
   try {
-    var options = Object.defineProperty({}, 'passive', {
-      get: function get() {
+    const options = Object.defineProperty({}, 'passive', {
+      get() {
         passiveSupported = true;
       }
     });
     window.addEventListener('test', null, options);
   } catch (err) {}
-  getPassiveSupported = function getPassiveSupported() {
-    return passiveSupported;
-  };
+  getPassiveSupported = () => passiveSupported;
   return passiveSupported;
 }
 
@@ -3574,7 +3055,7 @@ function distance(a, b) {
 function touchPinch(target) {
   target = target || window;
   var emitter = new EventEmitter2();
-  var _fingers = [null, null];
+  var fingers = [null, null];
   var activeCount = 0;
   var lastDistance = 0;
   var ended = false;
@@ -3582,11 +3063,11 @@ function touchPinch(target) {
 
   // some read-only values
   Object.defineProperties(emitter, {
-    pinching: function pinching() {
+    pinching() {
       return activeCount === 2;
     },
-    fingers: function fingers() {
-      return _fingers;
+    fingers() {
+      return fingers;
     }
   });
   enable();
@@ -3596,8 +3077,8 @@ function touchPinch(target) {
   return emitter;
   function indexOfTouch(touch) {
     var id = touch.identifier;
-    for (var i = 0; i < _fingers.length; i++) {
-      if (_fingers[i] && _fingers[i].touch && _fingers[i].touch.identifier === id) {
+    for (var i = 0; i < fingers.length; i++) {
+      if (fingers[i] && fingers[i].touch && fingers[i].touch.identifier === id) {
         return i;
       }
     }
@@ -3615,8 +3096,8 @@ function touchPinch(target) {
     if (!enabled) return;
     enabled = false;
     activeCount = 0;
-    _fingers[0] = null;
-    _fingers[1] = null;
+    fingers[0] = null;
+    fingers[1] = null;
     lastDistance = 0;
     ended = false;
     target.removeEventListener('touchstart', onTouchStart, false);
@@ -3633,18 +3114,18 @@ function touchPinch(target) {
         var first = activeCount === 0;
 
         // newest and previous finger (previous may be undefined)
-        var newIndex = _fingers[0] ? 1 : 0;
-        var oldIndex = _fingers[0] ? 0 : 1;
+        var newIndex = fingers[0] ? 1 : 0;
+        var oldIndex = fingers[0] ? 0 : 1;
         var newFinger = new Finger();
 
         // add to stack
-        _fingers[newIndex] = newFinger;
+        fingers[newIndex] = newFinger;
         activeCount++;
 
         // update touch event & position
         newFinger.touch = newTouch;
         mouseEventOffset(newTouch, target, newFinger.position);
-        var oldTouch = _fingers[oldIndex] ? _fingers[oldIndex].touch : undefined;
+        var oldTouch = fingers[oldIndex] ? fingers[oldIndex].touch : undefined;
         emitter.emit('place', newTouch, oldTouch);
         if (!first) {
           var initialDistance = computeDistance();
@@ -3662,8 +3143,8 @@ function touchPinch(target) {
       var idx = indexOfTouch(movedTouch);
       if (idx !== -1) {
         changed = true;
-        _fingers[idx].touch = movedTouch; // avoid caching touches
-        mouseEventOffset(movedTouch, target, _fingers[idx].position);
+        fingers[idx].touch = movedTouch; // avoid caching touches
+        mouseEventOffset(movedTouch, target, fingers[idx].position);
       }
     }
     if (activeCount === 2 && changed) {
@@ -3677,10 +3158,10 @@ function touchPinch(target) {
       var removed = ev.changedTouches[i];
       var idx = indexOfTouch(removed);
       if (idx !== -1) {
-        _fingers[idx] = null;
+        fingers[idx] = null;
         activeCount--;
         var otherIdx = idx === 0 ? 1 : 0;
-        var otherTouch = _fingers[otherIdx] ? _fingers[otherIdx].touch : undefined;
+        var otherTouch = fingers[otherIdx] ? fingers[otherIdx].touch : undefined;
         emitter.emit('lift', removed, otherTouch);
       }
     }
@@ -3691,7 +3172,7 @@ function touchPinch(target) {
   }
   function computeDistance() {
     if (activeCount < 2) return 0;
-    return distance(_fingers[0].position, _fingers[1].position);
+    return distance(fingers[0].position, fingers[1].position);
   }
 }
 function Finger() {
@@ -3725,26 +3206,21 @@ var requestFn = window.requestAnimationFrame || getPrefixed('RequestAnimationFra
 var cancelFn = window.cancelAnimationFrame || getPrefixed('CancelAnimationFrame') || getPrefixed('CancelRequestAnimationFrame') || function (id) {
   window.clearTimeout(id);
 };
-var raf = function raf(fn, context, immediate) {
+const raf = (fn, context, immediate) => {
   if (immediate && requestFn === timeoutDefer) {
     fn.call(context);
   } else {
     return requestFn.call(window, bind(fn, context));
   }
 };
-raf.cancel = function (id) {
+raf.cancel = id => {
   if (id) {
     cancelFn.call(window, id);
   }
 };
 
-var MagicScroll = /*#__PURE__*/function () {
-  function MagicScroll(target) {
-    var speed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 80;
-    var smooth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 12;
-    var current = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-    var passive = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
-    _classCallCheck(this, MagicScroll);
+class MagicScroll {
+  constructor(target, speed = 80, smooth = 12, current = 0, passive = false) {
     if (target === document) {
       target = document.scrollingElement || document.documentElement || document.body.parentNode || document.body;
     } // cross browser support for document scrolling
@@ -3757,53 +3233,48 @@ var MagicScroll = /*#__PURE__*/function () {
     this.frame = target === document.body && document.documentElement ? document.documentElement : target; // safari is the new IE
 
     target.addEventListener('wheel', scrolled, {
-      passive: passive
+      passive
     });
     target.addEventListener('DOMMouseScroll', scrolled, {
-      passive: passive
+      passive
     });
-    var scope = this;
+    const scope = this;
     function scrolled(e) {
       e.preventDefault(); // disable default scrolling
 
-      var delta = scope.normalizeWheelDelta(e);
+      const delta = scope.normalizeWheelDelta(e);
       scope.pos += -delta * scope.speed;
       // scope.pos = Math.max(0, Math.min(scope.pos, 3000)); // limit scrolling
 
       if (!scope.moving) scope.update(e);
     }
   }
-  return _createClass(MagicScroll, [{
-    key: "normalizeWheelDelta",
-    value: function normalizeWheelDelta(e) {
-      if (e.detail) {
-        if (e.wheelDelta) return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1);
-        // Opera
-        return -e.detail / 3; // Firefox
-      }
-      return e.wheelDelta / 120; // IE,Safari,Chrome
+  normalizeWheelDelta(e) {
+    if (e.detail) {
+      if (e.wheelDelta) return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1);
+      // Opera
+      return -e.detail / 3; // Firefox
     }
-  }, {
-    key: "update",
-    value: function update(e) {
-      this.moving = true;
-      var delta = (this.pos - this.scrollTop) / this.smooth;
-      this.scrollTop += delta;
+    return e.wheelDelta / 120; // IE,Safari,Chrome
+  }
+  update(e) {
+    this.moving = true;
+    const delta = (this.pos - this.scrollTop) / this.smooth;
+    this.scrollTop += delta;
 
-      // this.scrollTop = Math.round(this.scrollTop);
+    // this.scrollTop = Math.round(this.scrollTop);
 
-      if (this.onUpdate) {
-        this.onUpdate(delta, e);
-      }
-      var scope = this;
-      if (Math.abs(delta) > 1) {
-        requestFrame(function () {
-          scope.update();
-        });
-      } else this.moving = false;
+    if (this.onUpdate) {
+      this.onUpdate(delta, e);
     }
-  }]);
-}();
+    const scope = this;
+    if (Math.abs(delta) > 1) {
+      requestFrame(() => {
+        scope.update();
+      });
+    } else this.moving = false;
+  }
+}
 var requestFrame = function () {
   // requestAnimationFrame cross browser
   return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (func) {
@@ -3811,21 +3282,21 @@ var requestFrame = function () {
   };
 }();
 
-var panzoom = function panzoom(target, cb) {
+const panzoom = (target, cb) => {
   if (target instanceof Function) {
     cb = target;
     target = document.documentElement || document.body;
   }
   if (typeof target === 'string') target = document.querySelector(target);
-  var cursor = {
+  let cursor = {
     x: 0,
     y: 0
   };
-  var hasPassive = function hasPassive() {
-    var supported = false;
+  const hasPassive = () => {
+    let supported = false;
     try {
-      var opts = Object.defineProperty({}, 'passive', {
-        get: function get() {
+      const opts = Object.defineProperty({}, 'passive', {
+        get() {
           supported = true;
         }
       });
@@ -3836,20 +3307,20 @@ var panzoom = function panzoom(target, cb) {
     }
     return supported;
   };
-  var impetus;
-  var magicScroll;
-  var initX = 0;
-  var initY = 0;
-  var init = true;
-  var initFn = function initFn(e) {
+  let impetus;
+  let magicScroll;
+  let initX = 0;
+  let initY = 0;
+  let init = true;
+  const initFn = function (e) {
     init = true;
   };
   target.addEventListener('mousedown', initFn);
-  var onMouseMove = function onMouseMove(e) {
+  const onMouseMove = e => {
     cursor = evPos(e);
   };
   target.addEventListener('mousemove', onMouseMove);
-  var wheelListener = function wheelListener(e) {
+  const wheelListener = function (e) {
     if (e) {
       cursor = evPos(e);
     }
@@ -3858,22 +3329,22 @@ var panzoom = function panzoom(target, cb) {
   target.addEventListener('touchstart', initFn, hasPassive() ? {
     passive: true
   } : false);
-  target.addEventListener('contextmenu', function (e) {
+  target.addEventListener('contextmenu', e => {
     e.preventDefault();
     return false;
   }, false);
-  var lastY = 0;
-  var lastX = 0;
+  let lastY = 0;
+  let lastX = 0;
   impetus = new Impetus({
     source: target,
-    update: function update(x, y) {
+    update(x, y) {
       if (init) {
         init = false;
         initX = cursor.x;
         initY = cursor.y;
       }
-      var e = {
-        target: target,
+      const e = {
+        target,
         type: 'mouse',
         dx: x - lastX,
         dy: y - lastY,
@@ -3888,9 +3359,9 @@ var panzoom = function panzoom(target, cb) {
       lastY = y;
       schedule(e);
     },
-    stop: function stop() {
-      var ev = {
-        target: target,
+    stop() {
+      const ev = {
+        target,
         type: 'mouse',
         dx: 0,
         dy: 0,
@@ -3906,9 +3377,9 @@ var panzoom = function panzoom(target, cb) {
     friction: 0.75
   });
   magicScroll = new MagicScroll(target, 80, 12, 0);
-  magicScroll.onUpdate = function (dy, e) {
+  magicScroll.onUpdate = (dy, e) => {
     schedule({
-      target: target,
+      target,
       type: 'mouse',
       dx: 0,
       dy: 0,
@@ -3921,24 +3392,24 @@ var panzoom = function panzoom(target, cb) {
   };
 
   // mobile pinch zoom
-  var pinch = touchPinch(target);
-  var mult = 2;
-  var initialCoords;
-  pinch.on('start', function (curr) {
-    var f1 = pinch.fingers[0];
-    var f2 = pinch.fingers[1];
+  const pinch = touchPinch(target);
+  const mult = 2;
+  let initialCoords;
+  pinch.on('start', curr => {
+    const f1 = pinch.fingers[0];
+    const f2 = pinch.fingers[1];
     initialCoords = [f2.position[0] * 0.5 + f1.position[0] * 0.5, f2.position[1] * 0.5 + f1.position[1] * 0.5];
     impetus && impetus.pause();
   });
-  pinch.on('end', function () {
+  pinch.on('end', () => {
     if (!initialCoords) return;
     initialCoords = null;
     impetus && impetus.resume();
   });
-  pinch.on('change', function (curr, prev) {
+  pinch.on('change', (curr, prev) => {
     if (!pinch.pinching || !initialCoords) return;
     schedule({
-      target: target,
+      target,
       type: 'touch',
       dx: 0,
       dy: 0,
@@ -3951,8 +3422,8 @@ var panzoom = function panzoom(target, cb) {
   });
 
   // schedule function to current or next frame
-  var planned;
-  var frameId;
+  let planned;
+  let frameId;
   function schedule(ev) {
     if (frameId != null) {
       if (!planned) planned = ev;else {
@@ -3969,11 +3440,11 @@ var panzoom = function panzoom(target, cb) {
     // so we have to schedule callback to the next frame, not the current
     // cb(ev)
 
-    frameId = raf(function () {
+    frameId = raf(() => {
       cb(ev);
       frameId = null;
       if (planned) {
-        var arg = planned;
+        const arg = planned;
         planned = null;
         schedule(arg);
       }
@@ -3990,94 +3461,66 @@ var panzoom = function panzoom(target, cb) {
   };
 };
 
-var ModesMixin = function ModesMixin(superclass) {
-  return /*#__PURE__*/function (_superclass) {
-    function _class() {
-      _classCallCheck(this, _class);
-      return _callSuper(this, _class, arguments);
+const ModesMixin = superclass => class extends superclass {
+  /**
+   * MODES
+   */
+  setMode(mode) {
+    this.mode = mode;
+    switch (mode) {
+      case Modes$1.SELECT:
+        this.canvas.isDrawingMode = false;
+        this.canvas.interactive = true;
+        this.canvas.selection = true;
+        this.canvas.hoverCursor = 'default';
+        this.canvas.moveCursor = 'default';
+        break;
+      case Modes$1.GRAB:
+        this.canvas.isDrawingMode = false;
+        this.canvas.interactive = false;
+        this.canvas.selection = false;
+        this.canvas.discardActiveObject();
+        this.canvas.hoverCursor = 'move';
+        this.canvas.moveCursor = 'move';
+        break;
+      case Modes$1.MEASURE:
+        this.canvas.isDrawingMode = true;
+        this.canvas.freeDrawingBrush.color = 'transparent';
+        this.canvas.discardActiveObject();
+        break;
+      case Modes$1.DRAW:
+        this.canvas.isDrawingMode = true;
+        break;
     }
-    _inherits(_class, _superclass);
-    return _createClass(_class, [{
-      key: "setMode",
-      value:
-      /**
-       * MODES
-       */
-      function setMode(mode) {
-        this.mode = mode;
-        switch (mode) {
-          case Modes.SELECT:
-            this.canvas.isDrawingMode = false;
-            this.canvas.interactive = true;
-            this.canvas.selection = true;
-            this.canvas.hoverCursor = 'default';
-            this.canvas.moveCursor = 'default';
-            break;
-          case Modes.GRAB:
-            this.canvas.isDrawingMode = false;
-            this.canvas.interactive = false;
-            this.canvas.selection = false;
-            this.canvas.discardActiveObject();
-            this.canvas.hoverCursor = 'move';
-            this.canvas.moveCursor = 'move';
-            break;
-          case Modes.MEASURE:
-            this.canvas.isDrawingMode = true;
-            this.canvas.freeDrawingBrush.color = 'transparent';
-            this.canvas.discardActiveObject();
-            break;
-          case Modes.DRAW:
-            this.canvas.isDrawingMode = true;
-            break;
-        }
-      }
-    }, {
-      key: "setModeAsDraw",
-      value: function setModeAsDraw() {
-        this.setMode(Modes.DRAW);
-      }
-    }, {
-      key: "setModeAsSelect",
-      value: function setModeAsSelect() {
-        this.setMode(Modes.SELECT);
-      }
-    }, {
-      key: "setModeAsMeasure",
-      value: function setModeAsMeasure() {
-        this.setMode(Modes.MEASURE);
-      }
-    }, {
-      key: "setModeAsGrab",
-      value: function setModeAsGrab() {
-        this.setMode(Modes.GRAB);
-      }
-    }, {
-      key: "isSelectMode",
-      value: function isSelectMode() {
-        return this.mode === Modes.SELECT;
-      }
-    }, {
-      key: "isGrabMode",
-      value: function isGrabMode() {
-        return this.mode === Modes.GRAB;
-      }
-    }, {
-      key: "isMeasureMode",
-      value: function isMeasureMode() {
-        return this.mode === Modes.MEASURE;
-      }
-    }, {
-      key: "isDrawMode",
-      value: function isDrawMode() {
-        return this.mode === Modes.DRAW;
-      }
-    }]);
-  }(superclass);
+  }
+  setModeAsDraw() {
+    this.setMode(Modes$1.DRAW);
+  }
+  setModeAsSelect() {
+    this.setMode(Modes$1.SELECT);
+  }
+  setModeAsMeasure() {
+    this.setMode(Modes$1.MEASURE);
+  }
+  setModeAsGrab() {
+    this.setMode(Modes$1.GRAB);
+  }
+  isSelectMode() {
+    return this.mode === Modes$1.SELECT;
+  }
+  isGrabMode() {
+    return this.mode === Modes$1.GRAB;
+  }
+  isMeasureMode() {
+    return this.mode === Modes$1.MEASURE;
+  }
+  isDrawMode() {
+    return this.mode === Modes$1.DRAW;
+  }
 };
 
-var Measurer = /*#__PURE__*/function () {
-  function Measurer(options) {
-    _classCallCheck(this, Measurer);
+class Measurer {
+  constructor(options) {
     options = options || {};
     options.hasBorders = false;
     options.selectable = false;
@@ -4098,167 +3541,145 @@ var Measurer = /*#__PURE__*/function () {
     }
     this.draw();
   }
-  return _createClass(Measurer, [{
-    key: "clear",
-    value: function clear() {
-      var _this = this;
-      if (this.objects) {
-        this.objects.forEach(function (object) {
-          _this.canvas.remove(object);
-        });
-      }
-    }
-  }, {
-    key: "draw",
-    value: function draw() {
-      var _this2 = this;
-      this.clear();
-      var start = this.start,
-        end = this.end;
-      start = new Point(start);
-      end = new Point(end);
-      var center = start.add(end).multiply(0.5);
-      this.line = new fabric.Line([start.x, start.y, end.x, end.y], {
-        stroke: this.options.stroke || '#3e82ff',
-        hasControls: false,
-        hasBorders: false,
-        selectable: false,
-        evented: false,
-        strokeDashArray: [5, 5]
-      });
-      var lineEndOptions = {
-        left: start.x,
-        top: start.y,
-        strokeWidth: 1,
-        radius: this.options.radius || 1,
-        fill: this.options.fill || '#3e82ff',
-        stroke: this.options.stroke || '#3e82ff',
-        hasControls: false,
-        hasBorders: false
-      };
-      var lineEndOptions2 = {
-        left: start.x,
-        top: start.y,
-        strokeWidth: 1,
-        radius: this.options.radius || 5,
-        fill: this.options.fill || '#3e82ff33',
-        stroke: this.options.stroke || '#3e82ff',
-        hasControls: false,
-        hasBorders: false
-      };
-      this.circle1 = new fabric.Circle(lineEndOptions2);
-      this.circle2 = new fabric.Circle(_objectSpread2(_objectSpread2({}, lineEndOptions2), {}, {
-        left: end.x,
-        top: end.y
-      }));
-      this.circle11 = new fabric.Circle(lineEndOptions);
-      this.circle22 = new fabric.Circle(_objectSpread2(_objectSpread2({}, lineEndOptions), {}, {
-        left: end.x,
-        top: end.y
-      }));
-      var text = Math.round(start.distanceFrom(end));
-      text = "".concat(text / 100, " m");
-      this.text = new fabric.Text(text, {
-        textBackgroundColor: 'black',
-        fill: 'white',
-        left: center.x,
-        top: center.y - 10,
-        fontSize: 12,
-        hasControls: false,
-        hasBorders: false,
-        selectable: false,
-        evented: false
-      });
-      this.objects = [this.line, this.text, this.circle11, this.circle22, this.circle1, this.circle2];
-      this.objects.forEach(function (object) {
-        _this2.canvas.add(object);
-      });
-      this.line.hasControls = false;
-      this.line.hasBorders = false;
-      this.line.selectable = false;
-      this.line.evented = false;
-      this.registerListeners();
-    }
-  }, {
-    key: "setStart",
-    value: function setStart(start) {
-      this.start = start;
-      this.draw();
-    }
-  }, {
-    key: "setEnd",
-    value: function setEnd(end) {
-      this.end = end;
-      this.draw();
-    }
-  }, {
-    key: "complete",
-    value: function complete() {
-      this.completed = true;
-    }
-  }, {
-    key: "registerListeners",
-    value: function registerListeners() {
-      var _this3 = this;
-      this.circle2.on('moving', function (e) {
-        _this3.setEnd(e.pointer);
-      });
-      this.circle1.on('moving', function (e) {
-        _this3.setStart(e.pointer);
+  clear() {
+    if (this.objects) {
+      this.objects.forEach(object => {
+        this.canvas.remove(object);
       });
     }
-  }, {
-    key: "applyScale",
-    value: function applyScale(scale) {
-      this.start.x *= scale;
-      this.start.y *= scale;
-      this.end.x *= scale;
-      this.end.y *= scale;
-      this.draw();
-    }
-  }]);
-}();
+  }
+  draw() {
+    this.clear();
+    let {
+      start,
+      end
+    } = this;
+    start = new Point(start);
+    end = new Point(end);
+    const center = start.add(end).multiply(0.5);
+    this.line = new fabric.Line([start.x, start.y, end.x, end.y], {
+      stroke: this.options.stroke || '#3e82ff',
+      hasControls: false,
+      hasBorders: false,
+      selectable: false,
+      evented: false,
+      strokeDashArray: [5, 5]
+    });
+    const lineEndOptions = {
+      left: start.x,
+      top: start.y,
+      strokeWidth: 1,
+      radius: this.options.radius || 1,
+      fill: this.options.fill || '#3e82ff',
+      stroke: this.options.stroke || '#3e82ff',
+      hasControls: false,
+      hasBorders: false
+    };
+    const lineEndOptions2 = {
+      left: start.x,
+      top: start.y,
+      strokeWidth: 1,
+      radius: this.options.radius || 5,
+      fill: this.options.fill || '#3e82ff33',
+      stroke: this.options.stroke || '#3e82ff',
+      hasControls: false,
+      hasBorders: false
+    };
+    this.circle1 = new fabric.Circle(lineEndOptions2);
+    this.circle2 = new fabric.Circle(_objectSpread2(_objectSpread2({}, lineEndOptions2), {}, {
+      left: end.x,
+      top: end.y
+    }));
+    this.circle11 = new fabric.Circle(lineEndOptions);
+    this.circle22 = new fabric.Circle(_objectSpread2(_objectSpread2({}, lineEndOptions), {}, {
+      left: end.x,
+      top: end.y
+    }));
+    let text = Math.round(start.distanceFrom(end));
+    text = `${text / 100} m`;
+    this.text = new fabric.Text(text, {
+      textBackgroundColor: 'black',
+      fill: 'white',
+      left: center.x,
+      top: center.y - 10,
+      fontSize: 12,
+      hasControls: false,
+      hasBorders: false,
+      selectable: false,
+      evented: false
+    });
+    this.objects = [this.line, this.text, this.circle11, this.circle22, this.circle1, this.circle2];
+    this.objects.forEach(object => {
+      this.canvas.add(object);
+    });
+    this.line.hasControls = false;
+    this.line.hasBorders = false;
+    this.line.selectable = false;
+    this.line.evented = false;
+    this.registerListeners();
+  }
+  setStart(start) {
+    this.start = start;
+    this.draw();
+  }
+  setEnd(end) {
+    this.end = end;
+    this.draw();
+  }
+  complete() {
+    this.completed = true;
+  }
+  registerListeners() {
+    this.circle2.on('moving', e => {
+      this.setEnd(e.pointer);
+    });
+    this.circle1.on('moving', e => {
+      this.setStart(e.pointer);
+    });
+  }
+  applyScale(scale) {
+    this.start.x *= scale;
+    this.start.y *= scale;
+    this.end.x *= scale;
+    this.end.y *= scale;
+    this.draw();
+  }
+}
 
-var Measurement = /*#__PURE__*/function () {
-  function Measurement(map) {
-    _classCallCheck(this, Measurement);
+class Measurement {
+  constructor(map) {
     this.map = map;
     this.measurer = null;
   }
-  return _createClass(Measurement, [{
-    key: "onMouseMove",
-    value: function onMouseMove(e) {
-      var point = {
-        x: e.absolutePointer.x,
-        y: e.absolutePointer.y
-      };
-      if (this.measurer && !this.measurer.completed) {
-        this.measurer.setEnd(point);
-        this.map.canvas.requestRenderAll();
-      }
+  onMouseMove(e) {
+    const point = {
+      x: e.absolutePointer.x,
+      y: e.absolutePointer.y
+    };
+    if (this.measurer && !this.measurer.completed) {
+      this.measurer.setEnd(point);
+      this.map.canvas.requestRenderAll();
     }
-  }, {
-    key: "onClick",
-    value: function onClick(e) {
-      var point = {
-        x: e.absolutePointer.x,
-        y: e.absolutePointer.y
-      };
-      if (!this.measurer) {
-        this.measurer = new Measurer({
-          start: point,
-          end: point,
-          map: this.map
-        });
+  }
+  onClick(e) {
+    const point = {
+      x: e.absolutePointer.x,
+      y: e.absolutePointer.y
+    };
+    if (!this.measurer) {
+      this.measurer = new Measurer({
+        start: point,
+        end: point,
+        map: this.map
+      });
 
-        // this.map.canvas.add(this.measurer);
-      } else if (!this.measurer.completed) {
-        this.measurer.setEnd(point);
-        this.measurer.complete();
-      }
+      // this.map.canvas.add(this.measurer);
+    } else if (!this.measurer.completed) {
+      this.measurer.setEnd(point);
+      this.measurer.complete();
     }
-  }]);
-}();
+  }
+}
 
 /**
  * A fluent interface to apply a list of mixins to a superclass.
@@ -4280,15 +3701,10 @@ var Measurement = /*#__PURE__*/function () {
  * @param {Function} [superclass=Object]
  * @return {MixinBuilder}
  */
-var mix = function mix(superclass) {
-  return new MixinBuilder(superclass);
-};
-var MixinBuilder = /*#__PURE__*/function () {
-  function MixinBuilder(superclass) {
-    _classCallCheck(this, MixinBuilder);
-    this.superclass = superclass || /*#__PURE__*/_createClass(function _class() {
-      _classCallCheck(this, _class);
-    });
+const mix = superclass => new MixinBuilder(superclass);
+class MixinBuilder {
+  constructor(superclass) {
+    this.superclass = superclass || class {};
   }
 
   /**
@@ -4297,18 +3713,10 @@ var MixinBuilder = /*#__PURE__*/function () {
    * @param {Array.<Mixin>} mixins
    * @return {Function} a subclass of `superclass` with `mixins` applied
    */
-  return _createClass(MixinBuilder, [{
-    key: "with",
-    value: function _with() {
-      for (var _len = arguments.length, mixins = new Array(_len), _key = 0; _key < _len; _key++) {
-        mixins[_key] = arguments[_key];
-      }
-      return mixins.reduce(function (c, m) {
-        return m(c);
-      }, this.superclass);
-    }
-  }]);
-}();
+  with(...mixins) {
+    return mixins.reduce((c, m) => m(c), this.superclass);
+  }
+}
 
 /**
  * CoordinatePlane (formerly Map)
@@ -4320,7 +3728,7 @@ var MixinBuilder = /*#__PURE__*/function () {
  * @extends {Base}
  * @mixes {ModesMixin}
  */
-var Map$1 = /*#__PURE__*/function (_mix$with) {
+let Map$1 = class Map extends mix(Base).with(ModesMixin) {
   /**
    * Create a new coordinate plane
    *
@@ -4335,37 +3743,35 @@ var Map$1 = /*#__PURE__*/function (_mix$with) {
    * @param {boolean} [options.selectEnabled=true] - Whether selection is enabled
    * @param {string} [options.mode=Modes.SELECT] - Initial interaction mode
    */
-  function Map(container, options) {
-    var _this;
-    _classCallCheck(this, Map);
-    _this = _callSuper(this, Map, [options]);
-    _this.defaults = Object.assign({}, MAP);
+  constructor(container, options) {
+    super(options);
+    this.defaults = Object.assign({}, MAP);
 
     // set defaults
-    Object.assign(_this, _this.defaults);
+    Object.assign(this, this.defaults);
 
     // overwrite options
-    Object.assign(_this, _this._options);
-    _this.center = new Point(_this.center);
-    _this.container = container || document.body;
-    var canvas = document.createElement('canvas');
-    _this.container.appendChild(canvas);
+    Object.assign(this, this._options);
+    this.center = new Point(this.center);
+    this.container = container || document.body;
+    const canvas = document.createElement('canvas');
+    this.container.appendChild(canvas);
     canvas.setAttribute('id', 'fabric-layers-canvas');
-    canvas.width = _this.width || _this.container.clientWidth;
-    canvas.height = _this.height || _this.container.clientHeight;
-    _this.canvas = new fabric.Canvas(canvas, {
+    canvas.width = this.width || this.container.clientWidth;
+    canvas.height = this.height || this.container.clientHeight;
+    this.canvas = new fabric.Canvas(canvas, {
       preserveObjectStacking: true,
       renderOnAddRemove: true
     });
-    _this.context = _this.canvas.getContext('2d');
-    _this.on('render', function () {
-      if (_this.autostart) _this.clear();
+    this.context = this.canvas.getContext('2d');
+    this.on('render', () => {
+      if (this.autostart) this.clear();
     });
-    _this.originX = -_this.canvas.width / 2;
-    _this.originY = -_this.canvas.height / 2;
-    _this.canvas.absolutePan({
-      x: _this.originX,
-      y: _this.originY
+    this.originX = -this.canvas.width / 2;
+    this.originY = -this.canvas.height / 2;
+    this.canvas.absolutePan({
+      x: this.originX,
+      y: this.originY
     });
 
     // this.center = {
@@ -4373,538 +3779,494 @@ var Map$1 = /*#__PURE__*/function (_mix$with) {
     //   y: this.canvas.height / 2.0
     // };
 
-    _this.x = _this.center.x;
-    _this.y = _this.center.y;
-    _this.dx = 0;
-    _this.dy = 0;
+    this.x = this.center.x;
+    this.y = this.center.y;
+    this.dx = 0;
+    this.dy = 0;
     try {
-      _this.addFloorPlan();
+      this.addFloorPlan();
     } catch (e) {
       console.error(e);
     }
-    if (_this.showGrid) {
-      _this.addGrid();
+    if (this.showGrid) {
+      this.addGrid();
     }
-    _this.setMode(_this.mode || Modes.GRAB);
-    var vm = _this;
-    panzoom(_this.container, function (e) {
+    this.setMode(this.mode || Modes$1.GRAB);
+    const vm = this;
+    panzoom(this.container, e => {
       vm.panzoom(e);
     });
-    _this.registerListeners();
-    setTimeout(function () {
-      _this.emit('ready', _this);
+    this.registerListeners();
+    setTimeout(() => {
+      this.emit('ready', this);
     }, 300);
-    _this.measurement = new Measurement(_this);
-    return _this;
+    this.measurement = new Measurement(this);
   }
-  _inherits(Map, _mix$with);
-  return _createClass(Map, [{
-    key: "addBaseLayer",
-    value: function addBaseLayer() {
-      if (!this.baseLayer) return;
-      var vm = this;
-      this.baseLayer.on('load', function (img) {
-        vm.addLayer(img);
+  addBaseLayer() {
+    if (!this.baseLayer) return;
+    const vm = this;
+    this.baseLayer.on('load', img => {
+      vm.addLayer(img);
+    });
+  }
+  addLayer(layer) {
+    // this.canvas.renderOnAddRemove = false;
+    if (!layer.shape) {
+      console.error('shape is undefined');
+      return;
+    }
+    this.canvas.add(layer.shape);
+    this.canvas._objects.sort((o1, o2) => o1.zIndex - o2.zIndex);
+    if (layer.shape.keepOnZoom) {
+      const scale = 1.0 / this.zoom;
+      layer.shape.set('scaleX', scale);
+      layer.shape.set('scaleY', scale);
+      layer.shape.setCoords();
+      this.emit(`${layer.class}scaling`, layer);
+    }
+    if (layer.class) {
+      this.emit(`${layer.class}:added`, layer);
+    }
+
+    // this.canvas.renderOnAddRemove = true;
+
+    // this.update();
+    this.canvas.requestRenderAll();
+  }
+  removeLayer(layer) {
+    if (!layer || !layer.shape) return;
+    if (layer.class) {
+      this.emit(`${layer.class}:removed`, layer);
+    }
+    this.canvas.remove(layer.shape);
+  }
+  addGrid() {
+    this.gridCanvas = this.cloneCanvas();
+    this.gridCanvas.setAttribute('id', 'fabric-layers-grid-canvas');
+    this.grid = new Grid(this.gridCanvas, this);
+    this.grid.draw();
+  }
+  moveTo(obj, index) {
+    if (index !== undefined) {
+      obj.zIndex = index;
+    }
+    this.canvas.moveTo(obj.shape, obj.zIndex);
+  }
+  cloneCanvas(canvas) {
+    canvas = canvas || this.canvas;
+    const clone = document.createElement('canvas');
+    clone.width = canvas.width;
+    clone.height = canvas.height;
+    canvas.wrapperEl.appendChild(clone);
+    return clone;
+  }
+  setZoom(zoom) {
+    const {
+      width,
+      height
+    } = this.canvas;
+    this.zoom = clamp(zoom, this.minZoom, this.maxZoom);
+    this.dx = 0;
+    this.dy = 0;
+    this.x = width / 2.0;
+    this.y = height / 2.0;
+    this.update();
+    nextTick(() => {
+      this.update();
+    });
+  }
+  getBounds() {
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    this.canvas.forEachObject(obj => {
+      const coords = obj.getBounds();
+      coords.forEach(point => {
+        minX = Math.min(minX, point.x);
+        maxX = Math.max(maxX, point.x);
+        minY = Math.min(minY, point.y);
+        maxY = Math.max(maxY, point.y);
+      });
+    });
+    return [new Point(minX, minY), new Point(maxX, maxY)];
+  }
+  fitBounds(padding = 100) {
+    this.onResize();
+    const {
+      width,
+      height
+    } = this.canvas;
+    this.originX = -this.canvas.width / 2;
+    this.originY = -this.canvas.height / 2;
+    const bounds = this.getBounds();
+    this.center.x = (bounds[0].x + bounds[1].x) / 2.0;
+    this.center.y = -(bounds[0].y + bounds[1].y) / 2.0;
+    const boundWidth = Math.abs(bounds[0].x - bounds[1].x) + padding;
+    const boundHeight = Math.abs(bounds[0].y - bounds[1].y) + padding;
+    const scaleX = width / boundWidth;
+    const scaleY = height / boundHeight;
+    this.zoom = Math.min(scaleX, scaleY);
+    this.canvas.setZoom(this.zoom);
+    this.canvas.absolutePan({
+      x: this.originX + this.center.x * this.zoom,
+      y: this.originY - this.center.y * this.zoom
+    });
+    this.update();
+    nextTick(() => {
+      this.update();
+    });
+  }
+  setCursor(cursor) {
+    this.container.style.cursor = cursor;
+  }
+  reset() {
+    const {
+      width,
+      height
+    } = this.canvas;
+    this.zoom = this._options.zoom || 1;
+    this.center = new Point();
+    this.originX = -this.canvas.width / 2;
+    this.originY = -this.canvas.height / 2;
+    this.canvas.absolutePan({
+      x: this.originX,
+      y: this.originY
+    });
+    this.x = width / 2.0;
+    this.y = height / 2.0;
+    this.update();
+    nextTick(() => {
+      this.update();
+    });
+  }
+  onResize(width, height) {
+    const oldWidth = this.canvas.width;
+    const oldHeight = this.canvas.height;
+    width = width || this.container.clientWidth;
+    height = height || this.container.clientHeight;
+    this.canvas.setWidth(width);
+    this.canvas.setHeight(height);
+    if (this.grid) {
+      this.grid.setSize(width, height);
+    }
+    const dx = width / 2.0 - oldWidth / 2.0;
+    const dy = height / 2.0 - oldHeight / 2.0;
+    this.canvas.relativePan({
+      x: dx,
+      y: dy
+    });
+    this.update();
+  }
+  update() {
+    const canvas = this.canvas;
+    if (this.grid) {
+      this.grid.update2({
+        x: this.center.x,
+        y: this.center.y,
+        zoom: this.zoom
       });
     }
-  }, {
-    key: "addLayer",
-    value: function addLayer(layer) {
-      // this.canvas.renderOnAddRemove = false;
-      if (!layer.shape) {
-        console.error('shape is undefined');
+    this.emit('update', this);
+    if (this.grid) {
+      this.grid.render();
+    }
+    canvas.zoomToPoint(new Point(this.x, this.y), this.zoom);
+    if (this.isGrabMode() || this.isRight) {
+      canvas.relativePan(new Point(this.dx, this.dy));
+      this.emit('panning');
+      this.setCursor('grab');
+    } else {
+      this.setCursor('pointer');
+    }
+    const now = Date.now();
+    if (!this.lastUpdatedTime && Math.abs(this.lastUpdatedTime - now) < 100) {
+      return;
+    }
+    this.lastUpdatedTime = now;
+    const objects = canvas.getObjects();
+    let hasKeepZoom = false;
+    for (let i = 0; i < objects.length; i += 1) {
+      const object = objects[i];
+      if (object.keepOnZoom) {
+        object.set('scaleX', 1.0 / this.zoom);
+        object.set('scaleY', 1.0 / this.zoom);
+        object.setCoords();
+        hasKeepZoom = true;
+        this.emit(`${object.class}scaling`, object);
+      }
+    }
+    if (hasKeepZoom) canvas.requestRenderAll();
+  }
+  panzoom(e) {
+    // enable interactions
+    const {
+      width,
+      height
+    } = this.canvas;
+    // shift start
+    const zoom = clamp(-e.dz, -height * 0.75, height * 0.75) / height;
+    const prevZoom = 1 / this.zoom;
+    let curZoom = prevZoom * (1 - zoom);
+    curZoom = clamp(curZoom, this.minZoom, this.maxZoom);
+    let {
+      x,
+      y
+    } = this.center;
+
+    // pan
+    const oX = 0.5;
+    const oY = 0.5;
+    if (this.isGrabMode() || e.isRight) {
+      x -= prevZoom * e.dx;
+      y += prevZoom * e.dy;
+      this.setCursor('grab');
+    } else {
+      this.setCursor('pointer');
+    }
+    if (this.zoomEnabled) {
+      const tx = e.x / width - oX;
+      x -= width * (curZoom - prevZoom) * tx;
+      const ty = oY - e.y / height;
+      y -= height * (curZoom - prevZoom) * ty;
+    }
+    this.center.setX(x);
+    this.center.setY(y);
+    this.zoom = 1 / curZoom;
+    this.dx = e.dx;
+    this.dy = e.dy;
+    this.x = e.x0;
+    this.y = e.y0;
+    this.isRight = e.isRight;
+    this.isRight = e.isRight;
+    this.update();
+  }
+  setView(view) {
+    this.dx = 0;
+    this.dy = 0;
+    this.x = 0;
+    this.y = 0;
+    view.y *= -1;
+    const dx = this.center.x - view.x;
+    const dy = -this.center.y + view.y;
+    this.center.copy(view);
+    this.canvas.relativePan(new Point(dx * this.zoom, dy * this.zoom));
+    this.canvas.renderAll();
+    this.update();
+    nextTick(() => {
+      this.update();
+    });
+  }
+  registerListeners() {
+    const vm = this;
+    this.canvas.on('object:scaling', e => {
+      if (e.target.class) {
+        vm.emit(`${e.target.class}:scaling`, e.target.parent);
+        e.target.parent.emit('scaling', e.target.parent);
         return;
       }
-      this.canvas.add(layer.shape);
-      this.canvas._objects.sort(function (o1, o2) {
-        return o1.zIndex - o2.zIndex;
-      });
-      if (layer.shape.keepOnZoom) {
-        var scale = 1.0 / this.zoom;
-        layer.shape.set('scaleX', scale);
-        layer.shape.set('scaleY', scale);
-        layer.shape.setCoords();
-        this.emit("".concat(layer.class, "scaling"), layer);
+      const group = e.target;
+      if (!group.getObjects) return;
+      const objects = group.getObjects();
+      group.removeWithUpdate();
+      for (let i = 0; i < objects.length; i += 1) {
+        const object = objects[i];
+        object.orgYaw = object.parent.yaw || 0;
+        object.fire('moving', object.parent);
+        vm.emit(`${object.class}:moving`, object.parent);
       }
-      if (layer.class) {
-        this.emit("".concat(layer.class, ":added"), layer);
-      }
-
-      // this.canvas.renderOnAddRemove = true;
-
-      // this.update();
-      this.canvas.requestRenderAll();
-    }
-  }, {
-    key: "removeLayer",
-    value: function removeLayer(layer) {
-      if (!layer || !layer.shape) return;
-      if (layer.class) {
-        this.emit("".concat(layer.class, ":removed"), layer);
-      }
-      this.canvas.remove(layer.shape);
-    }
-  }, {
-    key: "addGrid",
-    value: function addGrid() {
-      this.gridCanvas = this.cloneCanvas();
-      this.gridCanvas.setAttribute('id', 'fabric-layers-grid-canvas');
-      this.grid = new Grid(this.gridCanvas, this);
-      this.grid.draw();
-    }
-  }, {
-    key: "moveTo",
-    value: function moveTo(obj, index) {
-      if (index !== undefined) {
-        obj.zIndex = index;
-      }
-      this.canvas.moveTo(obj.shape, obj.zIndex);
-    }
-  }, {
-    key: "cloneCanvas",
-    value: function cloneCanvas(canvas) {
-      canvas = canvas || this.canvas;
-      var clone = document.createElement('canvas');
-      clone.width = canvas.width;
-      clone.height = canvas.height;
-      canvas.wrapperEl.appendChild(clone);
-      return clone;
-    }
-  }, {
-    key: "setZoom",
-    value: function setZoom(zoom) {
-      var _this2 = this;
-      var _this$canvas = this.canvas,
-        width = _this$canvas.width,
-        height = _this$canvas.height;
-      this.zoom = clamp(zoom, this.minZoom, this.maxZoom);
-      this.dx = 0;
-      this.dy = 0;
-      this.x = width / 2.0;
-      this.y = height / 2.0;
-      this.update();
-      nextTick(function () {
-        _this2.update();
-      });
-    }
-  }, {
-    key: "getBounds",
-    value: function getBounds() {
-      var minX = Infinity;
-      var maxX = -Infinity;
-      var minY = Infinity;
-      var maxY = -Infinity;
-      this.canvas.forEachObject(function (obj) {
-        var coords = obj.getBounds();
-        coords.forEach(function (point) {
-          minX = Math.min(minX, point.x);
-          maxX = Math.max(maxX, point.x);
-          minY = Math.min(minY, point.y);
-          maxY = Math.max(maxY, point.y);
-        });
-      });
-      return [new Point(minX, minY), new Point(maxX, maxY)];
-    }
-  }, {
-    key: "fitBounds",
-    value: function fitBounds() {
-      var _this3 = this;
-      var padding = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
-      this.onResize();
-      var _this$canvas2 = this.canvas,
-        width = _this$canvas2.width,
-        height = _this$canvas2.height;
-      this.originX = -this.canvas.width / 2;
-      this.originY = -this.canvas.height / 2;
-      var bounds = this.getBounds();
-      this.center.x = (bounds[0].x + bounds[1].x) / 2.0;
-      this.center.y = -(bounds[0].y + bounds[1].y) / 2.0;
-      var boundWidth = Math.abs(bounds[0].x - bounds[1].x) + padding;
-      var boundHeight = Math.abs(bounds[0].y - bounds[1].y) + padding;
-      var scaleX = width / boundWidth;
-      var scaleY = height / boundHeight;
-      this.zoom = Math.min(scaleX, scaleY);
-      this.canvas.setZoom(this.zoom);
-      this.canvas.absolutePan({
-        x: this.originX + this.center.x * this.zoom,
-        y: this.originY - this.center.y * this.zoom
-      });
-      this.update();
-      nextTick(function () {
-        _this3.update();
-      });
-    }
-  }, {
-    key: "setCursor",
-    value: function setCursor(cursor) {
-      this.container.style.cursor = cursor;
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      var _this4 = this;
-      var _this$canvas3 = this.canvas,
-        width = _this$canvas3.width,
-        height = _this$canvas3.height;
-      this.zoom = this._options.zoom || 1;
-      this.center = new Point();
-      this.originX = -this.canvas.width / 2;
-      this.originY = -this.canvas.height / 2;
-      this.canvas.absolutePan({
-        x: this.originX,
-        y: this.originY
-      });
-      this.x = width / 2.0;
-      this.y = height / 2.0;
-      this.update();
-      nextTick(function () {
-        _this4.update();
-      });
-    }
-  }, {
-    key: "onResize",
-    value: function onResize(width, height) {
-      var oldWidth = this.canvas.width;
-      var oldHeight = this.canvas.height;
-      width = width || this.container.clientWidth;
-      height = height || this.container.clientHeight;
-      this.canvas.setWidth(width);
-      this.canvas.setHeight(height);
-      if (this.grid) {
-        this.grid.setSize(width, height);
-      }
-      var dx = width / 2.0 - oldWidth / 2.0;
-      var dy = height / 2.0 - oldHeight / 2.0;
-      this.canvas.relativePan({
-        x: dx,
-        y: dy
-      });
-      this.update();
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      var canvas = this.canvas;
-      if (this.grid) {
-        this.grid.update2({
-          x: this.center.x,
-          y: this.center.y,
-          zoom: this.zoom
-        });
-      }
-      this.emit('update', this);
-      if (this.grid) {
-        this.grid.render();
-      }
-      canvas.zoomToPoint(new Point(this.x, this.y), this.zoom);
-      if (this.isGrabMode() || this.isRight) {
-        canvas.relativePan(new Point(this.dx, this.dy));
-        this.emit('panning');
-        this.setCursor('grab');
-      } else {
-        this.setCursor('pointer');
-      }
-      var now = Date.now();
-      if (!this.lastUpdatedTime && Math.abs(this.lastUpdatedTime - now) < 100) {
+      vm.update();
+      vm.canvas.requestRenderAll();
+    });
+    this.canvas.on('object:rotating', e => {
+      if (e.target.class) {
+        vm.emit(`${e.target.class}:rotating`, e.target.parent, e.target.angle);
+        e.target.parent.emit('rotating', e.target.parent, e.target.angle);
         return;
       }
-      this.lastUpdatedTime = now;
-      var objects = canvas.getObjects();
-      var hasKeepZoom = false;
-      for (var i = 0; i < objects.length; i += 1) {
-        var object = objects[i];
-        if (object.keepOnZoom) {
-          object.set('scaleX', 1.0 / this.zoom);
-          object.set('scaleY', 1.0 / this.zoom);
-          object.setCoords();
-          hasKeepZoom = true;
-          this.emit("".concat(object.class, "scaling"), object);
-        }
-      }
-      if (hasKeepZoom) canvas.requestRenderAll();
-    }
-  }, {
-    key: "panzoom",
-    value: function panzoom(e) {
-      // enable interactions
-      var _this$canvas4 = this.canvas,
-        width = _this$canvas4.width,
-        height = _this$canvas4.height;
-      // shift start
-      var zoom = clamp(-e.dz, -height * 0.75, height * 0.75) / height;
-      var prevZoom = 1 / this.zoom;
-      var curZoom = prevZoom * (1 - zoom);
-      curZoom = clamp(curZoom, this.minZoom, this.maxZoom);
-      var _this$center = this.center,
-        x = _this$center.x,
-        y = _this$center.y;
-
-      // pan
-      var oX = 0.5;
-      var oY = 0.5;
-      if (this.isGrabMode() || e.isRight) {
-        x -= prevZoom * e.dx;
-        y += prevZoom * e.dy;
-        this.setCursor('grab');
-      } else {
-        this.setCursor('pointer');
-      }
-      if (this.zoomEnabled) {
-        var tx = e.x / width - oX;
-        x -= width * (curZoom - prevZoom) * tx;
-        var ty = oY - e.y / height;
-        y -= height * (curZoom - prevZoom) * ty;
-      }
-      this.center.setX(x);
-      this.center.setY(y);
-      this.zoom = 1 / curZoom;
-      this.dx = e.dx;
-      this.dy = e.dy;
-      this.x = e.x0;
-      this.y = e.y0;
-      this.isRight = e.isRight;
-      this.isRight = e.isRight;
-      this.update();
-    }
-  }, {
-    key: "setView",
-    value: function setView(view) {
-      var _this5 = this;
-      this.dx = 0;
-      this.dy = 0;
-      this.x = 0;
-      this.y = 0;
-      view.y *= -1;
-      var dx = this.center.x - view.x;
-      var dy = -this.center.y + view.y;
-      this.center.copy(view);
-      this.canvas.relativePan(new Point(dx * this.zoom, dy * this.zoom));
-      this.canvas.renderAll();
-      this.update();
-      nextTick(function () {
-        _this5.update();
-      });
-    }
-  }, {
-    key: "registerListeners",
-    value: function registerListeners() {
-      var _this6 = this;
-      var vm = this;
-      this.canvas.on('object:scaling', function (e) {
-        if (e.target.class) {
-          vm.emit("".concat(e.target.class, ":scaling"), e.target.parent);
-          e.target.parent.emit('scaling', e.target.parent);
-          return;
-        }
-        var group = e.target;
-        if (!group.getObjects) return;
-        var objects = group.getObjects();
-        group.removeWithUpdate();
-        for (var i = 0; i < objects.length; i += 1) {
-          var object = objects[i];
-          object.orgYaw = object.parent.yaw || 0;
+      const group = e.target;
+      if (!group.getObjects) return;
+      const objects = group.getObjects();
+      for (let i = 0; i < objects.length; i += 1) {
+        const object = objects[i];
+        if (object.class === 'marker') {
+          object._set('angle', -group.angle);
+          object.parent.yaw = -group.angle + (object.orgYaw || 0);
+          // object.orgYaw = object.parent.yaw;
           object.fire('moving', object.parent);
-          vm.emit("".concat(object.class, ":moving"), object.parent);
+          vm.emit(`${object.class}:moving`, object.parent);
+          object.fire('rotating', object.parent);
+          vm.emit(`${object.class}:rotating`, object.parent);
         }
-        vm.update();
-        vm.canvas.requestRenderAll();
-      });
-      this.canvas.on('object:rotating', function (e) {
-        if (e.target.class) {
-          vm.emit("".concat(e.target.class, ":rotating"), e.target.parent, e.target.angle);
-          e.target.parent.emit('rotating', e.target.parent, e.target.angle);
-          return;
+      }
+      this.update();
+    });
+    this.canvas.on('object:moving', e => {
+      if (e.target.class) {
+        vm.emit(`${e.target.class}:moving`, e.target.parent);
+        e.target.parent.emit('moving', e.target.parent);
+        return;
+      }
+      const group = e.target;
+      if (!group.getObjects) return;
+      const objects = group.getObjects();
+      for (let i = 0; i < objects.length; i += 1) {
+        const object = objects[i];
+        if (object.class) {
+          object.fire('moving', object.parent);
+          vm.emit(`${object.class}:moving`, object.parent);
         }
-        var group = e.target;
-        if (!group.getObjects) return;
-        var objects = group.getObjects();
-        for (var i = 0; i < objects.length; i += 1) {
-          var object = objects[i];
-          if (object.class === 'marker') {
-            object._set('angle', -group.angle);
-            object.parent.yaw = -group.angle + (object.orgYaw || 0);
-            // object.orgYaw = object.parent.yaw;
-            object.fire('moving', object.parent);
-            vm.emit("".concat(object.class, ":moving"), object.parent);
-            object.fire('rotating', object.parent);
-            vm.emit("".concat(object.class, ":rotating"), object.parent);
+      }
+      this.update();
+    });
+    this.canvas.on('object:moved', e => {
+      if (e.target.class) {
+        vm.emit(`${e.target.class}dragend`, e);
+        vm.emit(`${e.target.class}:moved`, e.target.parent);
+        e.target.parent.emit('moved', e.target.parent);
+        this.update();
+        return;
+      }
+      const group = e.target;
+      if (!group.getObjects) return;
+      const objects = group.getObjects();
+      for (let i = 0; i < objects.length; i += 1) {
+        const object = objects[i];
+        if (object.class) {
+          object.fire('moved', object.parent);
+          vm.emit(`${object.class}:moved`, object.parent);
+        }
+      }
+      this.update();
+    });
+    this.canvas.on('selection:cleared', e => {
+      const objects = e.deselected;
+      if (!objects || !objects.length) return;
+      for (let i = 0; i < objects.length; i += 1) {
+        const object = objects[i];
+        if (object.class === 'marker') {
+          object._set('angle', 0);
+          object._set('scaleX', 1 / vm.zoom);
+          object._set('scaleY', 1 / vm.zoom);
+          if (object.parent) {
+            object.parent.inGroup = false;
           }
+          object.fire('moving', object.parent);
         }
-        _this6.update();
-      });
-      this.canvas.on('object:moving', function (e) {
-        if (e.target.class) {
-          vm.emit("".concat(e.target.class, ":moving"), e.target.parent);
-          e.target.parent.emit('moving', e.target.parent);
-          return;
+      }
+    });
+    this.canvas.on('selection:created', e => {
+      const objects = e.selected;
+      if (!objects || objects.length < 2) return;
+      for (let i = 0; i < objects.length; i += 1) {
+        const object = objects[i];
+        if (object.class && object.parent) {
+          object.parent.inGroup = true;
+          object.orgYaw = object.parent.yaw || 0;
         }
-        var group = e.target;
-        if (!group.getObjects) return;
-        var objects = group.getObjects();
-        for (var i = 0; i < objects.length; i += 1) {
-          var object = objects[i];
-          if (object.class) {
-            object.fire('moving', object.parent);
-            vm.emit("".concat(object.class, ":moving"), object.parent);
-          }
+      }
+    });
+    this.canvas.on('selection:updated', e => {
+      const objects = e.selected;
+      if (!objects || objects.length < 2) return;
+      for (let i = 0; i < objects.length; i += 1) {
+        const object = objects[i];
+        if (object.class && object.parent) {
+          object.parent.inGroup = true;
+          object.orgYaw = object.parent.yaw || 0;
         }
-        _this6.update();
-      });
-      this.canvas.on('object:moved', function (e) {
-        if (e.target.class) {
-          vm.emit("".concat(e.target.class, "dragend"), e);
-          vm.emit("".concat(e.target.class, ":moved"), e.target.parent);
-          e.target.parent.emit('moved', e.target.parent);
-          _this6.update();
-          return;
-        }
-        var group = e.target;
-        if (!group.getObjects) return;
-        var objects = group.getObjects();
-        for (var i = 0; i < objects.length; i += 1) {
-          var object = objects[i];
-          if (object.class) {
-            object.fire('moved', object.parent);
-            vm.emit("".concat(object.class, ":moved"), object.parent);
-          }
-        }
-        _this6.update();
-      });
-      this.canvas.on('selection:cleared', function (e) {
-        var objects = e.deselected;
-        if (!objects || !objects.length) return;
-        for (var i = 0; i < objects.length; i += 1) {
-          var object = objects[i];
-          if (object.class === 'marker') {
-            object._set('angle', 0);
-            object._set('scaleX', 1 / vm.zoom);
-            object._set('scaleY', 1 / vm.zoom);
-            if (object.parent) {
-              object.parent.inGroup = false;
-            }
-            object.fire('moving', object.parent);
-          }
-        }
-      });
-      this.canvas.on('selection:created', function (e) {
-        var objects = e.selected;
-        if (!objects || objects.length < 2) return;
-        for (var i = 0; i < objects.length; i += 1) {
-          var object = objects[i];
-          if (object.class && object.parent) {
-            object.parent.inGroup = true;
-            object.orgYaw = object.parent.yaw || 0;
-          }
-        }
-      });
-      this.canvas.on('selection:updated', function (e) {
-        var objects = e.selected;
-        if (!objects || objects.length < 2) return;
-        for (var i = 0; i < objects.length; i += 1) {
-          var object = objects[i];
-          if (object.class && object.parent) {
-            object.parent.inGroup = true;
-            object.orgYaw = object.parent.yaw || 0;
-          }
-        }
-      });
-      this.canvas.on('mouse:down', function (e) {
-        vm.dragObject = e.target;
-      });
-      this.canvas.on('mouse:move', function (e) {
-        if (_this6.isMeasureMode()) {
-          _this6.measurement.onMouseMove(e);
-        }
-        if (vm.dragObject && vm.dragObject.clickable) {
-          if (vm.dragObject === e.target) {
-            vm.dragObject.dragging = true;
-          } else {
-            vm.dragObject.dragging = false;
-          }
-        }
-        _this6.isRight = false;
-        if ('which' in e.e) {
-          // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
-          _this6.isRight = e.e.which === 3;
-        } else if ('button' in e.e) {
-          // IE, Opera
-          _this6.isRight = e.e.button === 2;
-        }
-        vm.emit('mouse:move', e);
-      });
-      this.canvas.on('mouse:up', function (e) {
-        if (_this6.isMeasureMode()) {
-          _this6.measurement.onClick(e);
-        }
-        _this6.isRight = false;
-        _this6.dx = 0;
-        _this6.dy = 0;
-        if (!vm.dragObject || !e.target || !e.target.selectable) {
-          e.target = null;
-          vm.emit('mouse:click', e);
-        }
-        if (vm.dragObject && vm.dragObject.clickable) {
-          if (vm.dragObject !== e.target) return;
-          if (!vm.dragObject.dragging && !vm.modeToggleByKey) {
-            vm.emit("".concat(vm.dragObject.class, ":click"), vm.dragObject.parent);
-          }
+      }
+    });
+    this.canvas.on('mouse:down', e => {
+      vm.dragObject = e.target;
+    });
+    this.canvas.on('mouse:move', e => {
+      if (this.isMeasureMode()) {
+        this.measurement.onMouseMove(e);
+      }
+      if (vm.dragObject && vm.dragObject.clickable) {
+        if (vm.dragObject === e.target) {
+          vm.dragObject.dragging = true;
+        } else {
           vm.dragObject.dragging = false;
         }
-        vm.dragObject = null;
-      });
-      window.addEventListener('resize', function () {
-        vm.onResize();
-      });
-
-      // document.addEventListener('keyup', () => {
-      //   if (this.modeToggleByKey && this.isGrabMode()) {
-      //     this.setModeAsSelect();
-      //     this.modeToggleByKey = false;
-      //   }
-      // });
-
-      // document.addEventListener('keydown', event => {
-      //   if (event.ctrlKey || event.metaKey) {
-      //     if (this.isSelectMode()) {
-      //       this.setModeAsGrab();
-      //     }
-      //     this.modeToggleByKey = true;
-      //   }
-      // });
-    }
-  }, {
-    key: "unregisterListeners",
-    value: function unregisterListeners() {
-      this.canvas.off('object:moving');
-      this.canvas.off('object:moved');
-    }
-  }, {
-    key: "getMarkerById",
-    value: function getMarkerById(id) {
-      var objects = this.canvas.getObjects();
-      for (var i = 0; i < objects.length; i += 1) {
-        var obj = objects[i];
-        if (obj.class === 'marker' && obj.id === id) {
-          return obj.parent;
-        }
       }
-      return null;
-    }
-  }, {
-    key: "getMarkers",
-    value: function getMarkers() {
-      var list = [];
-      var objects = this.canvas.getObjects();
-      for (var i = 0; i < objects.length; i += 1) {
-        var obj = objects[i];
-        if (obj.class === 'marker') {
-          list.push(obj.parent);
-        }
+      this.isRight = false;
+      if ('which' in e.e) {
+        // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+        this.isRight = e.e.which === 3;
+      } else if ('button' in e.e) {
+        // IE, Opera
+        this.isRight = e.e.button === 2;
       }
-      return list;
+      vm.emit('mouse:move', e);
+    });
+    this.canvas.on('mouse:up', e => {
+      if (this.isMeasureMode()) {
+        this.measurement.onClick(e);
+      }
+      this.isRight = false;
+      this.dx = 0;
+      this.dy = 0;
+      if (!vm.dragObject || !e.target || !e.target.selectable) {
+        e.target = null;
+        vm.emit('mouse:click', e);
+      }
+      if (vm.dragObject && vm.dragObject.clickable) {
+        if (vm.dragObject !== e.target) return;
+        if (!vm.dragObject.dragging && !vm.modeToggleByKey) {
+          vm.emit(`${vm.dragObject.class}:click`, vm.dragObject.parent);
+        }
+        vm.dragObject.dragging = false;
+      }
+      vm.dragObject = null;
+    });
+    window.addEventListener('resize', () => {
+      vm.onResize();
+    });
+
+    // document.addEventListener('keyup', () => {
+    //   if (this.modeToggleByKey && this.isGrabMode()) {
+    //     this.setModeAsSelect();
+    //     this.modeToggleByKey = false;
+    //   }
+    // });
+
+    // document.addEventListener('keydown', event => {
+    //   if (event.ctrlKey || event.metaKey) {
+    //     if (this.isSelectMode()) {
+    //       this.setModeAsGrab();
+    //     }
+    //     this.modeToggleByKey = true;
+    //   }
+    // });
+  }
+  unregisterListeners() {
+    this.canvas.off('object:moving');
+    this.canvas.off('object:moved');
+  }
+  getMarkerById(id) {
+    const objects = this.canvas.getObjects();
+    for (let i = 0; i < objects.length; i += 1) {
+      const obj = objects[i];
+      if (obj.class === 'marker' && obj.id === id) {
+        return obj.parent;
+      }
     }
-  }]);
-}(mix(Base).with(ModesMixin));
+    return null;
+  }
+  getMarkers() {
+    const list = [];
+    const objects = this.canvas.getObjects();
+    for (let i = 0; i < objects.length; i += 1) {
+      const obj = objects[i];
+      if (obj.class === 'marker') {
+        list.push(obj.parent);
+      }
+    }
+    return list;
+  }
+};
 
 /**
  * ImageLayer - A layer for displaying and manipulating images
@@ -4916,7 +4278,7 @@ var Map$1 = /*#__PURE__*/function (_mix$with) {
  * @class
  * @extends {Layer}
  */
-var ImageLayer = /*#__PURE__*/function (_Layer) {
+class ImageLayer extends Layer {
   /**
    * Create a new ImageLayer
    *
@@ -4930,16 +4292,13 @@ var ImageLayer = /*#__PURE__*/function (_Layer) {
    * @param {number} [options.zIndex=1] - Z-index for layer stacking order
    * @param {string} [options.id] - Unique identifier for the layer
    */
-  function ImageLayer(options) {
-    var _this;
-    _classCallCheck(this, ImageLayer);
-    _this = _callSuper(this, ImageLayer, [options]);
-    _this.width = _this.width || -1;
-    _this.height = _this.height || -1;
-    _this.position = new Point(_this.position);
-    _this.class = 'image-layer';
-    _this.load();
-    return _this;
+  constructor(options) {
+    super(options);
+    this.width = this.width || -1;
+    this.height = this.height || -1;
+    this.position = new Point(this.position);
+    this.class = 'image-layer';
+    this.load();
   }
 
   /**
@@ -4950,129 +4309,117 @@ var ImageLayer = /*#__PURE__*/function (_Layer) {
    *
    * @returns {void}
    */
-  _inherits(ImageLayer, _Layer);
-  return _createClass(ImageLayer, [{
-    key: "load",
-    value: function load() {
-      var vm = this;
-      var index = this.url.lastIndexOf('.');
-      var ext = index > 0 ? this.url.substring(index + 1) : '';
-      if (ext === 'svg') {
-        fabric.loadSVGFromURL(this.url, function (objects, options) {
-          var shape = fabric.util.groupSVGElements(objects, options);
-          vm.onLoad(shape);
-        });
+  load() {
+    const vm = this;
+    const index = this.url.lastIndexOf('.');
+    const ext = index > 0 ? this.url.substring(index + 1) : '';
+    if (ext === 'svg') {
+      fabric.loadSVGFromURL(this.url, (objects, options) => {
+        const shape = fabric.util.groupSVGElements(objects, options);
+        vm.onLoad(shape);
+      });
+    } else {
+      fabric.Image.fromURL(this.url, img => {
+        vm.onLoad(img);
+      });
+    }
+    return this;
+  }
+
+  /**
+   * Handles the loaded image
+   * @param {Object} shape The loaded image object
+   */
+  onLoad(shape) {
+    const group = new Group({
+      label: this.label,
+      zIndex: this.zIndex,
+      selectable: false,
+      subTargetCheck: true,
+      width: shape.width || 0,
+      height: shape.height || 0
+    });
+    group.add(shape);
+    if (this.width < 0) {
+      this.width = shape.width || 0;
+    }
+    if (this.height < 0) {
+      this.height = shape.height || 0;
+    }
+    this.width = parseFloat(this.width);
+    this.height = parseFloat(this.height);
+    if (this.width > 0 && this.height > 0) {
+      if (this.keepRatio) {
+        const widthScale = this.width / shape.width;
+        const heightScale = this.height / shape.height;
+        const minScale = Math.min(widthScale, heightScale);
+        shape.scale(minScale);
       } else {
-        fabric.Image.fromURL(this.url, function (img) {
-          vm.onLoad(img);
-        });
+        shape.scaleToWidth(this.width);
+        shape.scaleToHeight(this.height);
       }
-      return this;
+      this.width = shape.getScaledWidth();
+      this.height = shape.getScaledHeight();
+    } else {
+      this.width = shape.width;
+      this.height = shape.height;
     }
+    this.shape = shape;
+    this.group = group;
+    shape.lockMovementX = true;
+    shape.lockMovementY = true;
+    shape.hoverCursor = 'default';
+    this.canvas = shape.canvas;
+    this.bindEvents();
+    this.fire('load', this);
+  }
 
-    /**
-     * Handles the loaded image
-     * @param {Object} shape The loaded image object
-     */
-  }, {
-    key: "onLoad",
-    value: function onLoad(shape) {
-      var group = new Group({
-        label: this.label,
-        zIndex: this.zIndex,
-        selectable: false,
-        subTargetCheck: true,
-        width: shape.width || 0,
-        height: shape.height || 0
-      });
-      group.add(shape);
-      if (this.width < 0) {
-        this.width = shape.width || 0;
-      }
-      if (this.height < 0) {
-        this.height = shape.height || 0;
-      }
-      this.width = parseFloat(this.width);
-      this.height = parseFloat(this.height);
-      if (this.width > 0 && this.height > 0) {
-        if (this.keepRatio) {
-          var widthScale = this.width / shape.width;
-          var heightScale = this.height / shape.height;
-          var minScale = Math.min(widthScale, heightScale);
-          shape.scale(minScale);
-        } else {
-          shape.scaleToWidth(this.width);
-          shape.scaleToHeight(this.height);
-        }
-        this.width = shape.getScaledWidth();
-        this.height = shape.getScaledHeight();
-      } else {
-        this.width = shape.width;
-        this.height = shape.height;
-      }
-      this.shape = shape;
-      this.group = group;
-      shape.lockMovementX = true;
-      shape.lockMovementY = true;
-      shape.hoverCursor = 'default';
-      this.canvas = shape.canvas;
-      this.bindEvents();
-      this.fire('load', this);
-    }
+  /**
+   * Bind events to the image
+   */
+  bindEvents() {
+    const vm = this;
+    this.shape.on('mousedown', e => {
+      vm.fire('mousedown', e);
+    });
+    this.shape.on('mousemove', e => {
+      vm.fire('mousemove', e);
+    });
+    this.shape.on('mouseup', e => {
+      vm.fire('mouseup', e);
+    });
+    this.shape.on('mouseover', e => {
+      vm.fire('mouseover', e);
+    });
+    this.shape.on('mouseout', e => {
+      vm.fire('mouseout', e);
+    });
+  }
 
-    /**
-     * Bind events to the image
-     */
-  }, {
-    key: "bindEvents",
-    value: function bindEvents() {
-      var vm = this;
-      this.shape.on('mousedown', function (e) {
-        vm.fire('mousedown', e);
-      });
-      this.shape.on('mousemove', function (e) {
-        vm.fire('mousemove', e);
-      });
-      this.shape.on('mouseup', function (e) {
-        vm.fire('mouseup', e);
-      });
-      this.shape.on('mouseover', function (e) {
-        vm.fire('mouseover', e);
-      });
-      this.shape.on('mouseout', function (e) {
-        vm.fire('mouseout', e);
-      });
-    }
-
-    /**
-     * Get the bounds of the image
-     * @returns {Object} The bounds of the image
-     */
-  }, {
-    key: "getBounds",
-    value: function getBounds() {
-      return {
-        width: this.width,
-        height: this.height
-      };
-    }
-  }]);
-}(Layer);
+  /**
+   * Get the bounds of the image
+   * @returns {Object} The bounds of the image
+   */
+  getBounds() {
+    return {
+      width: this.width,
+      height: this.height
+    };
+  }
+}
 
 /**
  * Factory function to create an ImageLayer
  * @param {Object} options Configuration options
  * @returns {ImageLayer} A new ImageLayer instance
  */
-var imageLayer = function imageLayer(options) {
-  return new ImageLayer(options);
-};
+const imageLayer = options => new ImageLayer(options);
 
 // Log version information in development only
-{
+if (process.env.NODE_ENV !== 'production') {
   console.log('fabric-layers-react', version);
   console.log('fabric.js', fabric$1.version);
 }
 
-export { Arrow, Axis, Base, Canvas, CanvasLayer, Circle, Connector, Map$1 as CoordinatePlane, Grid, GridManager, Grid as GridSystem, Group, ICON, Icon, ImageLayer, Layer, LayerManager, Line, MAP, Map$1 as Map, Marker, MarkerGroup, Measurement, Measurer, Modes, ModesMixin, Point, Polyline, Rect, Tooltip, circle, gridStyle, icon, imageLayer, line, marker, markerGroup, point, polyline, rect, version };
+export { Arrow, Axis, Base, Canvas, CanvasLayer, Circle, Connector, Map$1 as CoordinatePlane, Grid, GridManager, Grid as GridSystem, Group, ICON, Icon, ImageLayer, Layer, LayerManager, Line, MAP, Map$1 as Map, Marker, MarkerGroup, Measurement, Measurer, Modes$1 as Modes, ModesMixin, Point, Polyline, Rect, Tooltip, circle, gridStyle, icon, imageLayer, line, marker, markerGroup, point, polyline, rect, version };
 //# sourceMappingURL=index.esm.js.map

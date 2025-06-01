@@ -1,9 +1,10 @@
 // Rollup configuration for fabric-layers-react
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import json from 'rollup-plugin-json';
+import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 import pkg from './package.json';
 
 const banner = `/* @preserve
@@ -49,7 +50,8 @@ export default [
     plugins: [
       json(),
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
+        babelHelpers: 'bundled'
       }),
       commonjs()
     ]
@@ -68,7 +70,8 @@ export default [
     plugins: [
       json(),
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
+        babelHelpers: 'bundled'
       }),
       commonjs()
     ]
@@ -89,11 +92,13 @@ export default [
     plugins: [
       json(),
       babel({
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
+        babelHelpers: 'bundled'
       }),
       commonjs(),
       globals(),
-      builtins()
+      builtins(),
+      nodePolyfills()
     ]
   }
 ];

@@ -1,26 +1,18 @@
 // Config file for running Rollup in "normal" mode (non-watch)
 
-import rollupGitVersion from 'rollup-plugin-git-version';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+// import rollupGitVersion from 'rollup-plugin-git-version';
+import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
-import json from 'rollup-plugin-json';
-import gitRev from 'git-rev-sync';
-import pkg from '../package.json';
+import json from '@rollup/plugin-json';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pkg = require('../package.json');
 
-let { version } = pkg;
-let release;
-
-// Skip the git branch+rev in the banner when doing a release build
-if (process.env.NODE_ENV === 'release') {
-  release = true;
-} else {
-  release = false;
-  const branch = gitRev.branch();
-  const rev = gitRev.short();
-  version += `+${branch}.${rev}`;
-}
+const { version } = pkg;
+const release = process.env.NODE_ENV === 'release';
 
 const banner = `/* @preserve
  * fabric-layers-react ${version}, a fabric.js coordinate-plane (grid) & layers library for React
@@ -70,11 +62,13 @@ export default {
     commonjs({
       include: 'src/lib/panzoom.js'
     }),
-    release ? json() : rollupGitVersion(),
+    json(),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      babelHelpers: 'bundled'
     }),
     globals(),
-    builtins()
+    builtins(),
+    nodePolyfills()
   ]
 };
