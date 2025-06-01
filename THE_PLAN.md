@@ -81,7 +81,7 @@
 
 ## 6. Publishing
 
-### Pre-publishing Checklist
+###  Pre-publishing Checklist
 - [x] Verify package.json configuration
 - [x] Fix build dependencies (added missing Babel plugins)
 - [x] Run all tests (with some warnings to address in future updates)
