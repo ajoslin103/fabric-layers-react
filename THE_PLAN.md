@@ -89,11 +89,11 @@
 - [x] Test package locally using npm link
 
 ### Publishing Process
-- [ ] Set up npm account if needed
-- [ ] Configure npm access (public/private)
-- [ ] Create .npmrc configuration if needed
-- [ ] Update version number
-- [ ] Publish with `npm publish`
+- [x] Set up npm account if needed
+- [x] Configure npm access (public/private)
+- [x] Create .npmrc configuration if needed
+- [x] Update version number
+- [x] Publish with `npm publish`
 
 ### Continuous Integration
 - [ ] Set up GitHub Actions or similar for automated testing
