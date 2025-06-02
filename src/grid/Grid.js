@@ -1,11 +1,6 @@
-import alpha from '../lib/color-alpha';
-import Base from '../core/Base';
-import {
-  clamp, almost, len, parseUnit, toPx, isObj
-} from '../lib/mumath/index';
-import gridStyle from './gridStyle';
-import Axis from './Axis';
-import { Point } from '../geometry/Point';
+// Import dependencies from fabric-layers core library
+import { Base, gridStyle, Axis, Point } from 'fabric-layers';
+import { alpha, clamp, almost, len, parseUnit, toPx, isObj } from 'fabric-layers';
 
 /**
  * Grid - Provides a coordinate grid system for the coordinate plane

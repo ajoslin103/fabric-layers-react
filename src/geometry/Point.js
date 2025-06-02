@@ -1,37 +1,12 @@
-export class Point extends fabric.Point {
-  constructor(...params) {
-    let x;
-    let y;
-    if (params.length > 1) {
-      [x, y] = params;
-    } else if (params.length === 0 || !params[0]) {
-      [x, y] = [0, 0];
-    } else if (Object.prototype.hasOwnProperty.call(params[0], 'x')) {
-      x = params[0].x;
-      y = params[0].y;
-    } else if (params[0].length) {
-      [[x, y]] = params;
-    } else {
-      console.error(
-        'Parameter for Point is not valid. Use Point(x,y) or Point({x,y}) or Point([x,y])',
-        params
-      );
-    }
+// Re-export Point class and factory function from fabric-layers for backward compatibility
+import { Point as CorePoint, point as createPoint } from 'fabric-layers';
 
-    super(x, y);
-  }
-
-  setX(x) {
-    this.x = x || 0;
-  }
-
-  setY(y) {
-    this.y = y || 0;
-  }
-
+// Extend the Point class to maintain any custom methods from the React version
+export class Point extends CorePoint {
   copy(point) {
     this.x = point.x;
     this.y = point.y;
+    return this;
   }
 
   getArray() {
@@ -39,4 +14,5 @@ export class Point extends fabric.Point {
   }
 }
 
+// Re-export the point factory function
 export const point = (...params) => new Point(...params);

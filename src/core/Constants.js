@@ -1,23 +1,9 @@
-import { Point } from '../geometry/Point.js';
+// Import core constants from fabric-layers
+import { Modes, MAP, Point } from 'fabric-layers';
 
-export const Modes = {
-  SELECT: 'SELECT',
-  GRAB: 'GRAB',
-  MEASURE: 'MEASURE',
-  DRAW: 'DRAW'
-};
+// Re-export for backward compatibility
+export { Modes, MAP };
 
-export const MAP = {
-  center: new Point(),
-  zoom: 1,
-  minZoom: 0,
-  maxZoom: 20,
-  gridEnabled: true,
-  zoomEnabled: true,
-  selectEnabled: true,
-  mode: Modes.SELECT,
-  showGrid: true
-};
 
 export const MARKER = {
   position: new Point(),

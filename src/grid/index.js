@@ -2,8 +2,11 @@
  * Grid system exports
  */
 
-// Core grid components
+// Re-export core grid components from fabric-layers
+import { Grid as CoreGrid, Axis as CoreAxis, gridStyle as coreGridStyle, GridManager as CoreGridManager } from 'fabric-layers';
+
+// Export React-specific grid components
 export { default as Grid } from './Grid';
-export { default as Axis } from './Axis';
-export { default as gridStyle } from './gridStyle';
-export { default as GridManager } from './GridManager';
+
+// Re-export core components for backward compatibility
+export { CoreAxis as Axis, coreGridStyle as gridStyle, CoreGridManager as GridManager };

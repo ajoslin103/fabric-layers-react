@@ -4,6 +4,7 @@
  */
 
 import fabric from 'fabric-pure-browser';
+import * as fabricLayers from 'fabric-layers';
 import { version } from '../package.json';
 import Grid from './grid/Grid';
 // Import but don't re-export legacy renamed components to avoid naming conflicts
@@ -12,6 +13,7 @@ import './floorplan/index';
 // Log version information in development only
 if (process.env.NODE_ENV !== 'production') {
   console.log('fabric-layers-react', version);
+  console.log('fabric-layers', fabricLayers.version);
   console.log('fabric.js', fabric.version);
 }
 

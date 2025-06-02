@@ -2,5 +2,5 @@
  * Geometry module exports
  */
 
-// Export Point class and factory function
-export { Point, point } from './Point';
+// Re-export geometry components from fabric-layers
+export { Point, point } from 'fabric-layers';

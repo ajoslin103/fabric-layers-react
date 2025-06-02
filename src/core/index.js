@@ -2,12 +2,8 @@
  * Core module exports
  */
 
-// Export Base component
-export { default as Base } from './Base';
+// Re-export core components from fabric-layers
+export { Base, Modes, MAP } from 'fabric-layers';
 
-// Export constants
-export {
-  Modes,
-  MAP,
-  ICON
-} from './Constants';
+// Export React-specific constants
+export { ICON } from './Constants';
