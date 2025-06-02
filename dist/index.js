@@ -4,8 +4,11 @@
  */
 
 import fabric$1 from 'fabric-pure-browser';
-import EventEmitter2 from 'eventemitter2';
+import * as fabricLayers from 'fabric-layers';
+import { Grid as Grid$1, clamp, alpha, parseUnit, toPx, isObj, gridStyle, Axis, Point as Point$1, len, almost, Group as Group$1, Layer as Layer$1, CanvasLayer as CanvasLayer$1, Connector as Connector$1, Base, Modes as Modes$1, Measurer, MAP } from 'fabric-layers';
+export { Axis, Base, GridManager, LayerManager, MAP, Measurer, Modes, Point, gridStyle, point } from 'fabric-layers';
 import React from 'react';
+import EventEmitter2 from 'eventemitter2';
 
 var global$2 = (typeof global !== "undefined" ? global :
   typeof self !== "undefined" ? self :
@@ -164,355 +167,18 @@ var process = {
 
 var version = "2.0.0";
 
-function alpha(color, value) {
-  let obj = color.replace(/[^\d,]/g, '').split(',');
-  if (value == null) value = obj[3] || 1;
-  obj[3] = value;
-  return 'rgba(' + obj.join(',') + ')';
-}
-
-class Base extends EventEmitter2 {
-  constructor(options) {
-    super(options);
-    this._options = options || {};
-    Object.assign(this, options);
-  }
-}
+// Import dependencies from fabric-layers core library
 
 /**
- * Clamp value.
- * Detects proper clamp min/max.
- *
- * @param {number} a Current value to cut off
- * @param {number} min One side limit
- * @param {number} max Other side limit
- *
- * @return {number} Clamped value
- */
-
-function clamp(a, min, max) {
-  return max > min ? Math.max(Math.min(a, max), min) : Math.max(Math.min(a, min), max);
-}
-
-/**
- * Return quadratic length
- *
- * @module  mumath/len
- *
- */
-
-function len(a, b) {
-  return Math.sqrt(a * a + b * b);
-}
-
-// Type definitions for almost-equal 1.1
-// Project: https://github.com/mikolalysenko/almost-equal#readme
-// Definitions by: Curtis Maddalozzo <https://github.com/cmaddalozzo>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-var abs = Math.abs;
-var min = Math.min;
-function almostEqual(a, b, absoluteError, relativeError) {
-  var d = abs(a - b);
-  if (absoluteError == null) absoluteError = almostEqual.DBL_EPSILON;
-  if (relativeError == null) relativeError = absoluteError;
-  if (d <= absoluteError) {
-    return true;
-  }
-  if (d <= relativeError * min(abs(a), abs(b))) {
-    return true;
-  }
-  return a === b;
-}
-const FLT_EPSILON = 1.19209290e-7;
-const DBL_EPSILON = 2.2204460492503131e-16;
-almostEqual.FLT_EPSILON = FLT_EPSILON;
-almostEqual.DBL_EPSILON = DBL_EPSILON;
-
-// The MIT License (MIT)
-
-// Copyright (c) 2016 angus croll
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-
-/*
-  range(0, 5); // [0, 1, 2, 3, 4]
-  range(5); // [0, 1, 2, 3, 4]
-  range(-5); // [0, -1, -2, -3, -4]
-  range(0, 20, 5) // [0, 5, 10, 15]
-  range(0, -20, -5) // [0, -5, -10, -15]
-*/
-
-function range(start, stop, step) {
-  if (start != null && typeof start != 'number') {
-    throw new Error('start must be a number or null');
-  }
-  if (stop != null && typeof stop != 'number') {
-    throw new Error('stop must be a number or null');
-  }
-  if (step != null && typeof step != 'number') {
-    throw new Error('step must be a number or null');
-  }
-  if (stop == null) {
-    stop = start || 0;
-    start = 0;
-  }
-  if (step == null) {
-    step = stop > start ? 1 : -1;
-  }
-  var toReturn = [];
-  var increasing = start < stop; //← here’s the change
-  for (; increasing ? start < stop : start > stop; start += step) {
-    toReturn.push(start);
-  }
-  return toReturn;
-}
-
-/**
- * Base 10 logarithm
- *
- * @module mumath/log10
- */
-
-var lg = Math.log10 || function (a) {
-  return Math.log(a) / Math.log(10);
-};
-
-/**
- * Check if one number is multiple of other
- *
- * @module  mumath/is-multiple
- */
-
-function isMultiple(a, b, eps) {
-  var remainder = a % b;
-  if (!eps) eps = almostEqual.FLT_EPSILON;
-  if (!remainder) return true;
-  if (almostEqual(0, remainder, eps, 0) || almostEqual(Math.abs(b), Math.abs(remainder), eps, 0)) return true;
-  return false;
-}
-
-/**
- * Get step out of the set
- *
- * @module mumath/step
- */
-function scale (minStep, srcSteps) {
-  var power = Math.floor(lg(minStep));
-  var order = Math.pow(10, power);
-  var steps = srcSteps.map(v => v * order);
-  order = Math.pow(10, power + 1);
-  steps = steps.concat(srcSteps.map(v => v * order));
-
-  //find closest scale
-  var step = 0;
-  for (var i = 0; i < steps.length; i++) {
-    step = steps[i];
-    if (step >= minStep) break;
-  }
-  return step;
-}
-
-var parseUnit = (str, out) => {
-  if (!out) out = [0, ''];
-  str = String(str);
-  var num = parseFloat(str, 10);
-  out[0] = num;
-  out[1] = str.match(/[\d.\-\+]*\s*(.*)/)[1] || '';
-  return out;
-};
-
-// (c) 2015 Mikola Lysenko. MIT License
-// https://github.com/mikolalysenko/to-px
-
-var PIXELS_PER_INCH = 96;
-var defaults = {
-  'ch': 8,
-  'ex': 7.15625,
-  'em': 16,
-  'rem': 16,
-  'in': PIXELS_PER_INCH,
-  'cm': PIXELS_PER_INCH / 2.54,
-  'mm': PIXELS_PER_INCH / 25.4,
-  'pt': PIXELS_PER_INCH / 72,
-  'pc': PIXELS_PER_INCH / 6,
-  'px': 1
-};
-function toPX(str) {
-  if (!str) return null;
-  if (defaults[str]) return defaults[str];
-
-  // detect number of units
-  var parts = parseUnit(str);
-  if (!isNaN(parts[0]) && parts[1]) {
-    var px = toPX(parts[1]);
-    return typeof px === 'number' ? parts[0] * px : null;
-  }
-  return null;
-}
-
-/**
- * MIT © Sindre Sorhus
- * https://github.com/sindresorhus/is-plain-obj/blob/master/index.js
- */
-var isObj = value => {
-  if (Object.prototype.toString.call(value) !== '[object Object]') {
-    return false;
-  }
-  const prototype = Object.getPrototypeOf(value);
-  return prototype === null || prototype === Object.getPrototypeOf({});
-};
-
-/* eslint-disable consistent-return */
-const gridStyle = {
-  steps: [1, 2, 5],
-  distance: 20,
-  unit: 10,
-  lines: state => {
-    const coord = state.coordinate;
-    // eslint-disable-next-line no-multi-assign
-    const step = state.step = scale(coord.distance * coord.zoom, coord.steps);
-    return range(Math.floor(state.offset / step) * step, Math.ceil((state.offset + state.range) / step + 1) * step, step);
-  },
-  lineColor: state => {
-    if (!state.lines) return;
-    const coord = state.coordinate;
-    const light = alpha(coord.color, 0.1);
-    const heavy = alpha(coord.color, 0.3);
-    const step = state.step;
-    const power = Math.ceil(lg(step));
-    const tenStep = 10 ** power;
-    const nextStep = 10 ** (power + 1);
-    const eps = step / 10;
-    const colors = state.lines.map(v => {
-      if (isMultiple(v, nextStep, eps)) return heavy;
-      if (isMultiple(v, tenStep, eps)) return light;
-      return null;
-    });
-    return colors;
-  },
-  ticks: state => {
-    if (!state.lines) return;
-    const coord = state.coordinate;
-    const step = scale(scale(state.step * 1.1, coord.steps) * 1.1, coord.steps);
-    const eps = step / 10;
-    const tickWidth = state.axisWidth * 4;
-    return state.lines.map(v => {
-      if (!isMultiple(v, step, eps)) return null;
-      if (almostEqual(v, 0, eps)) return null;
-      return tickWidth;
-    });
-  },
-  labels: state => {
-    if (!state.lines) return;
-    const coord = state.coordinate;
-    const step = scale(scale(state.step * 1.1, coord.steps) * 1.1, coord.steps);
-    // let precision = clamp(Math.abs(Math.floor(lg(step))), 10, 20);
-    const eps = step / 100;
-    return state.lines.map(v => {
-      if (!isMultiple(v, step, eps)) return null;
-      if (almostEqual(v, 0, eps)) return coord.orientation === 'y' ? null : '0';
-      v = Number((v / 100).toFixed(2));
-      return coord.format(v);
-    });
-  }
-};
-
-class Axis {
-  constructor(orientation, options) {
-    Object.assign(this, options);
-    this.orientation = orientation || 'x';
-  }
-  getCoords(values) {
-    const coords = [];
-    if (!values) return coords;
-    for (let i = 0; i < values.length; i += 1) {
-      const t = this.getRatio(values[i]);
-      coords.push(t);
-      coords.push(0);
-      coords.push(t);
-      coords.push(1);
-    }
-    return coords;
-  }
-  getRange() {
-    let len = this.width;
-    if (this.orientation === 'y') len = this.height;
-    return len * this.zoom;
-  }
-  getRatio(value) {
-    return (value - this.offset) / this.range;
-  }
-  setOffset(offset) {
-    this.offset = offset;
-  }
-  update(options) {
-    options = options || {};
-    Object.assign(this, options);
-    this.range = this.getRange();
-  }
-}
-
-class Point extends fabric.Point {
-  constructor(...params) {
-    let x;
-    let y;
-    if (params.length > 1) {
-      [x, y] = params;
-    } else if (params.length === 0 || !params[0]) {
-      [x, y] = [0, 0];
-    } else if (Object.prototype.hasOwnProperty.call(params[0], 'x')) {
-      x = params[0].x;
-      y = params[0].y;
-    } else if (params[0].length) {
-      [[x, y]] = params;
-    } else {
-      console.error('Parameter for Point is not valid. Use Point(x,y) or Point({x,y}) or Point([x,y])', params);
-    }
-    super(x, y);
-  }
-  setX(x) {
-    this.x = x || 0;
-  }
-  setY(y) {
-    this.y = y || 0;
-  }
-  copy(point) {
-    this.x = point.x;
-    this.y = point.y;
-  }
-  getArray() {
-    return [this.x, this.y];
-  }
-}
-const point = (...params) => new Point(...params);
-
-/**
- * Grid - Provides a coordinate grid system for the coordinate plane
+ * Grid - React extension of the core Grid class
  *
  * Handles drawing grid lines, labels, and axes based on the current
- * coordinate plane state and viewport.
+ * coordinate plane state and viewport with React integration.
  *
  * @class
- * @extends {Base}
+ * @extends {CoreGrid}
  */
-class Grid extends Base {
+class Grid extends Grid$1 {
   /**
    * Create a new grid
    *
@@ -630,7 +296,7 @@ class Grid extends Base {
       state.fontSize = coord.fontSize;
     } else {
       const units = parseUnit(coord.fontSize);
-      state.fontSize = units[0] * toPX(units[1]);
+      state.fontSize = units[0] * toPx(units[1]);
     }
     state.fontFamily = coord.fontFamily || 'sans-serif';
     // get lines stops, including joined list of values
@@ -794,7 +460,7 @@ class Grid extends Base {
     });
     Object.assign(this, this.defaults);
     Object.assign(this, this._options);
-    this.center = new Point(this.center);
+    this.center = new Point$1(this.center);
   }
 
   // draw grid to the canvas
@@ -869,7 +535,7 @@ class Grid extends Base {
       ctx.lineWidth = state.axisWidth / 2;
       ctx.beginPath();
       for (let i = 0, j = 0; i < tickCoords.length; i += 4, j += 1) {
-        if (almostEqual(state.lines[j], state.opposite.coordinate.axisOrigin)) continue;
+        if (almost(state.lines[j], state.opposite.coordinate.axisOrigin)) continue;
         const x1 = left + pl + tickCoords[i] * (width - pl - pr);
         const y1 = top + pt + tickCoords[i + 1] * (height - pt - pb);
         const x2 = left + pl + tickCoords[i + 2] * (width - pl - pr);
@@ -914,7 +580,7 @@ class Grid extends Base {
       for (let i = 0; i < state.labels.length; i += 1) {
         let label = state.labels[i];
         if (label == null) continue;
-        if (isOpp && almostEqual(state.lines[i], state.opposite.coordinate.axisOrigin)) continue;
+        if (isOpp && almost(state.lines[i], state.opposite.coordinate.axisOrigin)) continue;
         const textWidth = ctx.measureText(label).width;
         let textLeft = state.labelCoords[i * 2] * (width - pl - pr) + indent + pl;
         if (state.coordinate.orientation === 'y') {
@@ -931,29 +597,48 @@ class Grid extends Base {
   }
 }
 
-class Group extends fabric.Group {
+// Re-export Point class and factory function from fabric-layers for backward compatibility
+
+// Extend the Point class to maintain any custom methods from the React version
+class Point extends Point$1 {
+  copy(point) {
+    this.x = point.x;
+    this.y = point.y;
+    return this;
+  }
+  getArray() {
+    return [this.x, this.y];
+  }
+}
+
+/**
+ * Group - React extension of the core Group class
+ * 
+ * Provides grouping functionality for fabric objects with React integration
+ */
+class Group extends Group$1 {
   constructor(objects, options) {
     options = options || {};
     super(objects, options);
   }
   getBounds() {
     const coords = [];
-    coords.push(new Point(this.left - this.width / 2.0, this.top - this.height / 2.0));
-    coords.push(new Point(this.left + this.width / 2.0, this.top + this.height / 2.0));
+    coords.push(new Point$1(this.left - this.width / 2.0, this.top - this.height / 2.0));
+    coords.push(new Point$1(this.left + this.width / 2.0, this.top + this.height / 2.0));
     return coords;
   }
 }
 
 /**
- * Layer - Base class for all layer components
+ * Layer - React extension of the core Layer class
  *
  * Provides the fundamental properties and methods for manipulating layers
- * within a coordinate plane or canvas.
+ * within a coordinate plane or canvas, with React-specific enhancements.
  *
  * @class
- * @extends {Base}
+ * @extends {CoreLayer}
  */
-class Layer extends Base {
+class Layer extends Layer$1 {
   /**
    * Create a new layer
    *
@@ -1021,25 +706,9 @@ class Layer extends Base {
   }
 }
 
-const Modes$1 = {
-  SELECT: 'SELECT',
-  GRAB: 'GRAB',
-  MEASURE: 'MEASURE',
-  DRAW: 'DRAW'
-};
-const MAP = {
-  center: new Point(),
-  zoom: 1,
-  minZoom: 0,
-  maxZoom: 20,
-  gridEnabled: true,
-  zoomEnabled: true,
-  selectEnabled: true,
-  mode: Modes$1.SELECT,
-  showGrid: true
-};
+// Import core constants from fabric-layers
 ({
-  position: new Point()});
+  position: new Point$1()});
 const ICON = {
   url: 'data:image/png;base64,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',
   size: [128, 128],
@@ -1067,256 +736,10 @@ fabric.Object.prototype.borderDashArray = [3, 3];
 fabric.Object.prototype.padding = 5;
 fabric.Object.prototype.getBounds = function getBounds() {
   const coords = [];
-  coords.push(new Point(this.left - this.width / 2.0, this.top - this.height / 2.0));
-  coords.push(new Point(this.left + this.width / 2.0, this.top + this.height / 2.0));
+  coords.push(new Point$1(this.left - this.width / 2.0, this.top - this.height / 2.0));
+  coords.push(new Point$1(this.left + this.width / 2.0, this.top + this.height / 2.0));
   return coords;
 };
-
-/**
- * GridManager - Manages grid properties and behavior
- *
- * This component provides methods for configuring and controlling
- * the grid system in a coordinate plane. It handles grid visibility,
- * spacing, colors, and other visual properties.
- *
- * @class
- * @extends {Base}
- */
-class GridManager extends Base {
-  /**
-   * Create a new GridManager
-   *
-   * @param {Object} options - Configuration options
-   * @param {CoordinatePlane} [options.coordinatePlane] - The coordinate plane to manage grid for
-   * @param {HTMLCanvasElement} [options.canvas] - Canvas element to draw the grid on
-   * @param {boolean} [options.visible=true] - Whether the grid is initially visible
-   * @param {number} [options.spacing=10] - Grid line spacing
-   * @param {string} [options.color='#cccccc'] - Grid line color
-   * @param {number} [options.opacity=0.5] - Grid line opacity
-   * @param {string} [options.axisColor='#999999'] - Axis line color
-   * @param {boolean} [options.showLabels=true] - Whether to show grid labels
-   */
-  constructor(options = {}) {
-    super(options);
-    this._coordinatePlane = options.coordinatePlane || null;
-    this._canvas = options.canvas || null;
-    this._grid = null;
-    this._visible = options.visible !== undefined ? options.visible : true;
-    this._spacing = options.spacing || 10;
-    this._color = options.color || '#cccccc';
-    this._opacity = options.opacity !== undefined ? options.opacity : 0.5;
-    this._axisColor = options.axisColor || '#999999';
-    this._showLabels = options.showLabels !== undefined ? options.showLabels : true;
-    if (this._canvas) {
-      this.initGrid();
-    }
-  }
-
-  /**
-   * Initialize the grid with current configuration options
-   *
-   * Creates a new Grid instance and draws it on the canvas if visible.
-   *
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  initGrid() {
-    if (!this._canvas) return this;
-    this._grid = new Grid(this._canvas, {
-      color: this._color,
-      opacity: this._opacity,
-      axisColor: this._axisColor,
-      spacing: this._spacing,
-      showLabels: this._showLabels,
-      visible: this._visible
-    });
-    if (this._grid && this._visible) {
-      this._grid.draw();
-    }
-    return this;
-  }
-
-  /**
-   * Set the grid visibility
-   *
-   * Controls whether the grid is drawn on the canvas or cleared.
-   * Fires a 'grid:visibility' event when the visibility changes.
-   *
-   * @param {boolean} visible - Whether the grid should be visible
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  setVisible(visible) {
-    this._visible = visible;
-    if (this._grid) {
-      if (visible) {
-        this._grid.draw();
-      } else if (this._canvas) {
-        // Clear the grid canvas
-        const context = this._canvas.getContext('2d');
-        if (context) {
-          context.clearRect(0, 0, this._canvas.width, this._canvas.height);
-        }
-      }
-    }
-    this.fire('grid:visibility', {
-      visible
-    });
-    return this;
-  }
-
-  /**
-   * Set the grid spacing
-   *
-   * Updates the distance between grid lines and redraws the grid.
-   * Fires a 'grid:spacing' event when the spacing changes.
-   *
-   * @param {number} spacing - The grid spacing in pixels
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  setSpacing(spacing) {
-    this._spacing = spacing;
-    if (this._grid) {
-      this._grid.update({
-        spacing
-      });
-      if (this._visible) {
-        this._grid.draw();
-      }
-    }
-    this.fire('grid:spacing', {
-      spacing
-    });
-    return this;
-  }
-
-  /**
-   * Set the grid color
-   * @param {string} color The grid color (CSS color string)
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  setColor(color) {
-    this._color = color;
-    if (this._grid) {
-      this._grid.update({
-        color
-      });
-      if (this._visible) {
-        this._grid.draw();
-      }
-    }
-    this.fire('grid:color', {
-      color
-    });
-    return this;
-  }
-
-  /**
-   * Set the grid opacity
-   * @param {number} opacity The grid opacity (0-1)
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  setOpacity(opacity) {
-    this._opacity = opacity;
-    if (this._grid) {
-      this._grid.update({
-        opacity
-      });
-      if (this._visible) {
-        this._grid.draw();
-      }
-    }
-    this.fire('grid:opacity', {
-      opacity
-    });
-    return this;
-  }
-
-  /**
-   * Set whether to show grid labels
-   * @param {boolean} show Whether to show grid labels
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  setShowLabels(show) {
-    this._showLabels = show;
-    if (this._grid) {
-      this._grid.update({
-        showLabels: show
-      });
-      if (this._visible) {
-        this._grid.draw();
-      }
-    }
-    this.fire('grid:labels', {
-      showLabels: show
-    });
-    return this;
-  }
-
-  /**
-   * Set the canvas for the grid
-   * @param {HTMLCanvasElement} canvas The canvas element
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  setCanvas(canvas) {
-    this._canvas = canvas;
-    if (canvas && !this._grid) {
-      this.initGrid();
-    } else if (canvas && this._grid) {
-      this._grid.canvas = canvas;
-      this._grid.context = canvas.getContext('2d');
-      if (this._visible) {
-        this._grid.draw();
-      }
-    }
-    return this;
-  }
-
-  /**
-   * Set the coordinate plane for this grid manager
-   * @param {CoordinatePlane} coordinatePlane The coordinate plane
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  setCoordinatePlane(coordinatePlane) {
-    this._coordinatePlane = coordinatePlane;
-    if (coordinatePlane && coordinatePlane.gridCanvas) {
-      this.setCanvas(coordinatePlane.gridCanvas);
-    }
-    return this;
-  }
-
-  /**
-   * Redraw the grid
-   * @returns {GridManager} This GridManager instance for chaining
-   */
-  redraw() {
-    if (this._grid && this._visible) {
-      this._grid.draw();
-    }
-    return this;
-  }
-
-  /**
-   * Get the current grid
-   * @returns {Grid} The current grid instance
-   */
-  getGrid() {
-    return this._grid;
-  }
-
-  /**
-   * Get the current grid settings
-   * @returns {Object} The current grid settings
-   */
-  getSettings() {
-    return {
-      visible: this._visible,
-      spacing: this._spacing,
-      color: this._color,
-      opacity: this._opacity,
-      axisColor: this._axisColor,
-      showLabels: this._showLabels
-    };
-  }
-}
 
 function _defineProperty(e, r, t) {
   return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
@@ -1385,10 +808,10 @@ function _toPropertyKey(t) {
 const _excluded = ["style", "className"];
 
 /**
- * CanvasLayer - A specialized layer for canvas-based content
- * This provides a base implementation for canvas-based layers
+ * CanvasLayer - A specialized layer for canvas-based content with React integration
+ * This extends the core CanvasLayer with React-specific functionality
  */
-class CanvasLayer extends Layer {
+class CanvasLayer extends CanvasLayer$1 {
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
@@ -1487,7 +910,12 @@ class Line extends fabric.Line {
 }
 const line = (points, options) => new Line(points, options);
 
-class Connector extends Layer {
+/**
+ * Connector - React extension of the core Connector class
+ * 
+ * Provides connection functionality between layer objects with React integration
+ */
+class Connector extends Connector$1 {
   constructor(start, end, options) {
     options = options || {};
     options.zIndex = options.zIndex || 10;
@@ -1596,200 +1024,6 @@ class Tooltip extends Layer {
     nextTick(() => {
       this.emit('ready');
     });
-  }
-}
-
-/**
- * LayerManager - Manages layers in a coordinate plane
- *
- * This component provides methods for adding, removing, and organizing layers
- * within a coordinate plane. It maintains a registry of layers and handles
- * their rendering order, visibility, and organization.
- *
- * @class
- * @extends {Base}
- */
-class LayerManager extends Base {
-  /**
-   * Create a new LayerManager
-   *
-   * @param {Object} options - Configuration options
-   * @param {CoordinatePlane} [options.coordinatePlane] - The coordinate plane to manage layers for
-   */
-  constructor(options = {}) {
-    super(options);
-    this.layers = [];
-    this.layersMap = new Map();
-    this._coordinatePlane = options.coordinatePlane || null;
-  }
-
-  /**
-   * Add a layer to the manager
-   * @param {Layer} layer The layer to add
-   * @param {boolean} render Whether to render the layer immediately
-   * @returns {LayerManager} This LayerManager instance for chaining
-   */
-  addLayer(layer, render = true) {
-    if (!layer) return this;
-
-    // Generate a unique ID if one doesn't exist
-    layer.id = layer.id || `layer-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-    // Store the layer
-    this.layers.push(layer);
-    this.layersMap.set(layer.id, layer);
-
-    // Add to canvas if coordinate plane exists
-    if (this._coordinatePlane && this._coordinatePlane.canvas) {
-      if (layer.group) {
-        this._coordinatePlane.canvas.add(layer.group);
-      } else if (layer.shape) {
-        this._coordinatePlane.canvas.add(layer.shape);
-      }
-      if (render) {
-        this._coordinatePlane.canvas.renderAll();
-      }
-    }
-
-    // Sort layers by z-index
-    this.sortLayers();
-    this.fire('layer:add', {
-      layer
-    });
-    return this;
-  }
-
-  /**
-   * Remove a layer from the manager
-   * @param {Layer|string} layer The layer or layer ID to remove
-   * @param {boolean} render Whether to render after removal
-   * @returns {LayerManager} This LayerManager instance for chaining
-   */
-  removeLayer(layer, render = true) {
-    let layerId;
-    if (typeof layer === 'string') {
-      layerId = layer;
-    } else if (layer && layer.id) {
-      layerId = layer.id;
-    } else {
-      return this;
-    }
-    const layerObj = this.layersMap.get(layerId);
-    if (!layerObj) return this;
-
-    // Remove from arrays and map
-    this.layers = this.layers.filter(l => l.id !== layerId);
-    this.layersMap.delete(layerId);
-
-    // Remove from canvas if coordinate plane exists
-    if (this._coordinatePlane && this._coordinatePlane.canvas) {
-      if (layerObj.group) {
-        this._coordinatePlane.canvas.remove(layerObj.group);
-      } else if (layerObj.shape) {
-        this._coordinatePlane.canvas.remove(layerObj.shape);
-      }
-      if (render) {
-        this._coordinatePlane.canvas.renderAll();
-      }
-    }
-    this.fire('layer:remove', {
-      layer: layerObj
-    });
-    return this;
-  }
-
-  /**
-   * Get a layer by its ID
-   * @param {string} id The layer ID
-   * @returns {Layer|null} The layer object or null if not found
-   */
-  getLayer(id) {
-    return this.layersMap.get(id) || null;
-  }
-
-  /**
-   * Sort layers by z-index
-   * @returns {LayerManager} This LayerManager instance for chaining
-   */
-  sortLayers() {
-    this.layers.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
-
-    // Update the stacking order if coordinate plane exists
-    if (this._coordinatePlane && this._coordinatePlane.canvas) {
-      this.layers.forEach(layer => {
-        if (layer.group) {
-          layer.group.bringToFront();
-        } else if (layer.shape) {
-          layer.shape.bringToFront();
-        }
-      });
-    }
-    return this;
-  }
-
-  /**
-   * Show all layers
-   * @param {boolean} render Whether to render after showing
-   * @returns {LayerManager} This LayerManager instance for chaining
-   */
-  showAllLayers(render = true) {
-    this.layers.forEach(layer => {
-      if (layer.setVisible) {
-        layer.setVisible(true);
-      } else if (layer.group) {
-        layer.group.visible = true;
-      } else if (layer.shape) {
-        layer.shape.visible = true;
-      }
-    });
-    if (render && this._coordinatePlane && this._coordinatePlane.canvas) {
-      this._coordinatePlane.canvas.renderAll();
-    }
-    return this;
-  }
-
-  /**
-   * Hide all layers
-   * @param {boolean} render Whether to render after hiding
-   * @returns {LayerManager} This LayerManager instance for chaining
-   */
-  hideAllLayers(render = true) {
-    this.layers.forEach(layer => {
-      if (layer.setVisible) {
-        layer.setVisible(false);
-      } else if (layer.group) {
-        layer.group.visible = false;
-      } else if (layer.shape) {
-        layer.shape.visible = false;
-      }
-    });
-    if (render && this._coordinatePlane && this._coordinatePlane.canvas) {
-      this._coordinatePlane.canvas.renderAll();
-    }
-    return this;
-  }
-
-  /**
-   * Set the coordinate plane for this layer manager
-   * @param {CoordinatePlane} coordinatePlane The coordinate plane
-   * @returns {LayerManager} This LayerManager instance for chaining
-   */
-  setCoordinatePlane(coordinatePlane) {
-    this._coordinatePlane = coordinatePlane;
-
-    // Add existing layers to the new coordinate plane
-    if (coordinatePlane && coordinatePlane.canvas) {
-      this.layers.forEach(layer => {
-        if (layer.group) {
-          coordinatePlane.canvas.add(layer.group);
-        } else if (layer.shape) {
-          coordinatePlane.canvas.add(layer.shape);
-        }
-      });
-      this.sortLayers();
-      coordinatePlane.canvas.renderAll();
-    }
-    return this;
   }
 }
 
@@ -3519,133 +2753,6 @@ const ModesMixin = superclass => class extends superclass {
   }
 };
 
-class Measurer {
-  constructor(options) {
-    options = options || {};
-    options.hasBorders = false;
-    options.selectable = false;
-    options.hasControls = false;
-    // options.evented = false;
-    options.class = 'measurer';
-    options.scale = options.scale || 1;
-
-    // super([], options);
-
-    this.options = options || {};
-    this.start = this.options.start;
-    this.end = this.options.end;
-    this.canvas = this.options.map.canvas;
-    this.completed = false;
-    if (!this.start || !this.end) {
-      throw new Error('start must be defined');
-    }
-    this.draw();
-  }
-  clear() {
-    if (this.objects) {
-      this.objects.forEach(object => {
-        this.canvas.remove(object);
-      });
-    }
-  }
-  draw() {
-    this.clear();
-    let {
-      start,
-      end
-    } = this;
-    start = new Point(start);
-    end = new Point(end);
-    const center = start.add(end).multiply(0.5);
-    this.line = new fabric.Line([start.x, start.y, end.x, end.y], {
-      stroke: this.options.stroke || '#3e82ff',
-      hasControls: false,
-      hasBorders: false,
-      selectable: false,
-      evented: false,
-      strokeDashArray: [5, 5]
-    });
-    const lineEndOptions = {
-      left: start.x,
-      top: start.y,
-      strokeWidth: 1,
-      radius: this.options.radius || 1,
-      fill: this.options.fill || '#3e82ff',
-      stroke: this.options.stroke || '#3e82ff',
-      hasControls: false,
-      hasBorders: false
-    };
-    const lineEndOptions2 = {
-      left: start.x,
-      top: start.y,
-      strokeWidth: 1,
-      radius: this.options.radius || 5,
-      fill: this.options.fill || '#3e82ff33',
-      stroke: this.options.stroke || '#3e82ff',
-      hasControls: false,
-      hasBorders: false
-    };
-    this.circle1 = new fabric.Circle(lineEndOptions2);
-    this.circle2 = new fabric.Circle(_objectSpread2(_objectSpread2({}, lineEndOptions2), {}, {
-      left: end.x,
-      top: end.y
-    }));
-    this.circle11 = new fabric.Circle(lineEndOptions);
-    this.circle22 = new fabric.Circle(_objectSpread2(_objectSpread2({}, lineEndOptions), {}, {
-      left: end.x,
-      top: end.y
-    }));
-    let text = Math.round(start.distanceFrom(end));
-    text = `${text / 100} m`;
-    this.text = new fabric.Text(text, {
-      textBackgroundColor: 'black',
-      fill: 'white',
-      left: center.x,
-      top: center.y - 10,
-      fontSize: 12,
-      hasControls: false,
-      hasBorders: false,
-      selectable: false,
-      evented: false
-    });
-    this.objects = [this.line, this.text, this.circle11, this.circle22, this.circle1, this.circle2];
-    this.objects.forEach(object => {
-      this.canvas.add(object);
-    });
-    this.line.hasControls = false;
-    this.line.hasBorders = false;
-    this.line.selectable = false;
-    this.line.evented = false;
-    this.registerListeners();
-  }
-  setStart(start) {
-    this.start = start;
-    this.draw();
-  }
-  setEnd(end) {
-    this.end = end;
-    this.draw();
-  }
-  complete() {
-    this.completed = true;
-  }
-  registerListeners() {
-    this.circle2.on('moving', e => {
-      this.setEnd(e.pointer);
-    });
-    this.circle1.on('moving', e => {
-      this.setStart(e.pointer);
-    });
-  }
-  applyScale(scale) {
-    this.start.x *= scale;
-    this.start.y *= scale;
-    this.end.x *= scale;
-    this.end.y *= scale;
-    this.draw();
-  }
-}
-
 class Measurement {
   constructor(map) {
     this.map = map;
@@ -3728,7 +2835,7 @@ class MixinBuilder {
  * @extends {Base}
  * @mixes {ModesMixin}
  */
-let Map$1 = class Map extends mix(Base).with(ModesMixin) {
+class Map extends mix(Base).with(ModesMixin) {
   /**
    * Create a new coordinate plane
    *
@@ -4266,7 +3373,7 @@ let Map$1 = class Map extends mix(Base).with(ModesMixin) {
     }
     return list;
   }
-};
+}
 
 /**
  * ImageLayer - A layer for displaying and manipulating images
@@ -4418,8 +3525,9 @@ const imageLayer = options => new ImageLayer(options);
 // Log version information in development only
 if (process.env.NODE_ENV !== 'production') {
   console.log('fabric-layers-react', version);
+  console.log('fabric-layers', fabricLayers.version);
   console.log('fabric.js', fabric$1.version);
 }
 
-export { Arrow, Axis, Base, Canvas, CanvasLayer, Circle, Connector, Map$1 as CoordinatePlane, Grid, GridManager, Grid as GridSystem, Group, ICON, Icon, ImageLayer, Layer, LayerManager, Line, MAP, Map$1 as Map, Marker, MarkerGroup, Measurement, Measurer, Modes$1 as Modes, ModesMixin, Point, Polyline, Rect, Tooltip, circle, gridStyle, icon, imageLayer, line, marker, markerGroup, point, polyline, rect, version };
+export { Arrow, Canvas, CanvasLayer, Circle, Connector, Map as CoordinatePlane, Grid, Grid as GridSystem, Group, ICON, Icon, ImageLayer, Layer, Line, Map, Marker, MarkerGroup, Measurement, ModesMixin, Polyline, Rect, Tooltip, circle, icon, imageLayer, line, marker, markerGroup, polyline, rect, version };
 //# sourceMappingURL=index.js.map

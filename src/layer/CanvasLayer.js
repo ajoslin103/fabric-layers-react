@@ -1,16 +1,16 @@
 /**
  * CanvasLayer component
- * A base layer for canvas-based components
+ * A React extension of the core CanvasLayer class
  */
 
 import React from 'react';
-import { Layer } from './Layer';
+import { CanvasLayer as CoreCanvasLayer } from 'fabric-layers';
 
 /**
- * CanvasLayer - A specialized layer for canvas-based content
- * This provides a base implementation for canvas-based layers
+ * CanvasLayer - A specialized layer for canvas-based content with React integration
+ * This extends the core CanvasLayer with React-specific functionality
  */
-class CanvasLayer extends Layer {
+class CanvasLayer extends CoreCanvasLayer {
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();

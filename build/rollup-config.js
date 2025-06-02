@@ -31,6 +31,7 @@ window.FabricLayersReact = exports;`;
 
 export default {
   input: 'src/index.js',
+  external: ['fabric-pure-browser', 'react', 'eventemitter2', 'fabric-layers'],
   output: [
     {
       file: pkg.main,
@@ -54,7 +55,8 @@ export default {
       globals:{
         'fabric-pure-browser': 'fabric',
         'react': 'React',
-        'eventemitter2': 'EventEmitter2'
+        'eventemitter2': 'EventEmitter2',
+        'fabric-layers': 'FabricLayers'
       }
     }
   ],

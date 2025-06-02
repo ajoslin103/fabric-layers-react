@@ -5,6 +5,8 @@
 
 A fabric.js coordinate-plane (grid) & layers library for React applications.
 
+> **Important**: This library now depends on the `fabric-layers` core library. Please see the [Migration Guide](./MIGRATION_GUIDE.md) for details on updating from previous versions.
+
 ## Features
 
 - **Coordinate Plane System**: Create interactive canvases with precise coordinate systems
@@ -20,13 +22,44 @@ A fabric.js coordinate-plane (grid) & layers library for React applications.
 ### Using npm
 
 ```bash
-npm install fabric-layers-react fabric-pure-browser react
+# First ensure you're using the correct Node version
+nvm use
+
+# Install the packages
+npm install fabric-layers fabric-layers-react fabric-pure-browser react
 ```
 
 ### Using yarn
 
 ```bash
-yarn add fabric-layers-react fabric-pure-browser react
+# First ensure you're using the correct Node version
+nvm use
+
+# Install the packages
+yarn add fabric-layers fabric-layers-react fabric-pure-browser react
+```
+
+## Architecture
+
+The library is now split into two packages:
+
+1. **fabric-layers** - Core functionality without React dependencies
+   - Contains all core utilities, constants, geometry tools, grid fundamentals
+   - No React-specific code or dependencies
+
+2. **fabric-layers-react** - React extensions
+   - Depends on the fabric-layers core library
+   - Contains all React components, hooks, and JSX rendering
+   - Provides React-specific implementation on top of core functionality
+
+For most users, you can continue to import everything from `fabric-layers-react` as before. For advanced users who need direct access to core functionality, you can now import from either library depending on your needs.
+
+```javascript
+// Import React components from fabric-layers-react
+import { Grid as ReactGrid } from 'fabric-layers-react';
+
+// Import core functionality directly from fabric-layers
+import { Point, MAP, Modes } from 'fabric-layers';
 ```
 
 ## Basic Usage

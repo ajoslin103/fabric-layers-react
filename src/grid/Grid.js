@@ -1,17 +1,17 @@
 // Import dependencies from fabric-layers core library
-import { Base, gridStyle, Axis, Point } from 'fabric-layers';
+import { Grid as CoreGrid, gridStyle, Axis, Point } from 'fabric-layers';
 import { alpha, clamp, almost, len, parseUnit, toPx, isObj } from 'fabric-layers';
 
 /**
- * Grid - Provides a coordinate grid system for the coordinate plane
+ * Grid - React extension of the core Grid class
  *
  * Handles drawing grid lines, labels, and axes based on the current
- * coordinate plane state and viewport.
+ * coordinate plane state and viewport with React integration.
  *
  * @class
- * @extends {Base}
+ * @extends {CoreGrid}
  */
-class Grid extends Base {
+class Grid extends CoreGrid {
   /**
    * Create a new grid
    *

@@ -1,15 +1,15 @@
-import Base from '../core/Base';
+import { Layer as CoreLayer } from 'fabric-layers';
 
 /**
- * Layer - Base class for all layer components
+ * Layer - React extension of the core Layer class
  *
  * Provides the fundamental properties and methods for manipulating layers
- * within a coordinate plane or canvas.
+ * within a coordinate plane or canvas, with React-specific enhancements.
  *
  * @class
- * @extends {Base}
+ * @extends {CoreLayer}
  */
-export class Layer extends Base {
+export class Layer extends CoreLayer {
   /**
    * Create a new layer
    *

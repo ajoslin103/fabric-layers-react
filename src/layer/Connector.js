@@ -1,7 +1,12 @@
-import { Layer } from './Layer';
+import { Connector as CoreConnector } from 'fabric-layers';
 import { Line } from './vector/Line';
 
-export class Connector extends Layer {
+/**
+ * Connector - React extension of the core Connector class
+ * 
+ * Provides connection functionality between layer objects with React integration
+ */
+export class Connector extends CoreConnector {
   constructor(start, end, options) {
     options = options || {};
     options.zIndex = options.zIndex || 10;

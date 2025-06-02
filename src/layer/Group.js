@@ -1,6 +1,11 @@
-import { Point } from '../geometry/Point';
+import { Group as CoreGroup, Point } from 'fabric-layers';
 
-export class Group extends fabric.Group {
+/**
+ * Group - React extension of the core Group class
+ * 
+ * Provides grouping functionality for fabric objects with React integration
+ */
+export class Group extends CoreGroup {
   constructor(objects, options) {
     options = options || {};
     super(objects, options);
