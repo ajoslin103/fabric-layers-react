@@ -46,21 +46,28 @@ The library is now split into two packages:
 1. **fabric-layers** - Core functionality without React dependencies
    - Contains all core utilities, constants, geometry tools, grid fundamentals
    - No React-specific code or dependencies
+   - Can be used independently in any JavaScript project
 
 2. **fabric-layers-react** - React extensions
    - Depends on the fabric-layers core library
    - Contains all React components, hooks, and JSX rendering
    - Provides React-specific implementation on top of core functionality
 
-For most users, you can continue to import everything from `fabric-layers-react` as before. For advanced users who need direct access to core functionality, you can now import from either library depending on your needs.
+For most users, you can continue to import React components from `fabric-layers-react` as before. For advanced users who need direct access to core functionality, you can now import from either library depending on your needs.
 
 ```javascript
 // Import React components from fabric-layers-react
-import { Grid as ReactGrid } from 'fabric-layers-react';
+import { CanvasLayer, useGridContext } from 'fabric-layers-react';
 
 // Import core functionality directly from fabric-layers
-import { Point, MAP, Modes } from 'fabric-layers';
+import { GridManager, Point, Constants } from 'fabric-layers';
 ```
+
+This separation allows for:
+- Using the core functionality without React dependencies
+- Better code organization and maintenance
+- More flexibility for different frameworks
+- Smaller bundle sizes when only core functionality is needed
 
 ## Basic Usage
 

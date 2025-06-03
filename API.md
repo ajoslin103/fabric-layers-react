@@ -2,6 +2,8 @@
 
 This document describes the public API for the fabric-layers-react library, a lightweight React library that provides coordinate plane (grid) and layering system built on top of fabric.js.
 
+> **Important**: This library now depends on the `fabric-layers` core library. Core functionality like GridManager, Point, and Constants are now imported from `fabric-layers` instead of `fabric-layers-react`. See the [Migration Guide](./MIGRATION_GUIDE.md) for details.
+
 ## Core Components
 
 ### CoordinatePlane (formerly Map)

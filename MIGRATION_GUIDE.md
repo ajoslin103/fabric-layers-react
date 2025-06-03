@@ -31,26 +31,36 @@ npm install fabric-layers fabric-layers-react
 
 ### Basic Usage
 
-For most users, the import paths remain the same. You can continue to import React components from `fabric-layers-react` as before:
+For most users who only use React components, the import paths remain the same. You can continue to import React components from `fabric-layers-react` as before:
 
 ```javascript
 // Before
-import { Grid, Layer, Point } from 'fabric-layers-react';
+import { CanvasLayer, LayerPanel } from 'fabric-layers-react';
 
-// After - still works the same way
-import { Grid, Layer, Point } from 'fabric-layers-react';
+// After - React components still imported from fabric-layers-react
+import { CanvasLayer, LayerPanel } from 'fabric-layers-react';
+```
+
+However, core functionality that doesn't depend on React should now be imported from the `fabric-layers` package:
+
+```javascript
+// Before
+import { GridManager, Point, Constants } from 'fabric-layers-react';
+
+// After - core functionality now from fabric-layers
+import { GridManager, Point, Constants } from 'fabric-layers';
 ```
 
 ### Advanced Usage
 
-For advanced users who need direct access to core functionality, you can now import from either library depending on your needs:
+For advanced users who need direct access to core functionality, you should now import from the appropriate library depending on your needs:
 
 ```javascript
 // Import React components from fabric-layers-react
-import { Grid as ReactGrid } from 'fabric-layers-react';
+import { CanvasLayer, useGridContext } from 'fabric-layers-react';
 
 // Import core functionality directly from fabric-layers
-import { Point, MAP, Modes } from 'fabric-layers';
+import { GridManager, Point, Constants } from 'fabric-layers';
 ```
 
 ## Breaking Changes
