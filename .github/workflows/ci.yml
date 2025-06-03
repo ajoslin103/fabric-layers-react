@@ -1,0 +1,108 @@
+name: Fabric Layers React CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [22.16.0]
+        
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: fabric-layers-react
+    
+    - name: Checkout fabric-layers core library
+      uses: actions/checkout@v3
+      with:
+        repository: ajoslin103/fabric-layers
+        path: fabric-layers
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: fabric-layers-react/package-lock.json
+    
+    - name: Install core library dependencies
+      run: |
+        cd fabric-layers
+        npm ci
+        npm run build
+    
+    - name: Install React library dependencies
+      run: |
+        cd fabric-layers-react
+        npm ci
+    
+    - name: Run integration tests
+      run: |
+        cd fabric-layers-react
+        node test/integration/verify-integration.js
+    
+    - name: Run unit tests
+      run: |
+        cd fabric-layers-react
+        npm test
+    
+    - name: Upload test coverage
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: fabric-layers-react/coverage/
+  
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    strategy:
+      matrix:
+        node-version: [22.16.0]
+        
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: fabric-layers-react
+    
+    - name: Checkout fabric-layers core library
+      uses: actions/checkout@v3
+      with:
+        repository: ajoslin103/fabric-layers
+        path: fabric-layers
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: fabric-layers-react/package-lock.json
+    
+    - name: Install and build core library
+      run: |
+        cd fabric-layers
+        npm ci
+        npm run build
+    
+    - name: Install React library dependencies
+      run: |
+        cd fabric-layers-react
+        npm ci
+    
+    - name: Build React library
+      run: |
+        cd fabric-layers-react
+        npm run build
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: fabric-layers-react/dist/

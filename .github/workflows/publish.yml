@@ -1,0 +1,50 @@
+name: Publish Package to NPM
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: fabric-layers-react
+    
+    - name: Use Node.js 22.16.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22.16.0
+        registry-url: 'https://registry.npmjs.org'
+        cache: 'npm'
+        cache-dependency-path: fabric-layers-react/package-lock.json
+    
+    - name: Update dependency
+      run: |
+        cd fabric-layers-react
+        # Update the fabric-layers dependency to use the published version instead of local path
+        npm pkg set dependencies.fabric-layers="^1.0.0"
+    
+    - name: Install dependencies
+      run: |
+        cd fabric-layers-react
+        npm ci
+    
+    - name: Run tests
+      run: |
+        cd fabric-layers-react
+        npm test
+    
+    - name: Build
+      run: |
+        cd fabric-layers-react
+        npm run build
+    
+    - name: Publish to NPM
+      run: |
+        cd fabric-layers-react
+        npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

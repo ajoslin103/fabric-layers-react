@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.83% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/24</span>
+                <span class='fraction'>0/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.23% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/26</span>
+                <span class='fraction'>0/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/22</span>
+                <span class='fraction'>0/22</span>
             </div>
         
             
@@ -176,20 +176,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -230,21 +230,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Base from '../core/Base';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Layer as CoreLayer } from 'fabric-layers';
 &nbsp;
 /**
- * Layer - Base class for all layer components
+ * Layer - React extension of the core Layer class
  *
  * Provides the fundamental properties and methods for manipulating layers
- * within a coordinate plane or canvas.
+ * within a coordinate plane or canvas, with React-specific enhancements.
  *
  * @class
- * @extends {Base}
+ * @extends {CoreLayer}
  */
-export class Layer extends Base {
+export class Layer extends CoreLayer {
   /**
    * Create a new layer
    *
@@ -260,21 +260,21 @@ export class Layer extends Base {
    * @param {string} [options.id] - Unique identifier for the layer
    * @param {string} [options.class] - CSS class name for the layer
    */
-  constructor(options) {
-    super(options);
-    this.label = this.label !== undefined ? this.label : null;
-    this.draggable = this.draggable || false;
-    this.zIndex = this.zIndex || 1;
-    this.opacity = this.opacity || 1;
-    this.keepOnZoom = this.keepOnZoom || false;
-    this.clickable = this.clickable || false;
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(options) {
+<span class="cstat-no" title="statement not covered" >    super(options);</span>
+<span class="cstat-no" title="statement not covered" >    this.label = this.label !== undefined ? this.label : null;</span>
+<span class="cstat-no" title="statement not covered" >    this.draggable = this.draggable || false;</span>
+<span class="cstat-no" title="statement not covered" >    this.zIndex = this.zIndex || 1;</span>
+<span class="cstat-no" title="statement not covered" >    this.opacity = this.opacity || 1;</span>
+<span class="cstat-no" title="statement not covered" >    this.keepOnZoom = this.keepOnZoom || false;</span>
+<span class="cstat-no" title="statement not covered" >    this.clickable = this.clickable || false;</span>
 &nbsp;
-    this.hoverCursor = this.hoverCursor || this.clickable ? 'pointer' : 'default';
-    this.moveCursor = this.moveCursor || 'move';
+<span class="cstat-no" title="statement not covered" >    this.hoverCursor = this.hoverCursor || this.clickable ? 'pointer' : 'default';</span>
+<span class="cstat-no" title="statement not covered" >    this.moveCursor = this.moveCursor || 'move';</span>
 &nbsp;
     // this.class = this.class || this.constructor.name.toLowerCase();
 &nbsp;
-    this.style = {
+<span class="cstat-no" title="statement not covered" >    this.style = {</span>
       zIndex: this.zIndex,
       class: this.class,
       parent: this,
@@ -315,7 +315,7 @@ export class Layer extends Base {
   }
 }
 &nbsp;
-export const layer = <span class="fstat-no" title="function not covered" >op</span>tions =&gt; <span class="cstat-no" title="statement not covered" >new Layer(options);</span>
+export const layer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >op</span>tions =&gt; <span class="cstat-no" title="statement not covered" >new Layer(options);</span></span>
 &nbsp;
 export default Layer;
 &nbsp;</pre></td></tr></table></pre>
@@ -325,7 +325,7 @@ export default Layer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-01T17:21:43.393Z
+                at 2025-06-03T01:21:28.158Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
