@@ -42,9 +42,10 @@ jobs:
         cd fabric-layers-react
         npm run build
     
+    - name: Authenticate with NPM
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
+      
     - name: Publish to NPM
       run: |
         cd fabric-layers-react
-        npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        npm publish --access public
