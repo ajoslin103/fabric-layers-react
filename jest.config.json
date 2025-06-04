@@ -2,14 +2,14 @@
   "testEnvironment": "jsdom",
   "moduleNameMapper": {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-    "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js",
-    "^fabric-layers$": "<rootDir>/../fabric-layers/src/index.js"
+    "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js"
   },
-  "setupFilesAfterEnv": ["<rootDir>/test/setupTests.js"],
+  "setupFilesAfterEnv": ["<rootDir>/test/setupTests.js", "<rootDir>/test/setupJest.js"],
   "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
   "transform": {
     "^.+\\.(js|jsx)$": "babel-jest"
   },
+  "transformIgnorePatterns": [],
   "collectCoverage": true,
   "coverageDirectory": "coverage",
   "collectCoverageFrom": [
