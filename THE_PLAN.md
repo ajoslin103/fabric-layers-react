@@ -3,47 +3,51 @@
 ## 1. Project Assessment
 
 ### Current State
-- Repository is structured as an indoor mapping library that was refactored to be a generic image manipulation library
-- Current name: "indoorjs" (in package.json)
-- Using fabric-pure-browser 3.4.0
-- Has webpack and rollup configurations for building
-- Main entry point: src/Indoor.js
+- [x] Repository is structured as an indoor mapping library that was refactored to be a generic image manipulation library
+- [x] Current name: "fabric-layers" (in package.json)
+- [x] Using fabric-pure-browser 3.4.0
+- [x] Has webpack and rollup configurations for building
+- [x] Main entry point: src/Indoor.js
 
 ## 2. Package Configuration Updates
 
 ### Package Identity
-- [ ] Rename package from "indoorjs" to "fabric-layers"
-- [ ] Update package description to reflect new purpose as a fabric.js coordinate-plane (grid) & layers library
-- [ ] Update keywords to match new functionality (fabric.js, canvas, grid, coordinate-plane, layers)
-- [ ] Update repository, bugs, and homepage URLs
+- [x] Rename package from "indoorjs" to "fabric-layers"
+- [x] Update package description to reflect new purpose as a fabric.js coordinate-plane (grid) & layers library
+- [x] Update keywords to match new functionality (fabric.js, canvas, grid, coordinate-plane, layers)
+- [x] Update repository, bugs, and homepage URLs
 
 ### Package Structure
-- [ ] Review and update main entry point in package.json
-- [ ] Add module field for ES modules support
+- [x] Review and update main entry point in package.json
+- [x] Add module field for ES modules support
 - [ ] Add types field if TypeScript definitions are added
-- [ ] Set appropriate "files" array to include only necessary files
-- [ ] Properly mark fabric.js as a peer dependency
+- [x] Set appropriate "files" array to include only necessary files
+- [x] Properly mark fabric.js as a peer dependency
 
 ### Build Configuration
-- [ ] Update webpack/rollup configuration to generate:
-  - CommonJS build (for Node.js/npm)
-  - ES module build (for modern bundlers)
-  - UMD build (for direct browser usage)
-- [ ] Configure external dependencies correctly
-- [ ] Set up source maps generation
-- [ ] Ensure tree-shaking friendly exports
+- [x] Update webpack/rollup configuration to generate:
+  - [x] CommonJS build (for Node.js/npm)
+  - [x] ES module build (for modern bundlers)
+  - [x] UMD build (for direct browser usage)
+- [x] Configure external dependencies correctly
+- [x] Set up source maps generation
+- [x] Ensure tree-shaking friendly exports
 
 ## 3. Code Refactoring
 
 ### Architecture Adjustments
-- [ ] Ensure proper module exports for all components
-- [ ] Review and restructure entry points if needed
-- [ ] Update imports/exports to support tree-shaking
+- [x] Ensure proper module exports for all components
+- [x] Review and restructure entry points if needed
+- [x] Update imports/exports to support tree-shaking
 
 ### API Improvements
 - [ ] Document public API interface focusing on coordinate-plane and layers functionality
-- [ ] Ensure consistent naming conventions across the codebase
-- [ ] Remove any indoor-specific code that wasn't already refactored
+- [x] Ensure consistent naming conventions across the codebase
+- [x] Remove any indoor-specific code that wasn't already refactored
+  - [x] Removed floorplan-specific code from Map.js
+  - [x] Updated canvas IDs to use consistent naming
+  - [x] Removed the floorplan directory
+  - [x] Updated Indoor.js to remove floorplan exports
 - [ ] Enhance grid system and layer management APIs
 - [ ] Add TypeScript type definitions (optional but recommended)
 
@@ -64,8 +68,15 @@
 ## 5. Testing
 
 ### Test Infrastructure
-- [ ] Set up/update testing framework
+- [x] Set up/update testing framework
+  - [x] Created test helpers
+  - [x] Set up test environment with JSDOM
+  - [x] Configured test runner
 - [ ] Write unit tests for core functionality
+  - [x] Base class tests
+  - [x] Map component tests
+  - [ ] Grid system tests
+  - [ ] Layer management tests
 - [ ] Add integration tests for components
 
 ### Demo Application
