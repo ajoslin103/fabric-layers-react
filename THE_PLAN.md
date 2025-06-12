@@ -1,20 +1,20 @@
-# Plan to Convert React Indoor Mapping to npm Package
+# Plan to Convert Indoor Mapping to an npm Package
 
 ## 1. Project Assessment
 
 ### Current State
-- Repository is structured as a React-based indoor mapping library that was refactored to be a generic image manipulation library
+- Repository is structured as an indoor mapping library that was refactored to be a generic image manipulation library
 - Current name: "indoorjs" (in package.json)
-- Using React 17.0.2 and fabric-pure-browser 3.4.0
+- Using fabric-pure-browser 3.4.0
 - Has webpack and rollup configurations for building
 - Main entry point: src/Indoor.js
 
 ## 2. Package Configuration Updates
 
 ### Package Identity
-- [ ] Rename package from "indoorjs" to "fabric-layers-react"
-- [ ] Update package description to reflect new purpose as a fabric.js coordinate-plane (grid) & layers library for React
-- [ ] Update keywords to match new functionality (fabric.js, canvas, grid, coordinate-plane, layers, react)
+- [ ] Rename package from "indoorjs" to "fabric-layers"
+- [ ] Update package description to reflect new purpose as a fabric.js coordinate-plane (grid) & layers library
+- [ ] Update keywords to match new functionality (fabric.js, canvas, grid, coordinate-plane, layers)
 - [ ] Update repository, bugs, and homepage URLs
 
 ### Package Structure
@@ -22,7 +22,7 @@
 - [ ] Add module field for ES modules support
 - [ ] Add types field if TypeScript definitions are added
 - [ ] Set appropriate "files" array to include only necessary files
-- [ ] Properly mark React and fabric.js as peer dependencies
+- [ ] Properly mark fabric.js as a peer dependency
 
 ### Build Configuration
 - [ ] Update webpack/rollup configuration to generate:
@@ -39,7 +39,6 @@
 - [ ] Ensure proper module exports for all components
 - [ ] Review and restructure entry points if needed
 - [ ] Update imports/exports to support tree-shaking
-- [ ] Verify React hooks usage follows best practices
 
 ### API Improvements
 - [ ] Document public API interface focusing on coordinate-plane and layers functionality
@@ -56,7 +55,7 @@
 - [ ] Add basic usage examples for coordinate planes and layer management
 - [ ] Document grid system API and coordinate transformation utilities
 - [ ] Explain layer system configuration options
-- [ ] Provide examples of integrating with existing React applications
+- [ ] Provide examples of integrating with existing web applications
 
 ### Code Documentation
 - [ ] Add/update JSDoc comments for public methods and components
@@ -67,7 +66,7 @@
 ### Test Infrastructure
 - [ ] Set up/update testing framework
 - [ ] Write unit tests for core functionality
-- [ ] Add integration tests for React components
+- [ ] Add integration tests for components
 
 ### Demo Application
 - [ ] Create/update demo application
@@ -103,7 +102,6 @@
 ### Upgrade Strategy
 - [ ] Create a separate branch for upgrades after initial library is working
 - [ ] Upgrade Node.js version (from 14.x to latest LTS)
-- [ ] Update React to latest version (from 17.0.2)
 - [ ] Update fabric.js dependency
 - [ ] Update build tools (webpack, babel, etc.)
 - [ ] Update all other dependencies to compatible versions
@@ -123,4 +121,4 @@
   - [ ] Performance optimizations for large canvases
   - [ ] Enhanced event handling system
 - [ ] Consider module federation for larger applications
-- [ ] Explore integration with other React visualization libraries
+- [ ] Explore integration with other visualization libraries
