@@ -1,4 +1,4 @@
-# ReactIndoorMapping
+# IndoorMapping
 
 ## Install
 

@@ -137,7 +137,7 @@
   - [ ] Verify all builds complete successfully
   - [ ] Check bundle sizes
 - [ ] Test package locally using npm link
-  - [ ] Test in a sample React application
+  - [ ] Test in a sample web page
   - [ ] Verify all imports work as expected
 
 ### Publishing Process
