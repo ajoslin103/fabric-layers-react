@@ -1,10 +1,13 @@
 {
-  "name": "fabric-layers",
+  "name": "fabric-layers-react",
   "version": "1.0.0",
-  "description": "A fabric.js coordinate-plane (grid) & layers library",
+  "description": "A fabric.js coordinate-plane (grid) & layers library for React",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.umd.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "docs": "node ./build/docs.js",
     "pretest": "npm run lint && npm run lint-spec",
