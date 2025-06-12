@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fabric-layers Grid Demo</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
+        #canvas-container { border: 1px solid #ccc; margin: 20px 0; width: 800px; height: 600px; background: #f8f9fa; }
+        canvas { display: block; }
+        .controls { margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 4px; }
+        button { padding: 8px 16px; margin-right: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>fabric-layers Grid Demo</h1>
+    <div class="controls">
+        <button id="zoomIn">Zoom In</button>
+        <button id="zoomOut">Zoom Out</button>
+        <button id="resetView">Reset View</button>
+        <span id="coordinates">X: 0, Y: 0</span>
+    </div>
+    <div id="canvas-container">
+        <canvas id="c" width="800" height="600"></canvas>
+    </div>
+
+    <!-- Load fabric.js first -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <!-- Then load our library -->
+    <script src="dist/indoor.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if fabric is loaded
+            if (!window.fabric) {
+                console.error('fabric.js not loaded');
+                return;
+            }
+            
+            // Initialize the fabric canvas
+            const canvas = new fabric.Canvas('c', {
+                width: 800,
+                height: 600,
+                backgroundColor: '#f8f9fa',
+                preserveObjectStacking: true
+            });
+            
+            // Simple grid implementation
+            function drawGrid() {
+                const gridSize = 20;
+                const gridColor = '#e0e0e0';
+                const gridWidth = 1000;
+                const gridHeight = 1000;
+                
+                // Draw grid lines
+                for (let i = -gridWidth; i <= gridWidth; i += gridSize) {
+                    // Vertical lines
+                    canvas.add(new fabric.Line(
+                        [i, -gridHeight, i, gridHeight], {
+                            stroke: gridColor,
+                            strokeWidth: 1,
+                            selectable: false,
+                            evented: false
+                        }
+                    ));
+                    
+                    // Horizontal lines
+                    canvas.add(new fabric.Line(
+                        [-gridWidth, i, gridWidth, i], {
+                            stroke: gridColor,
+                            strokeWidth: 1,
+                            selectable: false,
+                            evented: false
+                        }
+                    ));
+                }
+                
+                // Draw axes
+                const axisOptions = {
+                    stroke: '#333',
+                    strokeWidth: 2,
+                    selectable: false,
+                    evented: false
+                };
+                
+                // X axis
+                canvas.add(new fabric.Line(
+                    [-gridWidth, 0, gridWidth, 0],
+                    axisOptions
+                ));
+                
+                // Y axis
+                canvas.add(new fabric.Line(
+                    [0, -gridHeight, 0, gridHeight],
+                    axisOptions
+                ));
+                
+                // Add labels
+                function addLabel(text, x, y, options = {}) {
+                    const defaultOptions = {
+                        left: x,
+                        top: y,
+                        fontSize: 12,
+                        fontFamily: 'Arial',
+                        fill: '#333',
+                        selectable: false,
+                        evented: false,
+                        ...options
+                    };
+                    
+                    const textObj = new fabric.Text(text, defaultOptions);
+                    canvas.add(textObj);
+                    return textObj;
+                }
+                
+                // Add X axis labels
+                for (let i = -gridWidth + gridSize; i < gridWidth; i += gridSize * 5) {
+                    if (i !== 0) {
+                        addLabel(i.toString(), i, 10, { originX: 'center' });
+                    }
+                }
+                
+                // Add Y axis labels
+                for (let i = -gridHeight + gridSize; i < gridHeight; i += gridSize * 5) {
+                    if (i !== 0) {
+                        addLabel(i.toString(), 10, i, { originY: 'middle' });
+                    }
+                }
+                
+                // Add origin label
+                addLabel('(0, 0)', 10, 10);
+                
+                // Center the view
+                canvas.setViewportTransform([1, 0, 0, 1, 400, 300]);
+            }
+            
+            // Initialize the grid
+            drawGrid();
+            
+            // Add event listeners for zoom controls
+            document.getElementById('zoomIn').addEventListener('click', function() {
+                const zoom = canvas.getZoom();
+                if (zoom < 5) {
+                    canvas.zoomToPoint(
+                        { x: 400, y: 300 },
+                        zoom * 1.2
+                    );
+                }
+            });
+            
+            document.getElementById('zoomOut').addEventListener('click', function() {
+                const zoom = canvas.getZoom();
+                if (zoom > 0.2) {
+                    canvas.zoomToPoint(
+                        { x: 400, y: 300 },
+                        zoom / 1.2
+                    );
+                }
+            });
+            
+            document.getElementById('resetView').addEventListener('click', function() {
+                canvas.setViewportTransform([1, 0, 0, 1, 400, 300]);
+                canvas.setZoom(1);
+            });
+            
+            // Handle mouse movement to show coordinates
+            canvas.on('mouse:move', function(options) {
+                const pointer = canvas.getPointer(options.e);
+                const viewTransform = canvas.viewportTransform;
+                
+                // Transform the pointer coordinates to world coordinates
+                const x = Math.round((pointer.x - viewTransform[4]) / viewTransform[0]);
+                const y = Math.round((pointer.y - viewTransform[5]) / viewTransform[3]);
+                
+                document.getElementById('coordinates').textContent = `X: ${x}, Y: ${y}`;
+            });
+            
+            // Handle zoom with mouse wheel
+            canvas.on('mouse:wheel', function(opt) {
+                const delta = opt.e.deltaY;
+                let zoom = canvas.getZoom();
+                zoom *= 0.999 ** delta;
+                
+                // Zoom limits
+                if (zoom > 5) zoom = 5;
+                if (zoom < 0.2) zoom = 0.2;
+                
+                canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+                opt.e.preventDefault();
+                opt.e.stopPropagation();
+            });
+            
+            // Disable right-click context menu
+            canvas.upperCanvasEl.oncontextmenu = function() { return false; };
+        });
+    </script>
+</body>
+</html>
