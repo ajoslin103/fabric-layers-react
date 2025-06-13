@@ -145,9 +145,9 @@ export class Map extends mix(Base).with(ModesMixin) {
     this.x = width / 2.0;
     this.y = height / 2.0;
     this.update();
-    process.nextTick(() => {
+    setTimeout(() => {
       this.update();
-    });
+    }, 0);
   }
 
   getBounds() {
@@ -198,9 +198,9 @@ export class Map extends mix(Base).with(ModesMixin) {
     });
 
     this.update();
-    process.nextTick(() => {
+    setTimeout(() => {
       this.update();
-    });
+    }, 0);
   }
 
   setCursor(cursor) {
@@ -220,9 +220,9 @@ export class Map extends mix(Base).with(ModesMixin) {
     this.x = width / 2.0;
     this.y = height / 2.0;
     this.update();
-    process.nextTick(() => {
+    setTimeout(() => {
       this.update();
-    });
+    }, 0);
   }
 
   onResize(width, height) {
@@ -355,9 +355,9 @@ export class Map extends mix(Base).with(ModesMixin) {
 
     this.update();
 
-    process.nextTick(() => {
+    setTimeout(() => {
       this.update();
-    });
+    }, 0);
   }
 
   registerListeners() {
