@@ -29,5 +29,64 @@
     <!-- Load our library -->
     <script src="dist/index.umd.js"></script>
     
+    <script>
+      // Wait for DOM
+      window.addEventListener('DOMContentLoaded', function() {
+        // Get container
+        const container = document.getElementById('canvas-container');
+
+        // Create the map with grid enabled
+        const map = new window.FabricLayers.Map(container, {
+          width: 800,
+          height: 600,
+          showGrid: true,
+          mode: 'GRAB', // Enable pan/zoom mode by default
+        });
+
+        // Show grid if not auto-enabled
+        if (!map.grid) {
+          if (typeof map.addGrid === 'function') map.addGrid();
+        }
+
+        // UI controls
+        document.getElementById('zoomIn').onclick = function() {
+          map.canvas.setZoom(map.canvas.getZoom() * 1.2);
+        };
+        document.getElementById('zoomOut').onclick = function() {
+          map.canvas.setZoom(map.canvas.getZoom() / 1.2);
+        };
+        document.getElementById('resetView').onclick = function() {
+          if (typeof map.reset === 'function') map.reset();
+        };
+
+        // Mouse coordinates display and event logging via eventemitter2
+        const coords = document.getElementById('coordinates');
+        map.on('mouse:move', function(e) {
+          if (e && e.pointer) {
+            coords.textContent = `X: ${e.pointer.x.toFixed(1)}, Y: ${e.pointer.y.toFixed(1)}`;
+          }
+        });
+        map.on('mouse:out', function() {
+          coords.textContent = 'X: -, Y: -';
+        });
+
+        // Log some events for demo
+        map.on('mouse:down', function(e) {
+          if (e && e.pointer) {
+            console.log('mouse:down', e.pointer);
+          }
+        });
+        map.on('mouse:up', function(e) {
+          if (e && e.pointer) {
+            console.log('mouse:up', e.pointer);
+          }
+        });
+        map.on('mouse:dblclick', function(e) {
+          if (e && e.pointer) {
+            console.log('mouse:dblclick', e.pointer);
+          }
+        });
+      });
+    </script>
 </body>
 </html>
