@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fabric-layers-react Grid Demo</title>
+    <title>fabric-layers Grid Demo</title>
     <style>
         body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
         #canvas-container { border: 1px solid #ccc; margin: 20px 0; width: 800px; height: 600px; background: #f8f9fa; }
@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>fabric-layers-react Grid Demo</h1>
+    <h1>fabric-layers Grid Demo</h1>
     <div class="controls">
         <button id="zoomIn">Zoom In</button>
         <button id="zoomOut">Zoom Out</button>
@@ -22,9 +22,6 @@
     </div>
     <div id="canvas-container"></div>
 
-    <!-- Load React and ReactDOM -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <!-- Load fabric.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <!-- Load Babel for JSX -->
@@ -32,75 +29,5 @@
     <!-- Load our library -->
     <script src="dist/index.umd.js"></script>
     
-    <script type="text/babel">
-        const { Grid, CanvasProvider, useCanvas } = window.FabricLayersReact;
-
-        // Main App Component
-        function App() {
-            const [zoom, setZoom] = React.useState(1);
-            const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
-            const canvasRef = React.useRef(null);
-
-            // Handle canvas ready
-            const handleCanvasReady = (canvas) => {
-                canvasRef.current = canvas;
-                
-                // Update mouse coordinates
-                canvas.on('mouse:move', (e) => {
-                    if (e.absolutePointer) {
-                        setMousePos({
-                            x: Math.round(e.absolutePointer.x),
-                            y: Math.round(e.absolutePointer.y)
-                        });
-                    }
-                });
-            };
-
-            // Zoom handlers
-            const zoomIn = () => setZoom(prev => Math.min(prev * 1.2, 5));
-            const zoomOut = () => setZoom(prev => Math.max(prev / 1.2, 0.5));
-            const resetView = () => setZoom(1);
-
-            // Update coordinates display
-            React.useEffect(() => {
-                const coordsElement = document.getElementById('coordinates');
-                if (coordsElement) {
-                    coordsElement.textContent = `X: ${mousePos.x}, Y: ${mousePos.y}`;
-                }
-            }, [mousePos]);
-
-            // Set up button event listeners
-            React.useEffect(() => {
-                document.getElementById('zoomIn').addEventListener('click', zoomIn);
-                document.getElementById('zoomOut').addEventListener('click', zoomOut);
-                document.getElementById('resetView').addEventListener('click', resetView);
-
-                return () => {
-                    document.getElementById('zoomIn').removeEventListener('click', zoomIn);
-                    document.getElementById('zoomOut').removeEventListener('click', zoomOut);
-                    document.getElementById('resetView').removeEventListener('click', resetView);
-                };
-            }, []);
-
-            return (
-                <CanvasProvider width={800} height={600} onReady={handleCanvasReady}>
-                    <Grid 
-                        size={20}
-                        gridColor="#e0e0e0"
-                        axesColor="#333"
-                        showAxes={true}
-                        snapToGrid={false}
-                    />
-                </CanvasProvider>
-            );
-        }
-
-
-        // Render the app
-        const rootElement = document.createElement('div');
-        document.getElementById('canvas-container').appendChild(rootElement);
-        const root = ReactDOM.createRoot(rootElement);
-        root.render(<App />);
-    </script>
 </body>
 </html>

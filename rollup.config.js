@@ -1,10 +1,10 @@
 // Rollup configuration for fabric-layers library
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import builtins from 'rollup-plugin-node-builtins';
-import globals from 'rollup-plugin-node-globals';
-import json from 'rollup-plugin-json';
-import pkg from './package.json';
+import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+import pkg from './package.json' assert { type: 'json' };
 
 const banner = `/* @preserve
  * fabric-layers ${pkg.version}, a fabric.js coordinate-plane (grid) & layers library. ${pkg.homepage}
@@ -13,40 +13,57 @@ const banner = `/* @preserve
  */
 `;
 
-const outputConfig = {
+const outputConfig = (format) => ({
   globals: {
     'fabric-pure-browser': 'fabric'
   },
   sourcemap: true,
-  banner
-};
+  banner,
+  format
+});
+
+const commonPlugins = [
+  nodeResolve({
+    browser: true,
+    preferBuiltins: true
+  }),
+  commonjs(),
+  json(),
+  babel({
+    babelHelpers: 'bundled',
+    exclude: 'node_modules/**',
+    presets: [
+      ['@babel/preset-env', {
+        targets: '> 0.25%, not dead',
+        modules: false,
+        useBuiltIns: 'usage',
+        corejs: 3
+      }]
+    ]
+  })
+];
 
 export default [
   // UMD build for browsers
   {
     input: 'src/index.js',
-    output: {
-      file: pkg.unpkg,
-      format: 'umd',
-      name: 'FabricLayers',
-      ...outputConfig
-    },
-    plugins: [
-      commonjs(),
-      json(),
-      babel({
-        exclude: 'node_modules/**',
-        presets: [
-          ['@babel/preset-env', {
-            targets: '> 0.25%, not dead',
-            modules: false
-          }]
-        ]
-      }),
-      globals(),
-      builtins()
+    output: [
+      {
+        file: pkg.unpkg.replace('.js', '.min.js'),
+        format: 'umd',
+        name: 'FabricLayers',
+        ...outputConfig('umd')
+      },
+      {
+        file: pkg.unpkg,
+        format: 'umd',
+        name: 'FabricLayers',
+        ...outputConfig('umd'),
+        sourcemap: false,
+        plugins: [terser()]
+      }
     ],
-    external: ['fabric-pure-browser']
+    plugins: commonPlugins
   },
 
   // ESM build for modern bundlers
@@ -55,24 +72,9 @@ export default [
     output: {
       file: pkg.module,
       format: 'es',
-      ...outputConfig
+      ...outputConfig('es')
     },
-    plugins: [
-      commonjs(),
-      json(),
-      babel({
-        exclude: 'node_modules/**',
-        presets: [
-          ['@babel/preset-env', {
-            targets: '> 0.25%, not dead',
-            modules: false
-          }]
-        ]
-      }),
-      globals(),
-      builtins()
-    ],
-    external: ['fabric-pure-browser']
+    plugins: commonPlugins
   },
 
   // CommonJS build for Node.js/npm
@@ -81,23 +83,8 @@ export default [
     output: {
       file: pkg.main,
       format: 'cjs',
-      ...outputConfig
+      ...outputConfig('cjs')
     },
-    plugins: [
-      commonjs(),
-      json(),
-      babel({
-        exclude: 'node_modules/**',
-        presets: [
-          ['@babel/preset-env', {
-            targets: 'node 10',
-            modules: false
-          }]
-        ]
-      }),
-      globals(),
-      builtins()
-    ],
-    external: ['fabric-pure-browser']
+    plugins: commonPlugins
   }
 ];
