@@ -11,6 +11,6 @@ module.exports = {
     }]
   ],
   plugins: [
-    // Add any additional Babel plugins here if needed
+    // No additional plugins necessary unless you need legacy transforms
   ]
 };
