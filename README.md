@@ -1,23 +1,43 @@
-# Fabric Layers
+# Fabric Layers v1.1.0
 
 An interactive coordinate-plane, grid, and layer management library for [fabric.js](https://fabricjs.com/) canvases.
 
-`fabric-layers` is based on the excellent original work of [ReactIndoorMapping](https://github.com/martinwairegi/ReactIndoorMapping) featured in this blog:https://blog.logrocket.com/build-indoor-maps-fabric-js-react/ (interestingly, the code names React but doesn't require it) 
+`fabric-layers` is based on the excellent original work of [ReactIndoorMapping](https://github.com/martinwairegi/ReactIndoorMapping) featured in this [blog post](https://blog.logrocket.com/build-indoor-maps-fabric-js-react/). The library has been refactored to be framework-agnostic while maintaining all the powerful features of the original.
 
-`ReactIndoorMapping` turned a plain Fabric canvas into a powerful 2-D workspace with a pixel-perfect grid system, reusable layers, and fully-typed events – ideal for editors, games, mapping tools, CAD-like apps, and any time you need structured interaction on an HTML canvas.
+## 🚀 What's New in 1.1.0
 
-`fabric-layers` repackages this functionality, removing any traces of React (since the original codebase didn't actually use it) to provide a more generic image manipulation library. It can still be used in React apps, but it's not a React library.
+- **Enhanced Grid System**: Customizable grid line styles and colors
+- **Improved Performance**: Better rendering for complex scenes
+- **TypeScript Support**: Full type definitions included
+- **Better Event System**: More consistent event handling
+- **Bug Fixes**: Various stability improvements and bug fixes
+
+Check out the [CHANGELOG](CHANGELOG.md) for the complete list of changes.
 
 ---
 
 ## ✨ Features
 
-* Configurable Cartesian grid with panning, zooming, and snapping helpers
-* Lightweight Layer API: add, remove, reorder, show/hide, lock, and listen for events
-* Precise coordinate transformation utilities (grid ⇄ canvas ⇄ screen)
-* Event-driven core powered by `eventemitter2`
-* Framework-agnostic – works in vanilla JS, React, Vue, Svelte, etc.
-* Tree-shakable ESM, CommonJS, and UMD builds + source-maps
+* **Flexible Grid System**
+  * Customizable grid line styles and colors
+  * Configurable snapping and alignment
+  * Pan and zoom with mouse/touch gestures
+
+* **Powerful Layer Management**
+  * Add, remove, reorder, show/hide, and lock layers
+  * Layer groups and nested layers
+  * Event system for layer interactions
+
+* **Precision Tools**
+  * Coordinate transformation utilities (grid ⇄ canvas ⇄ screen)
+  * Pixel-perfect rendering
+  * Built-in measurement tools
+
+* **Developer Friendly**
+  * TypeScript support with full type definitions
+  * Framework-agnostic – works with any frontend stack
+  * Tree-shakable ESM, CommonJS, and UMD builds
+  * Comprehensive documentation and examples
 
 ---
 

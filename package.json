@@ -1,6 +1,6 @@
 {
   "name": "fabric-layers",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A fabric.js coordinate-plane (grid) & layers library",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -24,7 +24,8 @@
     "start": "webpack serve --mode=development --open",
     "prepublishOnly": "npm run build",
     "prepare": "npm run build",
-    "release": "standard-version"
+    "release": "standard-version",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "repository": {
     "type": "git",
@@ -57,6 +58,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "acorn": "^8.11.3",
     "chai": "^5.0.0",
+    "conventional-changelog-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
@@ -68,6 +70,7 @@
     "nyc": "^15.1.0",
     "prettier": "^3.2.5",
     "rollup": "^4.43.0",
+    "standard-version": "^9.5.0",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.3"
