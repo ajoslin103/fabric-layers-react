@@ -1,1 +1,1 @@
-this project is a fabric.js coordinate-plane (grid) & layers library
+this project is a wrapper around the fabric-layers library, to enable it to be used with react
