@@ -34,63 +34,17 @@ Base (EventEmitter2)
 └── Measurement System
     ├── Measurement
     └── Measurer
-    
-
 
 ## Components
-
-### FabricLayersReact
-
-The main component that renders the canvas and provides the context for all child components.
-
-#### Props
-
-- `width`: Width of the canvas (default: '100%')
-- `height`: Height of the canvas (default: '100%')
-- `className`: Additional CSS class for the container
-- `style`: Additional inline styles for the container
-- `canvasOptions`: Options to pass to the Fabric.js Canvas constructor
-- `onReady`: Callback function that receives the canvas and layer manager instances
-
-### LayerPanel
-
-A pre-built panel for managing layers.
-
-#### Props
-
-- `className`: Additional CSS class for the panel
-- `style`: Additional inline styles for the panel
 
 ## Hooks
 
 ### useFabricLayers
 
-A hook that provides access to the canvas and layer manager instances, as well as event handlers.
+## Licenses
 
-```jsx
-const { 
-  canvas, 
-  layerManager,
-  onObjectAdded,
-  onObjectRemoved,
-  onSelectionCreated,
-  onSelectionCleared 
-} = useFabricLayers();
+MIT © 2025 [Allen Joslin](https://github.com/ajoslin103) (current author of fabric-layers-react)
 
-// Example usage of event handlers
-useEffect(() => {
-  const handleObjectAdded = (object) => {
-    console.log('Object added:', object);
-  };
-  
-  onObjectAdded(handleObjectAdded);
-  
-  return () => {
-    // Cleanup if needed
-  };
-}, [onObjectAdded]);
-```
+MIT © 2025 [Allen Joslin](https://github.com/ajoslin103) (current author of fabric-layers)
 
-## License
-
-MIT
+MIT © 2022 [Martin Wairegi](https://github.com/martinwairegi) (original author of ReactIndoorMapping)
