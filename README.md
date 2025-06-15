@@ -10,34 +10,32 @@ npm install fabric-layers-react fabric-layers fabric
 yarn add fabric-layers-react fabric-layers fabric
 ```
 
-## Basic Usage
+## fabric-layer classes
 
-```jsx
-import React from 'react';
-import { FabricLayersReact, LayerPanel, useFabricLayers } from 'fabric-layers-react';
+Base (EventEmitter2)
+├── Map (+ ModesMixin)
+│   ├── Grid
+│   ├── Point
+│   └── Measurement
+├── Layer
+│   ├── Vector Layers (Line, Circle, Rect, Polyline)
+│   ├── Marker System
+│   │   ├── Marker
+│   │   ├── MarkerGroup
+│   │   └── Icon
+│   ├── Group
+│   ├── Connector
+│   └── Tooltip
+├── Paint System
+│   ├── Canvas
+│   ├── Arrow
+│   ├── ArrowHead
+│   └── PaintManager
+└── Measurement System
+    ├── Measurement
+    └── Measurer
+    
 
-const App = () => {
-  const { canvas, layerManager } = useFabricLayers();
-
-  const handleReady = (canvas, layerManager) => {
-    // Access the canvas and layer manager here
-    console.log('Canvas and LayerManager are ready');
-  };
-
-  return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ flex: 1 }}>
-        <FabricLayersReact onReady={handleReady} />
-      </div>
-      <div style={{ width: '250px', borderLeft: '1px solid #ddd' }}>
-        <LayerPanel />
-      </div>
-    </div>
-  );
-};
-
-export default App;
-```
 
 ## Components
 
