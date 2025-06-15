@@ -1,1 +1,1 @@
-this project is a wrapper around the fabric-layers library, to enable it to be used with react
+this project is a React wrapper around the fabric-layers (https://www.npmjs.com/package/fabric-layers) library

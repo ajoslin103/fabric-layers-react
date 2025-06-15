@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/esm",
+    "module": "esnext",
+    "target": "es6",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./dist/esm/types"
+  },
+  "include": ["src"]
+}

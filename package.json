@@ -1,0 +1,61 @@
+{
+  "name": "fabric-layers-react",
+  "version": "1.0.0",
+  "description": "A React wrapper around the fabric-layers (https://www.npmjs.com/package/fabric-layers) library",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.esm.json",
+    "prepare": "npm run build",
+    "example": "cd example && npm install && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajoslin103/fabric-layers-react.git"
+  },
+  "keywords": [
+    "fabric",
+    "fabricjs",
+    "layers",
+    "react",
+    "canvas",
+    "drawing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "fabric": "^6.7.0",
+    "fabric-layers": "^1.1.1"
+  },
+  "peerDependenciesMeta": {
+    "fabric": {
+      "optional": true
+    },
+    "fabric-layers": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/fabric": "^5.3.10",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}
