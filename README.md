@@ -12,6 +12,7 @@ yarn add fabric-layers-react fabric-layers fabric
 
 ## fabric-layer classes
 
+```
 Base (EventEmitter2)
 ├── Map (+ ModesMixin)
 │   ├── Grid
@@ -34,6 +35,7 @@ Base (EventEmitter2)
 └── Measurement System
     ├── Measurement
     └── Measurer
+```
 
 ## Components
 
