@@ -98,7 +98,7 @@ export const useFabricLayers = () => {
         const selected = canvas.getActiveObjects()
           .filter((obj: unknown): obj is FabricObject => isFabricObject(obj))
           .map(createMapObject)
-          .filter((obj): obj is MapObject => obj !== null);
+          .filter((obj: any): obj is MapObject => obj !== null);
         
         callbacks.current.onSelectionCreated({
           selected,
