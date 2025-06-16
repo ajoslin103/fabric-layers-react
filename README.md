@@ -1,118 +1,236 @@
-# Fabric Layers React v1.0.1
+# Fabric Layers React
 
-A React wrapper for the [fabric-layers](https://www.npmjs.com/package/fabric-layers) library, providing a React-friendly way to work with interactive, layered canvases using Fabric.js.
+React component library for [fabric-layers](https://github.com/ajoslin103/fabric-layers), providing declarative React components for all fabric-layers classes.
 
-## Overall Structure
+## Structure
 
-This project is delivered as two packages:
+The component library mirrors the structure of the original fabric-layers library:
 
-1. **fabric-layers** - Core functionality
-   - Core utilities and constants
-   - Geometry tools and grid fundamentals
-   - Framework-agnostic implementation
-   - No React dependencies
-
-2. **fabric-layers-react** (this package) - React extensions
-   - React components and hooks
-   - JSX rendering utilities
-   - React-specific implementations
-   - Built on top of fabric-layers core
+```
+Base (EventEmitter2)
+├── Map (components/Map/)
+│   ├── Grid
+│   ├── Point
+│   └── Measurement
+└── Layer (components/Layers/)
+    ├── Vector Layers
+    │   ├── Line
+    │   ├── Circle
+    │   ├── Rect
+    │   └── Polyline
+    ├── Marker System
+    │   ├── Marker
+    │   ├── MarkerGroup
+    │   └── Icon
+    ├── Group
+    ├── Connector
+    └── Tooltip
+```
 
 ## Installation
 
 ```bash
-# Install both packages (recommended)
-npm install fabric-layers-react fabric
-# or with yarn
-yarn add fabric-layers-react fabric
+npm install fabric-layers-react fabric-layers
+# or
+yarn add fabric-layers-react fabric-layers
 ```
 
-## React Architecture
+## Usage
 
+Basic example using Map and various layer types:
+
+```tsx
+import { Map } from 'fabric-layers-react';
+import { 
+  Circle, 
+  Line, 
+  Marker, 
+  Group 
+} from 'fabric-layers-react/components/Layers';
+
+function MyMap() {
+  return (
+    <Map width={800} height={600}>
+      {/* Vector layer example */}
+      <Circle
+        position={{ x: 100, y: 100 }}
+        radius={50}
+        style={{ fill: 'blue', stroke: 'black' }}
+        onSelect={handleSelect}
+      />
+
+      {/* Line example */}
+      <Line
+        points={[
+          { x: 0, y: 0 },
+          { x: 100, y: 100 }
+        ]}
+        style={{ stroke: 'red' }}
+      />
+
+      {/* Marker with tooltip */}
+      <Marker
+        position={{ x: 200, y: 200 }}
+        icon={{
+          url: 'marker.png',
+          width: 32,
+          height: 32
+        }}
+        tooltip="My Marker"
+        onClick={handleClick}
+      />
+
+      {/* Group of layers */}
+      <Group
+        layers={[
+          { type: 'circle', position: {x: 300, y: 300}, radius: 30 },
+          { type: 'rect', position: {x: 350, y: 350}, width: 50, height: 50 }
+        ]}
+        style={{ opacity: 0.8 }}
+      />
+    </Map>
+  );
+}
 ```
-React (fabric-layers-react)
-├── Components
-│   ├── Map
-│   │   ├── Grid
-│   │   ├── Map
-│   │   ├── Measurement
-│   │   └── Point
-└── Hooks
-    └── useFabricLayers
-```
 
-### Components
+## Component Reference
 
-#### Map
+### Map Components
 
-The main container component that renders the interactive canvas and manages the map instance.
+- **Map**: Main container component that initializes the fabric-layers canvas
+  ```tsx
+  <Map 
+    width={800} 
+    height={600}
+    gridVisible={true}
+    {...options}
+  />
+  ```
 
-**Props:**
-- `width`: `number | string` (default: '100%') - Width of the map container
-- `height`: `number | string` (default: '100%') - Height of the map container
-- `className`: `string` - Additional CSS class names
-- `style`: `React.CSSProperties` - Inline styles for the container
-- `children`: `React.ReactNode` - Child components to render within the map
-- `onReady`: `(map: CoreMap) => void` - Callback when the map is initialized
-- `modes`: `Record<string, any>` - Map interaction modes
-- `defaultMode`: `string` - Default interaction mode
+- **Grid**: Coordinate grid overlay
+  ```tsx
+  <Grid 
+    size={50}
+    color="#ccc"
+    visible={true}
+  />
+  ```
 
-#### Grid
+### Vector Layers
 
-Renders a grid overlay on the map for better spatial reference.
+- **Circle**
+  ```tsx
+  <Circle
+    position={{ x: 100, y: 100 }}
+    radius={50}
+    style={{ fill: 'blue' }}
+    onSelect={(e) => {}}
+  />
+  ```
 
-**Props:**
-- `size`: `number` (default: 20) - Size of grid cells in pixels
-- `color`: `string` (default: '#cccccc') - Color of the grid lines
-- `dashArray`: `number[]` (default: [1, 2]) - Dash pattern for grid lines
-- `opacity`: `number` (default: 0.5) - Opacity of the grid
-- `visible`: `boolean` (default: true) - Whether the grid is visible
-- `mapId`: `string` - ID of the map to attach to (defaults to active map)
+- **Line**
+  ```tsx
+  <Line
+    points={[
+      { x: 0, y: 0 },
+      { x: 100, y: 100 }
+    ]}
+    style={{ stroke: 'red' }}
+  />
+  ```
 
-#### Point
+- **Rect**
+  ```tsx
+  <Rect
+    position={{ x: 100, y: 100 }}
+    width={200}
+    height={100}
+    style={{ fill: 'green' }}
+  />
+  ```
 
-Renders a point on the map with various styling options.
+- **Polyline**
+  ```tsx
+  <Polyline
+    points={[
+      { x: 0, y: 0 },
+      { x: 100, y: 100 },
+      { x: 200, y: 50 }
+    ]}
+    style={{ stroke: 'blue' }}
+  />
+  ```
 
-**Props:**
-- `x`: `number` - X coordinate of the point
-- `y`: `number` - Y coordinate of the point
-- `radius`: `number` (default: 5) - Radius of the point in pixels
-- `fill`: `string` (default: '#ff0000') - Fill color of the point
-- `stroke`: `string` (default: '#000000') - Stroke color of the point
-- `strokeWidth`: `number` (default: 1) - Width of the point's stroke
-- `opacity`: `number` (default: 1) - Opacity of the point (0-1)
-- `visible`: `boolean` (default: true) - Whether the point is visible
-- `mapId`: `string` - ID of the map to attach to (defaults to active map)
-- Event handlers: `onSelect`, `onDeselect`, `onClick`, `onMouseEnter`, `onMouseLeave`
+### Marker System
 
-#### Measurement
+- **Marker**
+  ```tsx
+  <Marker
+    position={{ x: 200, y: 200 }}
+    icon={{
+      url: 'marker.png',
+      width: 32,
+      height: 32
+    }}
+    tooltip="My Marker"
+    onClick={(e) => {}}
+    onDragEnd={(e) => {}}
+  />
+  ```
 
-Renders a measurement line between two points with optional labels.
+- **MarkerGroup**
+  ```tsx
+  <MarkerGroup
+    markers={[
+      { position: { x: 100, y: 100 }, tooltip: "Marker 1" },
+      { position: { x: 200, y: 200 }, tooltip: "Marker 2" }
+    ]}
+    style={{ opacity: 0.8 }}
+  />
+  ```
 
-**Props:**
-- `startX`: `number` - Starting X coordinate
-- `startY`: `number` - Starting Y coordinate
-- `endX`: `number` - Ending X coordinate
-- `endY`: `number` - Ending Y coordinate
-- `unit`: `string` (default: 'px') - Unit of measurement
-- `lineColor`: `string` (default: '#ff0000') - Color of the measurement line
-- `lineWidth`: `number` (default: 2) - Width of the measurement line
-- `labelColor`: `string` (default: '#000000') - Color of the measurement labels
-- `labelSize`: `number` (default: 12) - Font size of the labels
-- `labelOffset`: `number` (default: 10) - Offset of labels from the line
-- `showLabels`: `boolean` (default: true) - Whether to show measurement labels
-- `precision`: `number` (default: 2) - Number of decimal places for measurements
-- `mapId`: `string` - ID of the map to attach to (defaults to active map)
-- Event handlers: `onUpdate`, `onSelect`, `onDeselect`
+### Other Components
 
-## Hooks
+- **Group**: Container for multiple layers
+  ```tsx
+  <Group
+    layers={[/* layer configs */]}
+    style={{ opacity: 0.8 }}
+    onSelect={(e) => {}}
+  />
+  ```
 
-    ### useFabricLayers
+- **Connector**: Connect two points or objects
+  ```tsx
+  <Connector
+    start={{ x: 0, y: 0 }}
+    end={{ x: 100, y: 100 }}
+    style={{ stroke: 'black' }}
+  />
+  ```
 
-## Licenses
+- **Tooltip**: Add tooltips to layers
+  ```tsx
+  <Tooltip
+    content="My tooltip"
+    position={{ x: 100, y: 100 }}
+    style={{ background: 'white' }}
+  />
+  ```
 
-MIT © 2025 [Allen Joslin](https://github.com/ajoslin103) (current author of fabric-layers-react)
+## TypeScript Support
 
-MIT © 2025 [Allen Joslin](https://github.com/ajoslin103) (current author of fabric-layers)
+All components are written in TypeScript and include comprehensive type definitions.
 
-MIT © 2022 [Martin Wairegi](https://github.com/martinwairegi) (original author of ReactIndoorMapping)
+## Contributing
+
+PRs and issues are welcome! Please make sure to:
+1. Fork & `git clone`
+2. `npm install`
+3. Make your changes
+4. Add/update tests in `test/`
+5. `npm test`
+
+## License
+
+MIT © 2025
