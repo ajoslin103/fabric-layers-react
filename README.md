@@ -27,33 +27,7 @@ npm install fabric-layers-react fabric
 yarn add fabric-layers-react fabric
 ```
 
-## Fabric-Layers
-
-```
-Base (EventEmitter2)
-├── Map (+ ModesMixin)
-│   ├── Grid
-│   ├── Point
-│   └── Measurement
-├── Layer
-│   ├── Vector Layers (Line, Circle, Rect, Polyline)
-│   ├── Marker System
-│   │   ├── Marker
-│   │   ├── MarkerGroup
-│   │   └── Icon
-│   ├── Group
-│   ├── Connector
-│   └── Tooltip
-├── Paint System
-│   ├── Canvas
-│   ├── Arrow
-│   ├── ArrowHead
-│   └── PaintManager
-└── Measurement System
-    ├── Measurement
-    └── Measurer
-```
-## React Components
+## React Architecture
 
 ```
 React (fabric-layers-react)
@@ -67,9 +41,9 @@ React (fabric-layers-react)
     └── useFabricLayers
 ```
 
-## Components
+### Components
 
-### Map
+#### Map
 
 The main container component that renders the interactive canvas and manages the map instance.
 
@@ -83,7 +57,7 @@ The main container component that renders the interactive canvas and manages the
 - `modes`: `Record<string, any>` - Map interaction modes
 - `defaultMode`: `string` - Default interaction mode
 
-### Grid
+#### Grid
 
 Renders a grid overlay on the map for better spatial reference.
 
@@ -95,7 +69,7 @@ Renders a grid overlay on the map for better spatial reference.
 - `visible`: `boolean` (default: true) - Whether the grid is visible
 - `mapId`: `string` - ID of the map to attach to (defaults to active map)
 
-### Point
+#### Point
 
 Renders a point on the map with various styling options.
 
@@ -111,7 +85,7 @@ Renders a point on the map with various styling options.
 - `mapId`: `string` - ID of the map to attach to (defaults to active map)
 - Event handlers: `onSelect`, `onDeselect`, `onClick`, `onMouseEnter`, `onMouseLeave`
 
-### Measurement
+#### Measurement
 
 Renders a measurement line between two points with optional labels.
 
