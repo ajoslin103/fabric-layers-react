@@ -27,7 +27,33 @@ npm install fabric-layers-react fabric
 yarn add fabric-layers-react fabric
 ```
 
-## Architecture
+## Fabric-Layers
+
+```
+Base (EventEmitter2)
+├── Map (+ ModesMixin)
+│   ├── Grid
+│   ├── Point
+│   └── Measurement
+├── Layer
+│   ├── Vector Layers (Line, Circle, Rect, Polyline)
+│   ├── Marker System
+│   │   ├── Marker
+│   │   ├── MarkerGroup
+│   │   └── Icon
+│   ├── Group
+│   ├── Connector
+│   └── Tooltip
+├── Paint System
+│   ├── Canvas
+│   ├── Arrow
+│   ├── ArrowHead
+│   └── PaintManager
+└── Measurement System
+    ├── Measurement
+    └── Measurer
+```
+## React Components
 
 ```
 React (fabric-layers-react)

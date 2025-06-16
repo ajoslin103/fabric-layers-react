@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Point as CorePoint } from 'fabric-layers';
-import { useLayerManager } from '../../context/LayerManagerContext';
+import { useMap } from '../../context/MapContext';
 
 export interface PointProps {
   x: number;
@@ -11,7 +11,6 @@ export interface PointProps {
   strokeWidth?: number;
   opacity?: number;
   visible?: boolean;
-  mapId?: string;
   onSelect?: (point: CorePoint) => void;
   onDeselect?: (point: CorePoint) => void;
   onClick?: (point: CorePoint) => void;
@@ -28,7 +27,6 @@ const Point = forwardRef<CorePoint, PointProps>(({
   strokeWidth = 1,
   opacity = 1,
   visible = true,
-  mapId,
   onSelect,
   onDeselect,
   onClick,
@@ -36,13 +34,10 @@ const Point = forwardRef<CorePoint, PointProps>(({
   onMouseLeave,
 }, ref) => {
   const pointRef = useRef<CorePoint | null>(null);
-  const { layerManager } = useLayerManager();
+  const { map } = useMap();
 
   // Initialize point
   useEffect(() => {
-    if (!layerManager) return;
-
-    const map = mapId ? layerManager.getMap(mapId) : layerManager.getActiveMap();
     if (!map) return;
 
     const point = new CorePoint({
@@ -74,7 +69,7 @@ const Point = forwardRef<CorePoint, PointProps>(({
         pointRef.current = null;
       }
     };
-  }, [layerManager, mapId]);
+  }, [map]);
 
   // Update point properties when they change
   useEffect(() => {

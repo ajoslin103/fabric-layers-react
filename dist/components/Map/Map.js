@@ -15,22 +15,19 @@ exports.Map = void 0;
 var jsx_runtime_1 = require("react/jsx-runtime");
 var react_1 = require("react");
 var fabric_layers_1 = require("fabric-layers");
-var LayerManagerContext_1 = require("../../context/LayerManagerContext");
+var MapContext_1 = require("../../context/MapContext");
 var Map = (0, react_1.forwardRef)(function (_a, ref) {
     var _b = _a.width, width = _b === void 0 ? '100%' : _b, _c = _a.height, height = _c === void 0 ? '100%' : _c, _d = _a.className, className = _d === void 0 ? '' : _d, _e = _a.style, style = _e === void 0 ? {} : _e, children = _a.children, onReady = _a.onReady, modes = _a.modes, defaultMode = _a.defaultMode;
     var mapRef = (0, react_1.useRef)(null);
-    var layerManager = (0, LayerManagerContext_1.useLayerManager)().layerManager;
     var containerRef = (0, react_1.useRef)(null);
     // Initialize map
     (0, react_1.useEffect)(function () {
-        if (!layerManager || !containerRef.current)
+        if (!containerRef.current)
             return;
         var map = new fabric_layers_1.Map(containerRef.current, {
             width: typeof width === 'number' ? width : undefined,
             height: typeof height === 'number' ? height : undefined,
         });
-        // Add map to layer manager
-        layerManager.addMap(map);
         mapRef.current = map;
         // Set modes if provided
         if (modes) {
@@ -49,15 +46,14 @@ var Map = (0, react_1.forwardRef)(function (_a, ref) {
         }
         return function () {
             if (mapRef.current) {
-                layerManager.removeMap(mapRef.current);
                 mapRef.current.dispose();
                 mapRef.current = null;
             }
         };
-    }, [layerManager, width, height, modes, defaultMode, onReady]);
+    }, [width, height, modes, defaultMode, onReady]);
     // Expose map methods via ref
     (0, react_1.useImperativeHandle)(ref, function () { return mapRef.current; }, []);
-    return ((0, jsx_runtime_1.jsx)("div", { ref: containerRef, className: "fabric-map ".concat(className), style: __assign({ width: width, height: height, position: 'relative', overflow: 'hidden' }, style), children: children }));
+    return ((0, jsx_runtime_1.jsx)("div", { ref: containerRef, className: "fabric-map ".concat(className), style: __assign({ width: width, height: height, position: 'relative', overflow: 'hidden' }, style), children: (0, jsx_runtime_1.jsx)(MapContext_1.MapContext.Provider, { value: { map: mapRef.current }, children: children }) }));
 });
 exports.Map = Map;
 Map.displayName = 'Map';

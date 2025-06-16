@@ -13,7 +13,6 @@ export interface MeasurementProps {
     labelOffset?: number;
     showLabels?: boolean;
     precision?: number;
-    mapId?: string;
     onUpdate?: (measurement: CoreMeasurement) => void;
     onSelect?: (measurement: CoreMeasurement) => void;
     onDeselect?: (measurement: CoreMeasurement) => void;

@@ -6,7 +6,6 @@ export interface GridProps {
     dashArray?: number[];
     opacity?: number;
     visible?: boolean;
-    mapId?: string;
 }
 declare const Grid: React.ForwardRefExoticComponent<GridProps & React.RefAttributes<CoreGrid>>;
 export { Grid };

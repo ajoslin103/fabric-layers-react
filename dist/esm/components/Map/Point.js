@@ -1,15 +1,12 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Point as CorePoint } from 'fabric-layers';
-import { useLayerManager } from '../../context/LayerManagerContext';
+import { useMap } from '../../context/MapContext';
 var Point = forwardRef(function (_a, ref) {
-    var x = _a.x, y = _a.y, _b = _a.radius, radius = _b === void 0 ? 5 : _b, _c = _a.fill, fill = _c === void 0 ? '#ff0000' : _c, _d = _a.stroke, stroke = _d === void 0 ? '#000000' : _d, _e = _a.strokeWidth, strokeWidth = _e === void 0 ? 1 : _e, _f = _a.opacity, opacity = _f === void 0 ? 1 : _f, _g = _a.visible, visible = _g === void 0 ? true : _g, mapId = _a.mapId, onSelect = _a.onSelect, onDeselect = _a.onDeselect, onClick = _a.onClick, onMouseEnter = _a.onMouseEnter, onMouseLeave = _a.onMouseLeave;
+    var x = _a.x, y = _a.y, _b = _a.radius, radius = _b === void 0 ? 5 : _b, _c = _a.fill, fill = _c === void 0 ? '#ff0000' : _c, _d = _a.stroke, stroke = _d === void 0 ? '#000000' : _d, _e = _a.strokeWidth, strokeWidth = _e === void 0 ? 1 : _e, _f = _a.opacity, opacity = _f === void 0 ? 1 : _f, _g = _a.visible, visible = _g === void 0 ? true : _g, onSelect = _a.onSelect, onDeselect = _a.onDeselect, onClick = _a.onClick, onMouseEnter = _a.onMouseEnter, onMouseLeave = _a.onMouseLeave;
     var pointRef = useRef(null);
-    var layerManager = useLayerManager().layerManager;
+    var map = useMap().map;
     // Initialize point
     useEffect(function () {
-        if (!layerManager)
-            return;
-        var map = mapId ? layerManager.getMap(mapId) : layerManager.getActiveMap();
         if (!map)
             return;
         var point = new CorePoint({
@@ -43,7 +40,7 @@ var Point = forwardRef(function (_a, ref) {
                 pointRef.current = null;
             }
         };
-    }, [layerManager, mapId]);
+    }, [map]);
     // Update point properties when they change
     useEffect(function () {
         if (!pointRef.current)

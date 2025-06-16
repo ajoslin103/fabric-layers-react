@@ -12,16 +12,6 @@ declare module 'fabric-layers' {
     y: number;
   }
 
-  export interface LayerOptions {
-    id?: string;
-    name?: string;
-    visible?: boolean;
-    selectable?: boolean;
-    evented?: boolean;
-    hoverCursor?: string;
-    [key: string]: any;   
-  }
-
   export interface GridOptions {
     size?: number;
     color?: string;
@@ -57,31 +47,6 @@ declare module 'fabric-layers' {
     radius?: number;
     fill?: string;
     [key: string]: any;
-  }
-
-  export class LayerManager implements ObjectMethods {
-    constructor(canvas: fabric.Canvas, options?: LayerOptions);
-    addMap(map: FabricMap): void;
-    removeMap(map: FabricMap): void;
-    getMap(id: string): FabricMap | undefined;
-    getActiveMap(): FabricMap | undefined;
-    createLayer(options?: LayerOptions): any;
-    getLayer(id: string): any;
-    getLayers(): any[];
-    removeLayer(id: string): boolean;
-    setActiveLayer(id: string): boolean;
-    getActiveLayer(): any;
-    moveLayer(id: string, newIndex: number): boolean;
-    showLayer(id: string): void;
-    hideLayer(id: string): void;
-    toggleLayerVisibility(id: string): void;
-    getActiveObjects(): fabric.Object[];
-    getActiveObject(): fabric.Object | null;
-    on(event: string, handler: (...args: any[]) => void): void;
-    off(event?: string, handler?: (...args: any[]) => void): void;
-    setOptions(options: LayerOptions): void;
-    render(): void;
-    dispose(): void;
   }
 
   export class FabricMap implements ObjectMethods {

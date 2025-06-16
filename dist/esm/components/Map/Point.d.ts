@@ -9,7 +9,6 @@ export interface PointProps {
     strokeWidth?: number;
     opacity?: number;
     visible?: boolean;
-    mapId?: string;
     onSelect?: (point: CorePoint) => void;
     onDeselect?: (point: CorePoint) => void;
     onClick?: (point: CorePoint) => void;

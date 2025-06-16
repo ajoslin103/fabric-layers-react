@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Measurement as CoreMeasurement } from 'fabric-layers';
-import { useLayerManager } from '../../context/LayerManagerContext';
+import { useMap } from '../../context/MapContext';
 
 export interface MeasurementProps {
   startX: number;
@@ -15,7 +15,6 @@ export interface MeasurementProps {
   labelOffset?: number;
   showLabels?: boolean;
   precision?: number;
-  mapId?: string;
   onUpdate?: (measurement: CoreMeasurement) => void;
   onSelect?: (measurement: CoreMeasurement) => void;
   onDeselect?: (measurement: CoreMeasurement) => void;
@@ -34,19 +33,15 @@ const Measurement = forwardRef<CoreMeasurement, MeasurementProps>(({
   labelOffset = 10,
   showLabels = true,
   precision = 2,
-  mapId,
   onUpdate,
   onSelect,
   onDeselect,
 }, ref) => {
   const measurementRef = useRef<CoreMeasurement | null>(null);
-  const { layerManager } = useLayerManager();
+  const { map } = useMap();
 
   // Initialize measurement
   useEffect(() => {
-    if (!layerManager) return;
-
-    const map = mapId ? layerManager.getMap(mapId) : layerManager.getActiveMap();
     if (!map) return;
 
     const measurement = new CoreMeasurement({
@@ -78,7 +73,7 @@ const Measurement = forwardRef<CoreMeasurement, MeasurementProps>(({
         measurementRef.current = null;
       }
     };
-  }, [layerManager, mapId]);
+  }, [map]);
 
   // Update measurement properties when they change
   useEffect(() => {
