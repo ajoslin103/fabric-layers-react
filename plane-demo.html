@@ -24,27 +24,17 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     
     <!-- Load Fabric.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/6.0.0-beta16/fabric.min.js"></script>
-    
-    <!-- Load fabric-layers -->
-    <script src="https://unpkg.com/fabric-layers@1.1.3/dist/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
 
     <!-- Load Babel for JSX support -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <!-- Our component -->
-    <script type="text/babel" data-type="module">
-        // Check if fabric is available
-        if (!window.fabric) {
-            console.error('Fabric.js not found. Make sure it is loaded before this script.');
-        } else {
-            console.log('Fabric.js version:', fabric.version);
-        }
-
-        // Simple demo component
+    <script type="text/babel">
+        // Simple demo component using plain Fabric.js without layers
         function Demo() {
-            const [activeLayer, setActiveLayer] = React.useState(0);
             const canvasRef = React.useRef(null);
+            const [activeLayer, setActiveLayer] = React.useState(0);
 
             const addRectangle = () => {
                 if (canvasRef.current) {
@@ -55,7 +45,7 @@
                         height: 50,
                         fill: 'red'
                     });
-                    canvasRef.current.getActiveLayer().add(rect);
+                    canvasRef.current.add(rect);
                     canvasRef.current.renderAll();
                 }
             };
@@ -68,16 +58,14 @@
                         radius: 30,
                         fill: 'blue'
                     });
-                    canvasRef.current.getActiveLayer().add(circle);
+                    canvasRef.current.add(circle);
                     canvasRef.current.renderAll();
                 }
             };
 
-            const switchLayer = () => {
-                const newLayer = activeLayer === 0 ? 1 : 0;
+            const clearCanvas = () => {
                 if (canvasRef.current) {
-                    canvasRef.current.setActiveLayer(newLayer);
-                    setActiveLayer(newLayer);
+                    canvasRef.current.clear();
                 }
             };
 
@@ -85,13 +73,9 @@
                 // Initialize canvas
                 const canvas = new fabric.Canvas('canvas', {
                     width: 600,
-                    height: 400
+                    height: 400,
+                    backgroundColor: '#f0f0f0'
                 });
-                
-                // Create layers manager
-                const layersManager = new FabricLayers.LayersManager(canvas);
-                layersManager.addLayer('Layer 1');
-                layersManager.addLayer('Layer 2');
                 
                 // Store reference
                 canvasRef.current = canvas;
@@ -106,12 +90,7 @@
                     <div className="controls">
                         <button onClick={addRectangle}>Add Rectangle</button>
                         <button onClick={addCircle}>Add Circle</button>
-                        <button onClick={switchLayer}>
-                            Switch to Layer {activeLayer === 0 ? '2' : '1'}
-                        </button>
-                        <span style={{marginLeft: '10px'}}>
-                            Active Layer: {activeLayer + 1}
-                        </span>
+                        <button onClick={clearCanvas}>Clear Canvas</button>
                     </div>
                     <canvas id="canvas"></canvas>
                 </div>
