@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Map as CoreMap } from 'fabric-layers';
-import { useLayerManager } from '../context/LayerManagerContext';
+import { useLayerManager } from '../../context/LayerManagerContext';
 
 export interface MapProps {
   width?: number | string;

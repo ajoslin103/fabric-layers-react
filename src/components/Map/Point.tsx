@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Point as CorePoint } from 'fabric-layers';
-import { useLayerManager } from '../context/LayerManagerContext';
+import { useLayerManager } from '../../context/LayerManagerContext';
 
 export interface PointProps {
   x: number;

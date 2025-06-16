@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Measurement as CoreMeasurement } from 'fabric-layers';
-import { useLayerManager } from '../context/LayerManagerContext';
+import { useLayerManager } from '../../context/LayerManagerContext';
 
 export interface MeasurementProps {
   startX: number;
