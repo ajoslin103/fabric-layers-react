@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { Line as FabricLine } from 'fabric-layers/layer/vector';
-import type { VectorLayerProps } from '../../types';
+import type { VectorLayerProps } from './types';
 
 export const Line: React.FC<VectorLayerProps> = ({
-  points,
+  points = [],
   style,
   onSelect,
   ...options
@@ -32,7 +32,7 @@ export const Line: React.FC<VectorLayerProps> = ({
     };
   }, [points, style]);
 
-  return null; // Renders directly on canvas
+  return null;
 };
 
 export default Line;

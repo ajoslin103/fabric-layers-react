@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Grid as CoreGrid } from 'fabric-layers';
-import { useMap } from '../../context/MapContext';
+import { Grid as CoreGrid, Map as CoreMap } from 'fabric-layers';
 
 export interface GridProps {
   size?: number;
@@ -8,6 +7,7 @@ export interface GridProps {
   dashArray?: number[];
   opacity?: number;
   visible?: boolean;
+  map: CoreMap | null;
 }
 
 const Grid = forwardRef<CoreGrid, GridProps>(({
@@ -16,9 +16,9 @@ const Grid = forwardRef<CoreGrid, GridProps>(({
   dashArray = [1, 2],
   opacity = 0.5,
   visible = true,
+  map,
 }, ref) => {
   const gridRef = useRef<CoreGrid | null>(null);
-  const { map } = useMap();
 
   // Initialize grid
   useEffect(() => {

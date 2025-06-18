@@ -1,93 +1,205 @@
 declare module 'fabric-layers' {
-  import { fabric } from 'fabric';
-  
-  export interface ObjectMethods {
-    on(event: string, handler: (...args: any[]) => void): void;
-    off(event?: string, handler?: (...args: any[]) => void): void;
+  export interface Point {
+    x: number;
+    y: number;
+  }
+
+  export interface StyleProps {
+    fill?: string;
+    stroke?: string;
+    strokeWidth?: number;
+    [key: string]: any;
+  }
+
+  export interface BaseLayer {
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
     setOptions(options: any): void;
   }
 
-  export interface Point2D {
-    x: number;
-    y: number;
-  }
-
-  export interface GridOptions {
-    size?: number;
-    color?: string;
-    opacity?: number;
-    dashArray?: number[];
-    visible?: boolean;
-    [key: string]: any;
-  }
-
-  export interface MapOptions {
-    width?: number;
-    height?: number;
-    [key: string]: any;
-  }
-
-  export interface MeasurementOptions {
-    start?: Point2D;
-    end?: Point2D;
-    unit?: string;
-    lineColor?: string;
-    lineWidth?: number;
-    labelColor?: string;
-    labelSize?: number;
-    labelOffset?: number;
-    showLabels?: boolean;
-    precision?: number;
-    [key: string]: any;
-  }
-
-  export interface PointOptions {
-    x: number;
-    y: number;
-    radius?: number;
-    fill?: string;
-    [key: string]: any;
-  }
-
-  export class FabricMap implements ObjectMethods {
-    constructor(container: HTMLElement, options?: MapOptions);
-    registerMode(name: string, mode: any): void;
-    setMode(mode: string): void;
+  export class Map {
+    constructor(container: HTMLElement, options?: any);
     addGrid(grid: Grid): void;
     removeGrid(grid: Grid): void;
     addPoint(point: Point): void;
     removePoint(point: Point): void;
     addMeasurement(measurement: Measurement): void;
     removeMeasurement(measurement: Measurement): void;
-    on(event: string, handler: (...args: any[]) => void): void;
-    off(event?: string, handler?: (...args: any[]) => void): void;
-    setOptions(options: MapOptions): void;
+    registerMode(mode: string, handler: any): void;
+    setMode(mode: string): void;
+    registerEventListener(event: string, handler: Function): void;
+    unregisterEventListener(event: string, handler: Function): void;
     dispose(): void;
   }
 
-  export { FabricMap as Map };
-
-  export class Grid implements ObjectMethods {
-    constructor(options?: GridOptions);
-    on(event: string, handler: (...args: any[]) => void): void;
-    off(event?: string, handler?: (...args: any[]) => void): void;
-    setOptions(options: GridOptions): void;
-    dispose(): void;
+  export class Grid implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
   }
 
-  export class Measurement implements ObjectMethods {
-    constructor(options?: MeasurementOptions);
-    on(event: string, handler: (...args: any[]) => void): void;
-    off(event?: string, handler?: (...args: any[]) => void): void;
-    setOptions(options: MeasurementOptions): void;
-    dispose(): void;
+  export class Measurement implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
   }
 
-  export class Point implements ObjectMethods {
-    constructor(options?: PointOptions);
-    on(event: string, handler: (...args: any[]) => void): void;
-    off(event?: string, handler?: (...args: any[]) => void): void;
-    setOptions(options: PointOptions): void;
-    dispose(): void;
+
+  export class CorePoint {
+    constructor(options: any);
+    setOptions(options: any): void;
+  }
+}
+
+declare module 'fabric-layers/layer' {
+  import { BaseLayer } from 'fabric-layers';
+
+  export class Connector implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Group implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Tooltip implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+}
+
+declare module 'fabric-layers/layer/marker' {
+  import { BaseLayer } from 'fabric-layers';
+
+  export class Icon implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Marker implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class MarkerGroup implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+}
+
+declare module 'fabric-layers/layer/vector' {
+  import { BaseLayer } from 'fabric-layers';
+
+  export class Circle implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Line implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Polyline implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Rect implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+}
+
+declare module 'fabric-layers/measurement' {
+  import { BaseLayer } from 'fabric-layers';
+
+  export class Measurement implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Measurer implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+}
+
+declare module 'fabric-layers/paint' {
+  import { BaseLayer } from 'fabric-layers';
+
+  export class Arrow implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class ArrowHead implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class Canvas implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
+  }
+  
+  export class PaintManager implements BaseLayer {
+    constructor(options: any);
+    on(event: string, handler: Function): void;
+    off(event: string, handler: Function): void;
+    destroy(): void;
+    setOptions(options: any): void;
   }
 }

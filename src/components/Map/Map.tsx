@@ -1,90 +1,72 @@
-import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Map as CoreMap } from 'fabric-layers';
-import { MapContext } from '../../context/MapContext';
+import React, { useEffect, useRef, useState } from 'react';
+import { Map as FabricMap } from 'fabric-layers';
+import type { Map as CoreMap } from 'fabric-layers';
 
 export interface MapProps {
   width?: number | string;
   height?: number | string;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-  onReady?: (map: CoreMap) => void;
-  modes?: Record<string, any>;
+  initialMode?: string;
   defaultMode?: string;
+  onReady?: (map: CoreMap) => void;
+  children?: React.ReactNode;
+  onModeChange?: (mode: string) => void;
 }
 
-const Map = forwardRef<CoreMap, MapProps>(({
+export const Map: React.FC<MapProps> = ({
   width = '100%',
   height = '100%',
-  className = '',
-  style = {},
-  children,
-  onReady,
-  modes,
+  initialMode = 'default',
   defaultMode,
-}, ref) => {
-  const mapRef = useRef<CoreMap | null>(null);
+  onReady,
+  children,
+  onModeChange,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [map, setMapInstance] = useState<CoreMap | null>(null);
 
-  // Initialize map
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const map = new CoreMap(containerRef.current, {
-      width: typeof width === 'number' ? width : undefined,
-      height: typeof height === 'number' ? height : undefined,
-    });
-
-    mapRef.current = map;
-
-    // Set modes if provided
-    if (modes) {
-      Object.entries(modes).forEach(([name, mode]) => {
-        map.registerMode(name, mode);
-      });
-    }
-
-    // Set default mode if provided
-    if (defaultMode) {
-      map.setMode(defaultMode);
-    }
-
-    // Call onReady callback
+    const mapInstance = new FabricMap(containerRef.current);
+    setMapInstance(mapInstance);
+    
     if (onReady) {
-      onReady(map);
+      onReady(mapInstance);
+    }
+
+    // Register default mode if needed
+    const mode = defaultMode || initialMode;
+    if (mode !== 'default') {
+      mapInstance.registerMode(mode, {});
+      mapInstance.setMode(mode);
     }
 
     return () => {
-      if (mapRef.current) {
-        mapRef.current.dispose();
-        mapRef.current = null;
+      if (mapInstance) {
+        mapInstance.dispose();
       }
     };
-  }, [width, height, modes, defaultMode, onReady]);
+  }, [initialMode, defaultMode, onReady]);
 
-  // Expose map methods via ref
-  useImperativeHandle(ref, () => mapRef.current as CoreMap, []);
+  useEffect(() => {
+    if (!map || !onModeChange) return;
+
+    const handleModeChange = (mode: string) => {
+      onModeChange(mode);
+    };
+
+    map.registerEventListener('modeChange', handleModeChange);
+
+    return () => {
+      map.unregisterEventListener('modeChange', handleModeChange);
+    };
+  }, [map, onModeChange]);
 
   return (
-    <div
-      ref={containerRef}
-      className={`fabric-map ${className}`}
-      style={{
-        width,
-        height,
-        position: 'relative',
-        overflow: 'hidden',
-        ...style,
-      }}
-    >
-      <MapContext.Provider value={{ map: mapRef.current }}>
-        {children}
-      </MapContext.Provider>
+    <div ref={containerRef} style={{ width, height }}>
+      {map && children}
     </div>
   );
-});
+};
 
-Map.displayName = 'Map';
-
-export { Map };
 export default Map;

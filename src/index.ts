@@ -1,3 +1,2 @@
-export * from './components/Map';
-export * from './context/MapContext';
-export * from './types';
+export * from './components';
+export type { Point, StyleProps } from './types';

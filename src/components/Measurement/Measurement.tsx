@@ -1,26 +1,24 @@
 import React, { useEffect, useRef } from 'react';
-import { Measurement as FabricMeasurement } from 'fabric-layers/measurement';
+import { Measurement as FabricMeasurement } from 'fabric-layers';
 import type { MeasurementProps } from '../../types';
 
 export const Measurement: React.FC<MeasurementProps> = ({
+  unit,
+  precision,
   start,
   end,
-  unit = 'px',
-  precision = 2,
   style,
   onUpdate,
-  ...options
 }) => {
   const measurementRef = useRef<FabricMeasurement | null>(null);
 
   useEffect(() => {
     measurementRef.current = new FabricMeasurement({
-      start,
-      end,
       unit,
       precision,
+      start,
+      end,
       style,
-      ...options
     });
 
     if (onUpdate) {

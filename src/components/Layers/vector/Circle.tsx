@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Circle as FabricCircle } from 'fabric-layers/layer/vector';
-import type { VectorLayerProps } from '../../types';
+import type { VectorLayerProps } from './types';
 
 export const Circle: React.FC<VectorLayerProps> = ({
   position,

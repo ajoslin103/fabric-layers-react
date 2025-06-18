@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Rect as FabricRect } from 'fabric-layers/layer/vector';
-import type { VectorLayerProps } from '../../types';
+import type { VectorLayerProps } from './types';
 
 export const Rect: React.FC<VectorLayerProps> = ({
   position,
@@ -36,7 +36,7 @@ export const Rect: React.FC<VectorLayerProps> = ({
     };
   }, [position, width, height, style]);
 
-  return null; // Renders directly on canvas
+  return null;
 };
 
 export default Rect;
